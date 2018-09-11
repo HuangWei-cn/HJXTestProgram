@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.506,=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test013.WebGridTemplate\Unit3.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.883,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test013.WebGridTemplate\uHJX.Template.WebGrid.pas=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test013.WebGridTemplate\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.505,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.CoreUnits.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.339,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test013.WebGridTemplate\Unit3.pas=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test013.WebGridTemplate\uHJX.Template.WGProc.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.544,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.ExcelDataAccess.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.603,C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Project2.dproj=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test013.WebGridTemplate\Test013_WGTemplate.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.547,=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test013.WebGridTemplate\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.945,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.915,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.057,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.132,C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test013.WebGridTemplate\ufrmMain.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.318,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\FuncFrames\MeterList\ufraMeterList.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.288,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Functions\WebGrid\uWebGridCross.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.132,C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.dfm=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test013.WebGridTemplate\ufrmMain.dfm</Transaction>
+  </Transactions>
+</BorlandProject>
