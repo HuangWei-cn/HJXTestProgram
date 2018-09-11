@@ -1,0 +1,190 @@
+调整CustomVertAxis位置，只能自己通过代码实现。参考下面的文章和示例：
+
+http://www.teechart.net/support/viewtopic.php?t=5923
+
+文章提供了两段代码，通过计算和调整Margin和PositionPercent实现自定义
+竖轴不重叠。
+
+代码1：
+=================================================
+procedure TForm1.FormCreate(Sender: TObject);
+var i: Integer;
+const nSeries = 6;
+begin
+  ComboBox1.Items.Clear;
+  ComboBox2.Items.Clear;
+
+  for i := 0 to nSeries-1 do
+  begin
+    Chart1.AddSeries(TLineSeries);
+    Chart1.CustomAxes.Add;
+    Chart1[i].CustomVertAxis := Chart1.CustomAxes.Items[i];
+    Chart1.CustomAxes.Items[i].Axis.Color := Chart1[i].Color;
+    Chart1.CustomAxes.Items[i].Grid.Visible := False;
+    ComboBox2.Items.Add('Series' + inttostr(i + 1));
+    Chart1[i].FillSampleValues(20000);
+    Chart1.CustomAxes.Items[i].PositionUnits := muPixels;
+    if ((i+1) mod 2 = 0) then
+      Chart1.CustomAxes.Items[i].OtherSide := True;
+  end;
+
+  Chart1.MarginUnits := muPixels;
+
+  ComboBox1.Items.Add('20000');
+  ComboBox1.Items.Add('5000');
+  ComboBox1.Items.Add('500');
+  ComboBox1.Items.Add('50');
+  ComboBox1.ItemIndex := 0;
+  ComboBox2.ItemIndex := 0;
+  CheckBox1.Checked := True;
+  CheckBox2.Checked := Chart1.CustomAxes.Items[0].OtherSide;
+
+  Chart1.Draw;
+  PlaceAxes();
+end;
+
+procedure TForm1.PlaceAxes(nSeries: Integer=0; NextXLeft: Integer=0; NextXRight: Integer=0; MargLeft: Integer=0; MargRight: Integer=0);
+const extraPos = 12;
+const extraMargin = 45;
+begin
+  if Chart1[nSeries].Active then
+  begin
+    if Chart1.CustomAxes.Items[nSeries].OtherSide then
+    begin
+      Chart1.CustomAxes.Items[nSeries].PositionPercent := NextXRight;
+      NextXRight := NextXRight - Chart1.CustomAxes.Items[nSeries].MaxLabelsWidth - Chart1.CustomAxes.Items[nSeries].TickLength - extraPos;
+      MargRight := MargRight + extraMargin;
+    end
+    else
+    begin
+      Chart1.CustomAxes.Items[nSeries].PositionPercent := NextXLeft;
+      NextXLeft := NextXLeft - Chart1.CustomAxes.Items[nSeries].MaxLabelsWidth - Chart1.CustomAxes.Items[nSeries].TickLength - extraPos;
+      MargLeft := MargLeft + extraMargin;
+    end;
+  end;
+
+  Chart1.MarginLeft := MargLeft;
+  Chart1.MarginRight := MargRight;
+
+  nSeries := nSeries + 1;
+
+  if nSeries <= Chart1.SeriesCount - 1 then
+  begin
+    PlaceAxes(nSeries, NextXLeft, NextXRight, MargLeft, MargRight);
+  end;
+end;
+
+procedure TForm1.CheckBox1Click(Sender: TObject);
+begin
+  Chart1[ComboBox2.ItemIndex].Active := CheckBox1.Checked;
+  PlaceAxes();
+end;
+
+procedure TForm1.CheckBox2Click(Sender: TObject);
+begin
+  Chart1.CustomAxes.Items[ComboBox2.ItemIndex].OtherSide := CheckBox2.Checked;
+  PlaceAxes();
+end;
+
+procedure TForm1.ComboBox2Change(Sender: TObject);
+begin
+  CheckBox1.Checked := Chart1[ComboBox2.ItemIndex].Active;
+  CheckBox2.Checked := Chart1.CustomAxes.Items[ComboBox2.ItemIndex].OtherSide;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+var i: Integer;
+begin
+  for i := 0 to Chart1.SeriesCount-1 do
+  begin
+    Chart1[i].FillSampleValues(strtoint(ComboBox1.Text));
+  end;
+  PlaceAxes();
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  Chart1.AddSeries(TLineSeries);
+  Chart1.CustomAxes.Add;
+  Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1].PositionUnits := muPixels;
+  Chart1[Chart1.SeriesCount-1].CustomVertAxis := Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1];
+
+  if (Chart1.CustomAxes.Count mod 2 = 0) then
+      Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1].OtherSide := True;
+
+  Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1].Axis.Color := Chart1[Chart1.SeriesCount-1].Color;
+  Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1].Grid.Visible := False;
+  ComboBox2.Items.Add('Series' + inttostr(Chart1.SeriesCount));
+  ComboBox2.ItemIndex := ComboBox2.Items.Count-1;
+  Chart1[Chart1.SeriesCount-1].FillSampleValues(Chart1[0].XValues.Count);
+  PlaceAxes();
+end;
+
+作者对上述代码的说明：
+Probably this is more than what you need because in this there are axis in the other side (right), 
+but I hope it will help you to see what you need.
+I will try to explain in a few words what is this code doing:
+
+-Create: This adds a predefined number of LineSeries (nSeries=6) to the chart, creates and assign 
+a custom axis to each one of them and populate them. (Note that I'm not using the predefined Left 
+Axis). Also is important to note that I change MarginUnits and all CustomAxis.PositionUnits to pixels 
+to calculate them easier.
+-PlaceAxes: Is a recursive method that calculates the position of all the Axes taking in consideration 
+the MaxLabelsWidth and the TickLength of the already drawn axes.
+-CheckBox1: Actives/ deactivates the Series shown at ComboBox2 (and its axis).
+-CheckBox2: Changes the side of the CustomAxis of the Series shown at ComboBox2.
+-Button1: Executes a FillSampleValues with a number of data indicated at ComboBox1.
+-Button2: Adds a new LineSeries and its new CustomAxis to the chart.
+
+I hope the explanation helps...
+
+上面的代码可能需要下面的Chart设置进行配合:
+===============================
+Please, add this 3 lines to the TForm1.FormCreate to see the chart better. 
+
+Chart1.View3D := false;
+Chart1.Title.Visible := false;
+Chart1.Legend.Alignment := laBottom;
+
+
+
+
+代码2：
+================================
+1) The code above was thought for having one Custom Axis per Series and avoid overlapping.
+
+2) If you want to add a title to each Custom Axis you should increment the axis separation 
+setting higher extraPos and extraMargin (at PlaceAxes method). Following values work for 
+me: extraPos := 32 and extraMargin := 62
+
+3) You should assign a left and a right custom axis to each of your series but it is not 
+possible at this moment. But, as a workaround, you can create two series with the same values 
+and assign a left custom axis to one and a right custom axis to the other. This would be as follows: 
+
+
+procedure TForm1.FormCreate(Sender: TObject);
+var i: Integer;
+begin
+  for i := 0 to 3 do
+  begin
+    Chart1.AddSeries(TLineSeries);
+    Chart1[Chart1.SeriesCount-1].FillSampleValues(2000);
+    Chart1.CustomAxes.Add;
+    Chart1[Chart1.SeriesCount-1].CustomVertAxis := Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1];
+    Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1].StartPosition := i * 25;
+    Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1].EndPosition := (i+1) * 25;
+
+    Chart1.AddSeries(CloneChartSeries(Chart1[Chart1.SeriesCount-1]));
+    Chart1.CustomAxes.Add;
+    Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1].OtherSide := true;
+    Chart1[Chart1.SeriesCount-1].CustomVertAxis := Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1];
+    Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1].StartPosition := i * 25;
+    Chart1.CustomAxes.Items[Chart1.CustomAxes.Count-1].EndPosition := (i+1) * 25;
+  end;
+
+  Chart1.View3D := false;
+  Chart1.Title.Visible := false;
+  Chart1.Legend.Visible := false;
+  Chart1.MarginLeft := 7;
+  Chart1.MarginRight := 7;
+end;
