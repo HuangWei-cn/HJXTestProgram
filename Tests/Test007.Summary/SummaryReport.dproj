@@ -84,8 +84,8 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.242;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_Build>242</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.246;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>246</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -259,7 +259,16 @@
         </DCCReference>
         <DCCReference Include="..\..\Client\ClientCommon\FuncFrames\DataGraph\uFuncDrawTLByStyle.pas"/>
         <DCCReference Include="..\..\Client\ClientCommon\FuncFrames\DataGraph\uTLDefineProc.pas"/>
-        <DCCReference Include="..\..\Client\ClientCommon\uHJX.Func.ChartTemplateClasses.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Templates\uHJX.Template.ChartTemplate.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Templates\uHJX.Template.ProcSpecifiers.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Templates\uHJX.Template.TemplatesImp.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Templates\uHJX.Template.WebGrid.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Templates\uHJX.Template.XLGrid.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Functions\Template\uHJX.Template.ChartTemplateProc.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Functions\Template\uHJX.Template.WebGridProc.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridHelper.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridProc.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Core\uHJX.Classes.Templates.pas"/>
         <None Include="说明.txt"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

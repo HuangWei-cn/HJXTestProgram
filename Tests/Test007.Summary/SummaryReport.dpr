@@ -59,7 +59,16 @@ uses
   ufraDisplacementChartShell in '..\..\Client\ClientCommon\FuncFrames\DataGraph\ufraDisplacementChartShell.pas' {fraDisplacementChartShell: TFrame},
   uFuncDrawTLByStyle in '..\..\Client\ClientCommon\FuncFrames\DataGraph\uFuncDrawTLByStyle.pas',
   uTLDefineProc in '..\..\Client\ClientCommon\FuncFrames\DataGraph\uTLDefineProc.pas',
-  uHJX.Func.ChartTemplateClasses in '..\..\Client\ClientCommon\uHJX.Func.ChartTemplateClasses.pas';
+  uHJX.Template.ChartTemplate in '..\..\Client\ClientCommon\Templates\uHJX.Template.ChartTemplate.pas',
+  uHJX.Template.ProcSpecifiers in '..\..\Client\ClientCommon\Templates\uHJX.Template.ProcSpecifiers.pas',
+  uHJX.Template.TemplatesImp in '..\..\Client\ClientCommon\Templates\uHJX.Template.TemplatesImp.pas',
+  uHJX.Template.WebGrid in '..\..\Client\ClientCommon\Templates\uHJX.Template.WebGrid.pas',
+  uHJX.Template.XLGrid in '..\..\Client\ClientCommon\Templates\uHJX.Template.XLGrid.pas',
+  uHJX.Template.ChartTemplateProc in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.ChartTemplateProc.pas',
+  uHJX.Template.WebGridProc in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.WebGridProc.pas',
+  uHJX.Template.XLGridHelper in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridHelper.pas',
+  uHJX.Template.XLGridProc in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridProc.pas',
+  uHJX.Classes.Templates in '..\..\Client\ClientCommon\Core\uHJX.Classes.Templates.pas';
 
 {$R *.res}
 
