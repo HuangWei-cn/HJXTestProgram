@@ -43,7 +43,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>2052</VerInfo_Locale>
-        <DCC_UnitSearchPath>D:\Develope\黄金峡\Souces\Client\ClientCommon;D:\Develope\黄金峡\Souces\Client\ClientCommon\Core;D:\Develope\黄金峡\Souces\Client\ClientCommon\Interfaces;D:\Develope\黄金峡\Souces\Client\ClientCommon\DataInfImp;D:\Develope\黄金峡\Souces\Client\ClientCommon\Dispatchers;D:\Develope\黄金峡\Souces\Client\ClientCommon\Functions\Template;D:\Develope\黄金峡\Souces\Client\ClientCommon\Functions\WebGrid;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>D:\Develope\HJXProject\HJXProject;D:\Develope\HJXProject\HJXProject\Core;D:\Develope\HJXProject\HJXProject\DataInfImp;D:\Develope\HJXProject\HJXProject\Dispatchers;D:\Develope\HJXProject\HJXProject\Interfaces;D:\Develope\HJXProject\HJXProject\Templates;D:\Develope\HJXProject\HJXProject\Functions\Template;D:\Develope\HJXProject\HJXProject\Functions\WebGrid;D:\Develope\HJXProject\HJXProject\Tools;D:\Develope\HJXProject\HJXProject\FuncFrames\DataGraph;D:\Develope\HJXProject\HJXProject\FuncFrames\DataViewer;D:\Develope\HJXProject\HJXProject\FuncFrames\MeterList;D:\Develope\HJXProject\HJXProject\FuncFrames\ReportDataHTMLGrid;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <Manifest_File>None</Manifest_File>
         <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
@@ -97,21 +97,13 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\..\..\Client\ClientCommon\uHJX.CoreUnits.pas"/>
-        <DCCReference Include="..\..\..\Client\ClientCommon\Core\uHJX.Classes.Templates.pas"/>
-        <DCCReference Include="..\..\..\Client\ClientCommon\Templates\uHJX.Template.ChartTemplate.pas"/>
-        <DCCReference Include="..\..\..\Client\ClientCommon\Templates\uHJX.Template.TemplatesImp.pas"/>
-        <DCCReference Include="..\..\..\Client\ClientCommon\uHJX.ExcelDataAccess.pas"/>
+        <DCCReference Include="..\..\..\HJXProject\uHJX.CoreUnits.pas"/>
+        <DCCReference Include="..\..\..\HJXProject\uHJX.ExcelDataAccess.pas"/>
+        <DCCReference Include="..\..\..\HJXProject\uHJX.GraphDispatcherUnits.pas"/>
+        <DCCReference Include="..\..\..\HJXProject\uHJX.HostTemplates.pas"/>
         <DCCReference Include="ufrmMian.pas">
             <Form>frmMain</Form>
         </DCCReference>
-        <DCCReference Include="..\..\..\Client\ClientCommon\Templates\uHJX.Template.ProcSpecifiers.pas"/>
-        <DCCReference Include="..\..\..\Client\ClientCommon\Functions\Template\uHJX.Template.WebGridProc.pas"/>
-        <DCCReference Include="..\..\..\Client\ClientCommon\Templates\uHJX.Template.WebGrid.pas"/>
-        <DCCReference Include="..\..\..\Client\ClientCommon\Templates\uHJX.Template.XLGrid.pas"/>
-        <DCCReference Include="..\..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridHelper.pas"/>
-        <DCCReference Include="..\..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridProc.pas"/>
-        <DCCReference Include="..\..\..\Client\ClientCommon\Functions\Template\uHJX.Template.ChartTemplateProc.pas"/>
         <None Include="说明.txt"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
@@ -180,7 +172,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="New1.txt" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="说明.txt" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

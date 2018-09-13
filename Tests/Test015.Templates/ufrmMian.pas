@@ -14,7 +14,7 @@ uses
     Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.WinXCtrls, Vcl.WinXPanels, Vcl.ExtCtrls,
     Vcl.ButtonGroup, Vcl.ComCtrls, Vcl.Buttons, VclTee.TeeGDIPlus, VclTee.TeEngine, VclTee.TeeProcs,
     VclTee.Chart, sSkinProvider, sSkinManager, System.Actions, Vcl.ActnList, nExcel,
-    Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, Vcl.Grids, Vcl.ToolWin;
+    Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, Vcl.Grids, Vcl.ToolWin, Vcl.CheckLst;
 
 type
     TfrmMain = class(TForm)
@@ -66,6 +66,11 @@ type
         ToolBar1: TToolBar;
         tbtnOpenXLTmpl: TToolButton;
         edtXLTmplName: TEdit;
+        staTemplates: TStatusBar;
+        TabSheet4: TTabSheet;
+        chklstMeters: TCheckListBox;
+        btnCreateXLSGrid: TButton;
+        dlgSave: TSaveDialog;
         procedure Button1Click(Sender: TObject);
         procedure Button2Click(Sender: TObject);
         procedure Button3Click(Sender: TObject);
@@ -74,6 +79,8 @@ type
         procedure tvwMetersCreateNodeClass(Sender: TCustomTreeView; var NodeClass: TTreeNodeClass);
         procedure FormCreate(Sender: TObject);
         procedure tbtnOpenXLTmplClick(Sender: TObject);
+        procedure tvwMetersClick(Sender: TObject);
+        procedure btnCreateXLSGridClick(Sender: TObject);
     private
         { Private declarations }
         procedure ListMeters;
@@ -84,6 +91,8 @@ type
         procedure LoadXLTmplDefines;
         { 从配置中加载模板列表 }
         procedure LoadTmplsFromConfig;
+        { 根据模板创建Excel数据表 }
+        procedure CreateExcelDataBook;
     public
         { Public declarations }
     end;
@@ -96,7 +105,7 @@ implementation
 uses
     uhjx.intf.appservices, uhjx.Classes.Meters,
     uhjx.Classes.Templates, uhjx.Template.XLGridProc, uhjx.Template.WebGrid, uhjx.Template.XLGrid,
-    uhjx.Excel.InitParams, uhjx.Excel.IO,
+    uhjx.Excel.InitParams, uhjx.Excel.IO, uhjx.EnvironmentVariables,
 
     System.Win.ComObj;
 {$R *.dfm}
@@ -126,6 +135,10 @@ type
         NdType: TmtNodeType;
     end;
 
+var
+    Meters   : TMeterDefines;
+    Templates: TTemplates;
+
 function __IIF(V: Boolean; TrueStr, FalseStr: string): string;
 begin
     if V then Result := TrueStr
@@ -151,6 +164,11 @@ procedure TfrmMain.actNewWebGridTemplateExecute(Sender: TObject);
 begin
     mmWGTEditor.Clear;
     mmWGTEditor.Lines.Text := NEWWG;
+end;
+
+procedure TfrmMain.btnCreateXLSGridClick(Sender: TObject);
+begin
+    CreateExcelDataBook;
 end;
 
 procedure TfrmMain.Button1Click(Sender: TObject);
@@ -202,6 +220,8 @@ begin
         ListTemplates;
         ShowMessage('Load project completed.');
         ts := IAppServices.Templates as TTemplates;
+        Meters := IAppServices.Meters as TMeterDefines;
+        Templates := IAppServices.Templates as TTemplates;
 {
 
             Memo1.Clear;
@@ -234,18 +254,20 @@ var
     S               : string;
 begin
     tvwMeters.Items.Clear;
+    chklstMeters.Clear;
     Excelmeters.SortByMeterType;
     S := '';
     for i := 0 to Excelmeters.Count - 1 do
     begin
         mt := Excelmeters.Items[i];
+        chklstMeters.Items.add(mt.DesignName);
         if S <> mt.params.MeterType then
         begin
             S := mt.params.MeterType;
-            typNode := tvwMeters.Items.Add(nil, S) as TmtNode;
+            typNode := tvwMeters.Items.add(nil, S) as TmtNode;
             typNode.NdType := ntCategory;
         end;
-        mtrNode := tvwMeters.Items.AddChild(typNode, mt.designname) as TmtNode;
+        mtrNode := tvwMeters.Items.AddChild(typNode, mt.DesignName) as TmtNode;
         mtrNode.NdType := ntMeter;
     end;
 end;
@@ -254,6 +276,28 @@ procedure TfrmMain.tbtnOpenXLTmplClick(Sender: TObject);
 begin
     dlgOpenWB.Title := '选择Excel表格模板文件';
     if dlgOpenWB.Execute then edtXLTmplName.Text := dlgOpenWB.FileName;
+end;
+
+procedure TfrmMain.tvwMetersClick(Sender: TObject);
+var
+    nd: TmtNode;
+    mt: TMeterDefine;
+begin
+    if tvwMeters.selected = nil then Exit;
+    nd := tvwMeters.selected as TmtNode;
+    if nd.NdType = ntMeter then
+    begin
+        mt := Meters.meter[nd.Text];
+        if mt = nil then Exit;
+
+        with staTemplates, mt.datasheetstru do
+        begin
+            Panels[0].Text := mt.DesignName;
+            Panels[1].Text := 'CT: ' + ChartTemplate;
+            Panels[2].Text := 'WGT: ' + WGTemplate;
+            Panels[3].Text := 'XLT: ' + XLTemplate;
+        end;
+    end;
 end;
 
 procedure TfrmMain.tvwMetersCreateNodeClass(Sender: TCustomTreeView; var NodeClass: TTreeNodeClass);
@@ -269,15 +313,15 @@ var
 begin
     ts := IAppServices.Templates as TTemplates;
     tvwTemplates.Items.Clear;
-    typNode := tvwTemplates.Items.Add(nil, 'ChartTemplates');
+    typNode := tvwTemplates.Items.add(nil, 'ChartTemplates');
     for i := 0 to ts.ChartTemplateCount - 1 do
             tvwTemplates.Items.AddChild(typNode, ts.ChartTemplate[i].TemplateName);
 
-    typNode := tvwTemplates.Items.Add(nil, 'WebGridTemplates');
+    typNode := tvwTemplates.Items.add(nil, 'WebGridTemplates');
     for i := 0 to ts.WebGridTemplateCount - 1 do
             tvwTemplates.Items.AddChild(typNode, ts.WebGridTemplate[i].TemplateName);
 
-    typNode := tvwTemplates.Items.Add(nil, 'XLGridTemplates');
+    typNode := tvwTemplates.Items.add(nil, 'XLGridTemplates');
     for i := 0 to ts.XLSGridTemplateCount - 1 do
             tvwTemplates.Items.AddChild(typNode, ts.xlsgridtemplate[i].TemplateName);
 
@@ -379,6 +423,49 @@ begin
             Cells[8, i + 1] := tp.DataRangeRef;
             Cells[9, i + 1] := tp.Annotation;
         end;
+    end;
+end;
+
+procedure TfrmMain.CreateExcelDataBook;
+var
+    i, n: Integer;
+    Strs: TStrings;
+    mt  : TMeterDefine;
+    tp  : TXLGridTemplate;
+begin
+    if ENV_XLTemplBook = '' then
+    begin
+        ShowMessage('没有提供模板文件，无法生成数据表');
+        Exit;
+    end;
+
+    n := 0;
+    for i := 0 to chklstMeters.Count - 1 do
+        if chklstMeters.Checked[i] then inc(n);
+    if n = 0 then
+    begin
+        ShowMessage('没有选择仪器。');
+        Exit;
+    end;
+
+// 请用户先选择输出的报表文件
+    if dlgSave.Execute then
+    begin
+        for i := 0 to chklstMeters.Count - 1 do
+            if chklstMeters.Checked[i] then
+            begin
+                mt := Meters.meter[chklstMeters.Items[i]];
+                if mt = nil then Continue;
+
+                if mt.datasheetstru.XLTemplate = '' then Continue;
+                tp := Templates.ItemByName[mt.datasheetstru.XLTemplate] as TXLGridTemplate;
+                if tp = nil then Continue;
+
+                GenXLGrid(tp, mt.DesignName, ENV_XLTemplBook, dlgSave.FileName);
+                application.ProcessMessages;
+            end;
+
+        ShowMessage('I''m done.');
     end;
 end;
 

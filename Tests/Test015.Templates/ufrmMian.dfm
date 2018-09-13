@@ -37,7 +37,7 @@ object frmMain: TfrmMain
   object Splitter1: TSplitter
     Left = 225
     Top = 53
-    Height = 639
+    Height = 620
     ExplicitLeft = 520
     ExplicitTop = 312
     ExplicitHeight = 100
@@ -46,10 +46,11 @@ object frmMain: TfrmMain
     Left = 0
     Top = 53
     Width = 225
-    Height = 639
+    Height = 620
     Align = alLeft
     Caption = 'Panel1'
     TabOrder = 0
+    ExplicitHeight = 639
     object Button1: TButton
       Left = 14
       Top = 37
@@ -83,7 +84,7 @@ object frmMain: TfrmMain
       Left = 1
       Top = 101
       Width = 223
-      Height = 537
+      Height = 518
       VertScrollBar.Tracking = True
       Align = alBottom
       Anchors = [akLeft, akTop, akRight, akBottom]
@@ -93,38 +94,46 @@ object frmMain: TfrmMain
       HeaderFont.Name = 'Tahoma'
       HeaderFont.Style = []
       TabOrder = 3
+      ExplicitHeight = 537
       object CategoryPanel1: TCategoryPanel
         Top = 0
         Height = 377
         Caption = 'Meter List'
+        Ctl3D = False
+        ParentCtl3D = False
         TabOrder = 0
+        ExplicitWidth = 221
         object tvwMeters: TTreeView
           Left = 0
           Top = 0
-          Width = 219
+          Width = 202
           Height = 351
           Align = alClient
           Indent = 19
           TabOrder = 0
+          OnClick = tvwMetersClick
           OnCreateNodeClass = tvwMetersCreateNodeClass
+          ExplicitWidth = 219
         end
       end
       object CategoryPanel2: TCategoryPanel
         Top = 377
-        Height = 30
+        Height = 371
         Caption = 'Templates List'
-        Collapsed = True
         TabOrder = 1
-        ExpandedHeight = 252
+        ExplicitTop = 30
+        ExplicitWidth = 221
         object tvwTemplates: TTreeView
           Left = 0
           Top = 0
-          Width = 219
-          Height = 0
+          Width = 202
+          Height = 345
           Align = alClient
           Indent = 19
           ReadOnly = True
           TabOrder = 0
+          ExplicitWidth = 219
+          ExplicitHeight = 0
         end
       end
     end
@@ -133,8 +142,8 @@ object frmMain: TfrmMain
     Left = 228
     Top = 53
     Width = 850
-    Height = 639
-    ActivePage = TabSheet3
+    Height = 620
+    ActivePage = TabSheet4
     Align = alClient
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -143,15 +152,14 @@ object frmMain: TfrmMain
     Font.Style = []
     ParentFont = False
     TabOrder = 1
-    ExplicitWidth = 803
     object TabSheet1: TTabSheet
       Caption = 'Test Chart Template'
-      ExplicitWidth = 795
+      ExplicitHeight = 606
       object Panel2: TPanel
         Left = 700
         Top = 0
         Width = 142
-        Height = 606
+        Height = 587
         Align = alRight
         BevelKind = bkFlat
         BevelOuter = bvNone
@@ -163,7 +171,7 @@ object frmMain: TfrmMain
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        ExplicitLeft = 653
+        ExplicitHeight = 606
         object btnNewChartTemplate: TButton
           Left = 4
           Top = 18
@@ -201,13 +209,13 @@ object frmMain: TfrmMain
         Left = 0
         Top = 0
         Width = 700
-        Height = 606
+        Height = 587
         Align = alClient
         BevelKind = bkSoft
         BevelOuter = bvNone
         Caption = 'Panel3'
         TabOrder = 1
-        ExplicitWidth = 653
+        ExplicitHeight = 606
         object Label3: TLabel
           Left = 0
           Top = 0
@@ -221,18 +229,18 @@ object frmMain: TfrmMain
           Left = 0
           Top = 18
           Width = 696
-          Height = 322
+          Height = 303
           Align = alClient
           Lines.Strings = (
             'mmCTEditor')
           ScrollBars = ssBoth
           TabOrder = 0
           WordWrap = False
-          ExplicitWidth = 649
+          ExplicitHeight = 322
         end
         object Chart1: TChart
           Left = 0
-          Top = 340
+          Top = 321
           Width = 696
           Height = 262
           Title.Text.Strings = (
@@ -240,7 +248,7 @@ object frmMain: TfrmMain
           View3D = False
           Align = alBottom
           TabOrder = 1
-          ExplicitWidth = 649
+          ExplicitTop = 340
           DefaultCanvas = 'TGDIPlusCanvas'
           ColorPaletteIndex = 13
         end
@@ -249,7 +257,7 @@ object frmMain: TfrmMain
     object TabSheet2: TTabSheet
       Caption = 'Test WebGrid Template'
       ImageIndex = 1
-      ExplicitWidth = 795
+      ExplicitHeight = 606
       object Panel4: TPanel
         Left = 0
         Top = 0
@@ -258,7 +266,6 @@ object frmMain: TfrmMain
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 795
         DesignSize = (
           842
           106)
@@ -281,7 +288,6 @@ object frmMain: TfrmMain
           Text = 
             '%([a-zA-Z]*|((Meter)([1-9][0-9]*)\.)?(DesignName|(PD|MD)([1-9][0' +
             '-9]*)\.(Name|Alias|DataUnit)))%'
-          ExplicitWidth = 782
         end
         object LabeledEdit2: TLabeledEdit
           Left = 2
@@ -302,21 +308,20 @@ object frmMain: TfrmMain
           Text = 
             '%(DTScale|Annotation|((Meter)(n|[1-9][0-9]*)\.)?(PD|MD)([1-9][0-' +
             '9]*))%'
-          ExplicitWidth = 782
         end
       end
       object Panel5: TPanel
         Left = 0
         Top = 106
         Width = 842
-        Height = 500
+        Height = 481
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 795
+        ExplicitHeight = 500
         DesignSize = (
           842
-          500)
+          481)
         object Label1: TLabel
           Left = 5
           Top = 8
@@ -341,17 +346,16 @@ object frmMain: TfrmMain
             'mmWGTEditor')
           ScrollBars = ssBoth
           TabOrder = 0
-          ExplicitWidth = 609
         end
         object Panel6: TPanel
           Left = 667
           Top = 0
           Width = 175
-          Height = 500
+          Height = 481
           Align = alRight
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitLeft = 620
+          ExplicitHeight = 500
           object btnNewWGT: TButton
             Left = 12
             Top = 9
@@ -427,31 +431,31 @@ object frmMain: TfrmMain
           Left = 5
           Top = 248
           Width = 656
-          Height = 249
+          Height = 230
           Anchors = [akLeft, akTop, akRight, akBottom]
           Lines.Strings = (
             'mmWGTResult')
           ScrollBars = ssBoth
           TabOrder = 2
-          ExplicitWidth = 609
+          ExplicitHeight = 249
         end
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Test XLS DataGrid Template'
       ImageIndex = 2
-      ExplicitWidth = 795
+      ExplicitHeight = 606
       object grdXLTemplates: TStringGrid
         Left = 0
         Top = 21
         Width = 842
-        Height = 585
+        Height = 566
         Align = alClient
         ColCount = 10
         DefaultColWidth = 80
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goEditing]
         TabOrder = 0
-        ExplicitLeft = -1
+        ExplicitHeight = 364
       end
       object ToolBar1: TToolBar
         Left = 0
@@ -498,6 +502,57 @@ object frmMain: TfrmMain
         end
       end
     end
+    object TabSheet4: TTabSheet
+      Caption = 'TabSheet4'
+      ImageIndex = 3
+      object chklstMeters: TCheckListBox
+        Left = 0
+        Top = 0
+        Width = 177
+        Height = 587
+        Align = alLeft
+        ItemHeight = 18
+        TabOrder = 0
+        ExplicitLeft = 16
+        ExplicitTop = 8
+        ExplicitHeight = 473
+      end
+      object btnCreateXLSGrid: TButton
+        Left = 200
+        Top = 10
+        Width = 137
+        Height = 25
+        Caption = #21019#24314#25968#25454#34920
+        TabOrder = 1
+        OnClick = btnCreateXLSGridClick
+      end
+    end
+  end
+  object staTemplates: TStatusBar
+    Left = 0
+    Top = 673
+    Width = 1078
+    Height = 19
+    Panels = <
+      item
+        Text = 'M18zpr'
+        Width = 80
+      end
+      item
+        Text = 'CT:'#22810#28857#20301#31227#35745#36807#31243#32447#27169#26495
+        Width = 200
+      end
+      item
+        Text = 'WGT:'
+        Width = 250
+      end
+      item
+        Text = 'XLT:'
+        Width = 250
+      end>
+    ExplicitLeft = 544
+    ExplicitTop = 352
+    ExplicitWidth = 0
   end
   object dlgOpenWB: TOpenDialog
     Filter = 'Excel'#25991#20214'|*.xls;*.xlsx'
@@ -565,5 +620,11 @@ object frmMain: TfrmMain
       Caption = #21019#24314#26032'WebGrid'#27169#26495
       OnExecute = actNewWebGridTemplateExecute
     end
+  end
+  object dlgSave: TSaveDialog
+    DefaultExt = 'xls'
+    Filter = 'Excel files|*.xls'
+    Left = 512
+    Top = 186
   end
 end
