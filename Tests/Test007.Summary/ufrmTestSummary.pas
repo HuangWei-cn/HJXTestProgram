@@ -79,6 +79,7 @@ type
         piSetDefaultTLSize: TMenuItem;
         tabQuickView: TTabSheet;
         Button2: TButton;
+        btnListSetupDate: TButton;
         procedure actLoadParamsExecute(Sender: TObject);
         procedure actLoadDataFileListExecute(Sender: TObject);
         procedure FormCreate(Sender: TObject);
@@ -92,6 +93,7 @@ type
         procedure piSetDefaultTLSizeClick(Sender: TObject);
         procedure FormClose(Sender: TObject; var Action: TCloseAction);
         procedure Button2Click(Sender: TObject);
+        procedure btnListSetupDateClick(Sender: TObject);
     private
         { Private declarations }
         FParamLoaded,
@@ -120,7 +122,7 @@ implementation
 
 uses uHJX.Excel.InitParams, {uHJX.Excel.Meters} uHJX.Classes.Meters, uHJX.EnvironmentVariables,
     uHJX.Excel.DataQuery, uHJX.IntfImp.FuncCompManager, uHJX.Intf.FunctionDispatcher,
-    ufrmDataCounts, ufraMeterSelector;
+    ufrmDataCounts, ufraMeterSelector, ufrmQuerySetupDate;
 {$R *.dfm}
 
 
@@ -232,6 +234,15 @@ begin
     finally
         frm.Release;
     end;
+end;
+
+procedure TfrmTestSummary.btnListSetupDateClick(Sender: TObject);
+var
+    frm: TfrmQuerySetupDate;
+begin
+    frm := TfrmQuerySetupDate.Create(Self);
+    frm.ShowModal;
+    frm.Release;
 end;
 
 procedure TfrmTestSummary.btnTest_LoadMetersClick(Sender: TObject);

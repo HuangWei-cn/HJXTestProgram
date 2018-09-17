@@ -68,7 +68,8 @@ uses
   uHJX.Template.WebGridProc in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.WebGridProc.pas',
   uHJX.Template.XLGridHelper in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridHelper.pas',
   uHJX.Template.XLGridProc in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridProc.pas',
-  uHJX.Classes.Templates in '..\..\Client\ClientCommon\Core\uHJX.Classes.Templates.pas';
+  uHJX.Classes.Templates in '..\..\Client\ClientCommon\Core\uHJX.Classes.Templates.pas',
+  ufrmQuerySetupDate in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmQuerySetupDate.pas' {frmQuerySetupDate};
 
 {$R *.res}
 
@@ -78,6 +79,7 @@ begin
     Application.MainFormOnTaskbar := True;
     Application.Title := '黄金峡观测数据处理辅助工具（功能测试程序）';
   Application.CreateForm(TfrmTestSummary, frmTestSummary);
+  Application.CreateForm(TfrmQuerySetupDate, frmQuerySetupDate);
   //Application.CreateForm(TfrmMeterSelector, frmMeterSelector);
   Application.Run;
 
