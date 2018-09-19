@@ -12,16 +12,26 @@ object frmTestSummary: TfrmTestSummary
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  ScreenSnap = True
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object pgcMain: TPageControl
-    Left = 185
+  object Splitter2: TSplitter
+    Left = 233
     Top = 0
-    Width = 785
     Height = 688
-    ActivePage = tabTools
+    Beveled = True
+    ExplicitLeft = 492
+    ExplicitTop = 312
+    ExplicitHeight = 100
+  end
+  object pgcMain: TPageControl
+    Left = 236
+    Top = 0
+    Width = 734
+    Height = 688
+    ActivePage = tabBaseParams
     Align = alClient
     TabOrder = 0
     object tabBaseParams: TTabSheet
@@ -29,14 +39,14 @@ object frmTestSummary: TfrmTestSummary
       inline fraMeterListGrid1: TfraMeterListGrid
         Left = 0
         Top = 0
-        Width = 777
+        Width = 726
         Height = 660
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 777
+        ExplicitWidth = 726
         ExplicitHeight = 660
         inherited dbgMeters: TDBGridEh
-          Width = 777
+          Width = 726
           Height = 660
         end
       end
@@ -44,14 +54,19 @@ object frmTestSummary: TfrmTestSummary
     object tabDataViewer: TTabSheet
       Caption = #35266#27979#25968#25454
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 777
+      ExplicitHeight = 0
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 777
+        Width = 726
         Height = 41
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 777
         object Label1: TLabel
           Left = 12
           Top = 8
@@ -127,33 +142,54 @@ object frmTestSummary: TfrmTestSummary
     object tabDataGraph: TTabSheet
       Caption = #36807#31243#32447
       ImageIndex = 8
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 777
+      ExplicitHeight = 0
       object scrTLList: TScrollBox
         Left = 0
         Top = 0
-        Width = 777
+        Width = 726
         Height = 660
         VertScrollBar.Smooth = True
         Align = alClient
         Ctl3D = True
         ParentCtl3D = False
         TabOrder = 0
+        ExplicitWidth = 777
       end
     end
     object tabDataLayout: TTabSheet
       Caption = #20998#24067#22270
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 777
+      ExplicitHeight = 0
     end
     object tabEigenValue: TTabSheet
       Caption = #29305#24449#20540
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 777
+      ExplicitHeight = 0
     end
     object tabDataReport: TTabSheet
       Caption = #35266#27979#25968#25454#25253#34920
       ImageIndex = 8
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 777
+      ExplicitHeight = 0
     end
     object tabSummary: TTabSheet
       Caption = #27719#24635#34920
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 777
+      ExplicitHeight = 0
     end
     object tabTools: TTabSheet
       Caption = #23567#24037#20855
@@ -220,13 +256,14 @@ object frmTestSummary: TfrmTestSummary
         OnDblClick = lstTestMetersDblClick
       end
       object Panel2: TPanel
-        Left = 648
+        Left = 597
         Top = 0
         Width = 129
         Height = 660
         Align = alRight
         BevelKind = bkSoft
         TabOrder = 1
+        ExplicitLeft = 648
         object btnTest_LoadMeters: TButton
           Left = 12
           Top = 11
@@ -240,22 +277,22 @@ object frmTestSummary: TfrmTestSummary
       inline fraXLSParamEditor1: TfraXLSParamEditor
         Left = 153
         Top = 0
-        Width = 495
+        Width = 444
         Height = 660
         Align = alClient
         TabOrder = 2
         ExplicitLeft = 153
-        ExplicitWidth = 495
+        ExplicitWidth = 444
         ExplicitHeight = 660
         inherited CategoryPanelGroup1: TCategoryPanelGroup
-          Width = 495
+          Width = 444
           Height = 559
-          ExplicitWidth = 495
+          ExplicitWidth = 444
           ExplicitHeight = 559
           inherited CategoryPanel3: TCategoryPanel
-            ExplicitWidth = 476
+            ExplicitWidth = 442
             inherited vleDataStru: TValueListEditor
-              Width = 474
+              Width = 423
               ExplicitWidth = 474
               ColWidths = (
                 150
@@ -274,9 +311,9 @@ object frmTestSummary: TfrmTestSummary
             end
           end
           inherited CategoryPanel2: TCategoryPanel
-            ExplicitWidth = 476
+            ExplicitWidth = 442
             inherited vlePrjParams: TValueListEditor
-              Width = 474
+              Width = 423
               ExplicitWidth = 474
               ColWidths = (
                 150
@@ -293,9 +330,9 @@ object frmTestSummary: TfrmTestSummary
             end
           end
           inherited CategoryPanel1: TCategoryPanel
-            ExplicitWidth = 476
+            ExplicitWidth = 442
             inherited vleMeterParams: TValueListEditor
-              Width = 474
+              Width = 423
               ExplicitWidth = 474
               ColWidths = (
                 98
@@ -318,14 +355,23 @@ object frmTestSummary: TfrmTestSummary
           end
         end
         inherited Panel1: TPanel
-          Width = 495
+          Width = 444
           ExplicitWidth = 495
+          inherited lblWorkBook: TLabel
+            Width = 290
+            ExplicitWidth = 290
+          end
+          inherited edtDesignID: TLabeledEdit
+            EditLabel.ExplicitTop = -16
+            EditLabel.ExplicitWidth = 59
+            EditLabel.ExplicitHeight = 13
+          end
           inherited Button1: TButton
-            Left = 414
+            Left = 363
             ExplicitLeft = 414
           end
           inherited Button2: TButton
-            Left = 414
+            Left = 363
             ExplicitLeft = 414
           end
         end
@@ -334,12 +380,16 @@ object frmTestSummary: TfrmTestSummary
     object tabQuickView: TTabSheet
       Caption = #35266#27979#24773#20917#36895#35272
       ImageIndex = 9
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 777
+      ExplicitHeight = 0
     end
   end
   object pnlLeftPanel: TPanel
     Left = 0
     Top = 0
-    Width = 185
+    Width = 233
     Height = 688
     Align = alLeft
     BevelOuter = bvNone
@@ -348,7 +398,7 @@ object frmTestSummary: TfrmTestSummary
     object Splitter1: TSplitter
       Left = 0
       Top = 229
-      Width = 185
+      Width = 233
       Height = 3
       Cursor = crVSplit
       Align = alTop
@@ -357,7 +407,7 @@ object frmTestSummary: TfrmTestSummary
     object cbsFunctions: TCategoryButtons
       Left = 0
       Top = 0
-      Width = 185
+      Width = 233
       Height = 229
       Align = alTop
       ButtonFlow = cbfVertical

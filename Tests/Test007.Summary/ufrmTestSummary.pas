@@ -9,10 +9,10 @@
 unit ufrmTestSummary;
 
 { todo:完善“特性”功能，加载完参数表之后，显示当前参数设置的基本情况 }
-{ todo:整合参数表和仪器列表，用一个工程设置工作簿取代逐个打开各种设置文件 }
+{ DONE:整合参数表和仪器列表，用一个工程设置工作簿取代逐个打开各种设置文件 }
 { todo:完成显示仪器观测数据的功能 }
 { DONE:增加双击仪器显示过程线的功能 }
-{ todo:增加特征值提取功能 }
+{ DONE:增加特征值提取功能 }
 { todo:增加一个命令终端窗口，敲命令可以显示相应的功能，like hack..mmm }
 
 interface
@@ -21,9 +21,11 @@ uses
     Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
     Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.CategoryButtons, nExcel, System.Actions, Vcl.ActnList,
     Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.StdCtrls,
-    {--------}
+    {----core system----}
     uHJX.Intf.AppServices, uHJX.IntfImp.AppServices,
-    ufraSummaryMaker.Excel, uHJX.Intf.Datas, ufraHJXDataGrid,
+    ufraSummaryMaker.Excel, uHJX.Intf.Datas,
+    {---function frames---}
+    ufraHJXDataGrid,
     ufraMeterListGrid, ufraDataLayout, ufraDataPresentation, ufraExcelMeterParamEditor,
     {ufraTrendLineShell,} ufraMeterList, ufraEigenvalueWeb, uHJX.ProjectGlobal, ufraRptDataHTMLGrid,
     ufraQuickViewer,
@@ -80,6 +82,7 @@ type
         tabQuickView: TTabSheet;
         Button2: TButton;
         btnListSetupDate: TButton;
+        Splitter2: TSplitter;
         procedure actLoadParamsExecute(Sender: TObject);
         procedure actLoadDataFileListExecute(Sender: TObject);
         procedure FormCreate(Sender: TObject);
@@ -137,7 +140,7 @@ begin
     if dlgOpen.Execute then
     begin
         FfraMeterList.tvwMeters.Items.Clear;
-        { todo:加入参数加载结果的判断 }
+        { todo:加入参数加载结果的判断。可通过事件进行驱动参数加载完毕后应该进行的动作 }
         LoadProjectConfig(dlgOpen.FileName);
         if ExcelMeters.Count > 0 then
         begin
