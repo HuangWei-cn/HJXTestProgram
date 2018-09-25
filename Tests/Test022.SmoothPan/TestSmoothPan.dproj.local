@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.546,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.403,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.173,=D:\Develope\DefaultDelphiProject\SplitPaneView1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.711,=D:\Develope\DefaultDelphiProject\GridPaneView1.pas</Transaction>
+    <Transaction>2018-09-25 15:32:00.631,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>2018-09-25 15:34:32.730,D:\Develope\HJXProject\HJXTestProgram\Tests\Test022.SmoothPan\ufrmMain.dfm=D:\Develope\DefaultDelphiProject\Unit1.dfm</Transaction>
+    <Transaction>2018-09-25 15:34:32.730,D:\Develope\HJXProject\HJXTestProgram\Tests\Test022.SmoothPan\ufrmMain.pas=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>2018-09-25 15:34:41.020,D:\Develope\HJXProject\HJXTestProgram\Tests\Test022.SmoothPan\TestSmoothPan.dproj=D:\Develope\DefaultDelphiProject\Project1.dproj</Transaction>
+    <Transaction>2018-09-25 15:34:55.162,=D:\Develope\HJXProject\HJXTestProgram\Tests\Test022.SmoothPan\SimpleGraph.pas</Transaction>
+    <Transaction>2018-09-25 16:06:04.722,=D:\Develope\HJXProject\HJXProject\Tools\uhwSGEx.DataMapClasses.pas</Transaction>
+    <Transaction>2018-09-25 16:06:04.755,=D:\Develope\HJXProject\HJXProject\Tools\uhwSGEx.pas</Transaction>
+  </Transactions>
+</BorlandProject>
