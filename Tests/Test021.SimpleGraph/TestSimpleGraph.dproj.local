@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.173,=D:\Develope\DefaultDelphiProject\SplitPaneView1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.260,=D:\Develope\HJXProject\HJXProject\uHJX.ExcelDataAccess.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.546,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.921,=D:\Develope\HJXProject\HJXProject\FuncFrames\DataLayout\ufraDataLayout.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.230,=D:\Develope\HJXProject\HJXProject\uHJX.CoreUnits.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.036,D:\Develope\HJXProject\HJXTestProgram\Tests\Test021.SimpleGraph\TestSimpleGraph.dproj=D:\Develope\DefaultDelphiProject\Project1.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.403,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.198,=D:\Develope\HJXProject\HJXProject\FuncFrames\DataLayout\ufraDataPresentation.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.711,=D:\Develope\DefaultDelphiProject\GridPaneView1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.093,D:\Develope\HJXProject\HJXTestProgram\Tests\Test021.SimpleGraph\ufrmMain.dfm=D:\Develope\DefaultDelphiProject\Unit1.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.581,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.289,=D:\Develope\HJXProject\HJXProject\uHJX.HostTemplates.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.093,D:\Develope\HJXProject\HJXTestProgram\Tests\Test021.SimpleGraph\ufrmMain.pas=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>
