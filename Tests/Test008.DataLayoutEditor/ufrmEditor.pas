@@ -149,6 +149,8 @@ type
         procedure actRestoreOriginBackgroundSizeUpdate(Sender: TObject);
         procedure chkTextAutoSizeClick(Sender: TObject);
         procedure chkUseGDIPClick(Sender: TObject);
+        procedure sgLayoutKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+        procedure sgLayoutKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     private
         { Private declarations }
         FLayoutfile       : string;
@@ -165,6 +167,9 @@ type
         FdefTrans    : Integer;
         FdefBorder   : Boolean;
 
+        FPreCmd      : TGraphCommandMode;
+        FHoldSpaceKey: Boolean;
+
         function ForEachCallback(GraphObject: TGraphObject; Action: Integer): Boolean;
         procedure ShowMeters;
     public
@@ -177,7 +182,8 @@ var
 implementation
 
 uses
-    NodeProp, LinkProp, ObjectProp, DesignProp, uHJX.Intf.Datas, uHJX.Classes.Meters, uHJX.Excel.Meters,
+    NodeProp, LinkProp, ObjectProp, DesignProp, uHJX.Intf.Datas, uHJX.Classes.Meters,
+    uHJX.Excel.Meters,
     uHJX.Excel.InitParams;
 {$R *.dfm}
 
@@ -419,7 +425,7 @@ end;
 procedure TfrmEditor.actInsBackgroudExecute(Sender: TObject);
 begin
     sgLayout.DefaultNodeClass := TdmcMap;
-    sgLayout.CommandMode      := cmInsertNode;
+    sgLayout.CommandMode := cmInsertNode;
 end;
 
 procedure TfrmEditor.actInsBackgroudUpdate(Sender: TObject);
@@ -431,7 +437,7 @@ end;
 procedure TfrmEditor.actInsDataItemExecute(Sender: TObject);
 begin
     sgLayout.DefaultNodeClass := TdmcDataItem;
-    sgLayout.CommandMode      := cmInsertNode;
+    sgLayout.CommandMode := cmInsertNode;
 end;
 
 procedure TfrmEditor.actInsDataItemUpdate(Sender: TObject);
@@ -443,7 +449,7 @@ end;
 procedure TfrmEditor.actInsLinkExecute(Sender: TObject);
 begin
     sgLayout.DefaultLinkClass := TGPGraphicLink;
-    sgLayout.CommandMode      := cmInsertLink;
+    sgLayout.CommandMode := cmInsertLink;
 end;
 
 procedure TfrmEditor.actInsLinkUpdate(Sender: TObject);
@@ -454,7 +460,7 @@ end;
 procedure TfrmEditor.actInsTextExecute(Sender: TObject);
 begin
     sgLayout.DefaultNodeClass := TGPTextNode;
-    sgLayout.CommandMode      := cmInsertNode;
+    sgLayout.CommandMode := cmInsertNode;
 end;
 
 procedure TfrmEditor.actInsTextUpdate(Sender: TObject);
@@ -488,12 +494,12 @@ begin
 
     if dlgOpenLayout.Execute then
     begin
-        FLoading    := True;
+        FLoading := True;
         FLayoutfile := dlgOpenLayout.FileName;
         sgLayout.LoadFromFile(dlgOpenLayout.FileName);
-        Caption                := dlgOpenLayout.FileName + ' - ' + Application.Title;
+        Caption := dlgOpenLayout.FileName + ' - ' + Application.Title;
         dlgSaveLayout.FileName := dlgOpenLayout.FileName;
-        FLoading               := False;
+        FLoading := False;
     end;
 end;
 
@@ -510,10 +516,10 @@ begin
     end;
 
     sgLayout.Clear;
-    sgLayout.Zoom          := 100;
-    sgLayout.CommandMode   := cmEdit;
+    sgLayout.Zoom := 100;
+    sgLayout.CommandMode := cmEdit;
     dlgSaveLayout.FileName := SUntitled;
-    Caption                := dlgSaveLayout.FileName + ' - ' + Application.Title;
+    Caption := dlgSaveLayout.FileName + ' - ' + Application.Title;
 end;
 
 procedure TfrmEditor.actPanModeExecute(Sender: TObject);
@@ -633,13 +639,13 @@ end;
 
 procedure TfrmEditor.btnSetAsDefaultClick(Sender: TObject);
 begin
-    FdefFontName  := cmbFonts.Text;
-    FdefFontSize  := StrToInt(cmbFontSize.Text);
+    FdefFontName := cmbFonts.Text;
+    FdefFontSize := StrToInt(cmbFontSize.Text);
     FdefFontColor := clbxFontColor.Selected;
     FdefBackColor := clbxBackColor.Selected;
     FdefLineColor := clbxLineColor.Selected;
-    FdefTrans     := round(trcTransparency.Position * 2.55);
-    FdefBorder    := chkBorder.Checked;
+    FdefTrans := round(trcTransparency.Position * 2.55);
+    FdefBorder := chkBorder.Checked;
 end;
 
 procedure TfrmEditor.chkBorderClick(Sender: TObject);
@@ -774,7 +780,7 @@ begin
     if edtSeek.Text = '' then
         exit;
     // 查找：
-    s     := UpperCase(edtSeek.Text);
+    s := UpperCase(edtSeek.Text);
     for i := 0 to tvwMeters.Items.Count - 1 do
         if Pos(s, UpperCase(tvwMeters.Items[i].Text)) > 0 then
         begin
@@ -812,17 +818,17 @@ begin
         with go as TdmcDataItem do
         begin
             DesignName := ADragItem.Meter.DesignName;
-            DataName   := ADragItem.DataName;
-            Text       := DesignName + ':' + DataName;
+            DataName := ADragItem.DataName;
+            Text := DesignName + ':' + DataName;
         end;
 
     { 如果FdefFontName<>''，说明已经设置过了缺省属性 }
     if FdefFontName <> '' then
     begin
-        go.Font.Name                 := FdefFontName;
-        go.Font.Size                 := FdefFontSize;
-        go.Font.Color                := FdefFontColor;
-        go.Brush.Color               := FdefBackColor;
+        go.Font.Name := FdefFontName;
+        go.Font.Size := FdefFontSize;
+        go.Font.Color := FdefFontColor;
+        go.Brush.Color := FdefBackColor;
         TGPTextNode(go).Transparency := FdefTrans;
         if FdefBorder then
             TGPTextNode(go).Pen.Style := psSolid
@@ -836,6 +842,34 @@ procedure TfrmEditor.sgLayoutDragOver(Sender, Source: TObject; X, Y: Integer; St
 begin
     // ShowMessage('Drag over');
     Accept := (ADragItem <> nil) and (ADragItem.NodeType <> ntClass);
+end;
+
+procedure TfrmEditor.sgLayoutKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+    FHoldSpaceKey := Key = 32;
+    if sgLayout.CommandMode <> cmPan then
+        if FHoldSpaceKey then
+        begin
+            FPreCmd := sgLayout.CommandMode;
+            sgLayout.CommandMode := cmPan;
+        end;
+end;
+
+procedure TfrmEditor.sgLayoutKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+    if Key = 32 then
+    begin
+        if FHoldSpaceKey then
+        begin
+            FHoldSpaceKey := False;
+            if sgLayout.CommandMode = cmPan then
+            begin
+                sgLayout.CommandMode := FPreCmd;
+                if FPreCmd <> cmPan then
+                    sgLayout.Invalidate;
+            end;
+        end;
+    end;
 end;
 
 procedure TfrmEditor.sgLayoutMouseWheelDown(Sender: TObject; Shift: TShiftState; MousePos: TPoint;
@@ -879,34 +913,34 @@ begin
     if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = GraphObject)
     then
     begin
-        FLoadingProperties     := True;
-        FSelectedGObj          := GraphObject;
-        cmbFonts.Text          := GraphObject.Font.Name;
-        cmbFontSize.Text       := IntToStr(GraphObject.Font.Size);
+        FLoadingProperties := True;
+        FSelectedGObj := GraphObject;
+        cmbFonts.Text := GraphObject.Font.Name;
+        cmbFontSize.Text := IntToStr(GraphObject.Font.Size);
         clbxFontColor.Selected := GraphObject.Font.Color;
         clbxBackColor.Selected := GraphObject.Brush.Color;
         clbxLineColor.Selected := GraphObject.Pen.Color;
-        edtText.Text           := GraphObject.Text;
+        edtText.Text := GraphObject.Text;
 
-        edtID.Enabled       := GraphObject is TdmcDataItem;
+        edtID.Enabled := GraphObject is TdmcDataItem;
         edtDataName.Enabled := edtID.Enabled;
-        chkBorder.Enabled   := GraphObject is TGPTextNode;
+        chkBorder.Enabled := GraphObject is TGPTextNode;
 
         if GraphObject is TGPGraphNode then
         begin
-            trcTransparency.Enabled  := True;
+            trcTransparency.Enabled := True;
             trcTransparency.Position := round(TGPGraphNode(GraphObject).Transparency / 255 * 100);
         end
         else if GraphObject is TGPTextNode then
         begin
-            trcTransparency.Enabled  := True;
+            trcTransparency.Enabled := True;
             trcTransparency.Position := round(TGPTextNode(GraphObject).Transparency / 255 * 100);
-            chkBorder.Checked        := GraphObject.Pen.Style <> psClear;
-            chkTextAutoSize.Checked  := TGPTextNode(GraphObject).AutoSize;
-            chkUseGDIP.Checked       := TGPTextNode(GraphObject).UseGdipDrawText;
+            chkBorder.Checked := GraphObject.Pen.Style <> psClear;
+            chkTextAutoSize.Checked := TGPTextNode(GraphObject).AutoSize;
+            chkUseGDIP.Checked := TGPTextNode(GraphObject).UseGdipDrawText;
             if GraphObject is TdmcDataItem then
             begin
-                edtID.Text       := TdmcDataItem(GraphObject).DesignName;
+                edtID.Text := TdmcDataItem(GraphObject).DesignName;
                 edtDataName.Text := TdmcDataItem(GraphObject).DataName;
                 edtDataUnit.Text := TdmcDataItem(GraphObject).DataUnit;
             end;
@@ -953,7 +987,7 @@ begin
             GraphObject.Pen.Color := FdefLineColor;
             GraphObject.Font.Name := FdefFontName;
             GraphObject.Font.Size := FdefFontSize;
-            GraphObject.Options   := GraphObject.Options - [goLinkable]; // 不允许连接
+            GraphObject.Options := GraphObject.Options - [goLinkable]; // 不允许连接
             if TGraphLink(GraphObject).Source is TdmcDataItem then
                 TGraphLink(GraphObject).Text := TdmcDataItem(TGraphLink(GraphObject).Source)
                     .DesignName;
@@ -977,9 +1011,9 @@ var
 begin
     tvwMeters.Items.Clear;
     ExcelMeters.SortByPosition;
-    sPos  := '';
+    sPos := '';
     sType := '';
-    nPos  := nil;
+    nPos := nil;
     nType := nil;
     for i := 0 to ExcelMeters.Count - 1 do
     begin
@@ -987,25 +1021,25 @@ begin
         // 增加一个工作部位
         if AMeter.PrjParams.Position <> sPos then
         begin
-            sPos                       := AMeter.PrjParams.Position;
-            sType                      := AMeter.Params.MeterType;
-            nPos                       := tvwMeters.Items.Add(nil, sPos);
-            nType                      := tvwMeters.Items.AddChild(nPos, sType);
-            TmeterNode(nPos).NodeType  := ntClass;
+            sPos := AMeter.PrjParams.Position;
+            sType := AMeter.Params.MeterType;
+            nPos := tvwMeters.Items.Add(nil, sPos);
+            nType := tvwMeters.Items.AddChild(nPos, sType);
+            TmeterNode(nPos).NodeType := ntClass;
             TmeterNode(nType).NodeType := ntClass;
         end;
         // 增加一个仪器类型
         if AMeter.Params.MeterType <> sType then
         begin
-            sType                      := AMeter.Params.MeterType;
-            nType                      := tvwMeters.Items.AddChild(nPos, sType);
+            sType := AMeter.Params.MeterType;
+            nType := tvwMeters.Items.AddChild(nPos, sType);
             TmeterNode(nType).NodeType := ntClass;
         end;
         // 增加仪器
         nMeter := tvwMeters.Items.AddChild(nType, AMeter.DesignName);
         if nMeter is TmeterNode then
         begin
-            TmeterNode(nMeter).Meter    := AMeter;
+            TmeterNode(nMeter).Meter := AMeter;
             TmeterNode(nMeter).NodeType := ntMeter;
             if AMeter.DataBook = '' then
                 TmeterNode(nMeter).Valid := False
@@ -1030,17 +1064,17 @@ var
 begin
     iTrans := Trunc(trcTransparency.Position * 2.55);
     trcTransparency.Tag := iTrans;
-    sgLayout.ForEachObject(ForEachCallback,FEO_SetTransparency, True);
-//    if FLoadingProperties then
-//        exit;
-//    if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
-//    then
-//    begin
-//        if FSelectedGObj is TGPGraphNode then
-//            TGPGraphNode(FSelectedGObj).Transparency := iTrans
-//        else if FSelectedGObj is TGPRectangularNode then
-//            TGPRectangularNode(FSelectedGObj).Transparency := iTrans;
-//    end;
+    sgLayout.ForEachObject(ForEachCallback, FEO_SetTransparency, True);
+// if FLoadingProperties then
+// exit;
+// if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
+// then
+// begin
+// if FSelectedGObj is TGPGraphNode then
+// TGPGraphNode(FSelectedGObj).Transparency := iTrans
+// else if FSelectedGObj is TGPRectangularNode then
+// TGPRectangularNode(FSelectedGObj).Transparency := iTrans;
+// end;
 end;
 
 procedure TfrmEditor.tvwMetersCreateNodeClass(Sender: TCustomTreeView;
