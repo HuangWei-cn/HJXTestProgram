@@ -136,7 +136,8 @@ var
 procedure TfrmTestSummary.actConnectDatabaseExecute(Sender: TObject);
 begin
     // 下面是临时代码，将来使用数据访问对象替代连接数据库。
-
+    IAppServices.OpenDatabaseManager;
+    (*
     if dlgOpen.Execute then
     begin
         FfraMeterList.tvwMeters.Items.Clear;
@@ -148,6 +149,7 @@ begin
             fraMeterListGrid1.ListMeters;
         end;
     end;
+    *)
 end;
 
 procedure TfrmTestSummary.actLoadDataFileListExecute(Sender: TObject);
