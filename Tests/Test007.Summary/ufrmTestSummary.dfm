@@ -31,7 +31,7 @@ object frmTestSummary: TfrmTestSummary
     Top = 0
     Width = 734
     Height = 688
-    ActivePage = tabBaseParams
+    ActivePage = tabTools
     Align = alClient
     TabOrder = 0
     object tabBaseParams: TTabSheet
@@ -213,6 +213,16 @@ object frmTestSummary: TfrmTestSummary
         Style = bsCommandLink
         TabOrder = 3
         OnClick = btnListSetupDateClick
+      end
+      object Button3: TButton
+        Left = 12
+        Top = 120
+        Width = 175
+        Height = 41
+        Caption = #28204#35430#29305#24449#20540#34920#26684
+        Style = bsCommandLink
+        TabOrder = 4
+        OnClick = Button3Click
       end
     end
     object tabParamsEditor: TTabSheet

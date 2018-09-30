@@ -69,7 +69,8 @@ uses
   uHJX.Template.XLGridHelper in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridHelper.pas',
   uHJX.Template.XLGridProc in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridProc.pas',
   uHJX.Classes.Templates in '..\..\Client\ClientCommon\Core\uHJX.Classes.Templates.pas',
-  ufrmQuerySetupDate in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmQuerySetupDate.pas' {frmQuerySetupDate};
+  ufrmQuerySetupDate in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmQuerySetupDate.pas' {frmQuerySetupDate},
+  ufraEigenvalueGrid in '..\..\Client\ClientCommon\FuncFrames\Eigenvalue\ufraEigenvalueGrid.pas' {fraEigenvalueGrid: TFrame};
 
 {$R *.res}
 
