@@ -20,7 +20,8 @@ uses
   SizeDlg in '..\..\Client\ClientCommon\Tools\SGEditor\SizeDlg.pas' {SizeDialog},
   uhwSGEx in '..\..\Client\ClientCommon\Tools\uhwSGEx.pas',
   SimpleGraph in '..\..\Client\ClientCommon\Tools\SimpleGraph.pas',
-  uHJX.HostTemplates in '..\..\Client\ClientCommon\uHJX.HostTemplates.pas';
+  uHJX.HostTemplates in '..\..\Client\ClientCommon\uHJX.HostTemplates.pas',
+  AlignDlg in '..\..\Client\ClientCommon\Tools\SGEditor\AlignDlg.pas' {AlignDialog};
 
 {$R *.res}
 

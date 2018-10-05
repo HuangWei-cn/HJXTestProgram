@@ -368,7 +368,7 @@ begin
     //
   IFD := IAppServices.FuncDispatcher as IFunctionDispatcher;
   Self.Width := screen.Width - 350;
-  Self.Height := screen.Height - 350;
+  Self.Height := screen.Height - 200;
 end;
 
 procedure TfrmTestSummary.lstTestMetersDblClick(Sender: TObject);

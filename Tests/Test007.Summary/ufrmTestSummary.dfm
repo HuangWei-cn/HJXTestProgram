@@ -180,7 +180,7 @@ object frmTestSummary: TfrmTestSummary
       end
       object Button1: TButton
         Left = 12
-        Top = 67
+        Top = 267
         Width = 175
         Height = 41
         Caption = #27979#35797#65306#24377#20986#24335#36807#31243#32447
@@ -196,8 +196,8 @@ object frmTestSummary: TfrmTestSummary
         OnClick = Button1Click
       end
       object Button2: TButton
-        Left = 28
-        Top = 180
+        Left = 24
+        Top = 324
         Width = 139
         Height = 25
         Caption = #27979#35797#20202#22120#36873#25321#23545#35805#31383
@@ -205,8 +205,8 @@ object frmTestSummary: TfrmTestSummary
         OnClick = Button2Click
       end
       object btnListSetupDate: TButton
-        Left = 193
-        Top = 20
+        Left = 12
+        Top = 56
         Width = 175
         Height = 41
         Caption = #26597#35810#23433#35013#26085#26399
@@ -216,7 +216,7 @@ object frmTestSummary: TfrmTestSummary
       end
       object Button3: TButton
         Left = 12
-        Top = 120
+        Top = 92
         Width = 175
         Height = 41
         Caption = #28204#35430#29305#24449#20540#34920#26684
@@ -270,9 +270,11 @@ object frmTestSummary: TfrmTestSummary
         inherited CategoryPanelGroup1: TCategoryPanelGroup
           Width = 444
           Height = 559
+          VertScrollBar.Position = 75
           ExplicitWidth = 444
           ExplicitHeight = 559
           inherited CategoryPanel3: TCategoryPanel
+            Top = 404
             ExplicitWidth = 425
             inherited vleDataStru: TValueListEditor
               Width = 423
@@ -294,6 +296,7 @@ object frmTestSummary: TfrmTestSummary
             end
           end
           inherited CategoryPanel2: TCategoryPanel
+            Top = 210
             ExplicitWidth = 425
             inherited vlePrjParams: TValueListEditor
               Width = 423
@@ -313,6 +316,7 @@ object frmTestSummary: TfrmTestSummary
             end
           end
           inherited CategoryPanel1: TCategoryPanel
+            Top = -75
             ExplicitWidth = 425
             inherited vleMeterParams: TValueListEditor
               Width = 423

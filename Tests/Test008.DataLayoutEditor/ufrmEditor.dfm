@@ -355,7 +355,7 @@ object frmEditor: TfrmEditor
     Left = 358
     Top = 422
     Bitmap = {
-      494C0101360038003C0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010136003800400010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000E0000000010020000000000000E0
       0000000000000000000000000000000000000000000000000033000000330000
       0033000000330000003300000033000000000000000C00000033000000330000
@@ -2418,6 +2418,10 @@ object frmEditor: TfrmEditor
             ImageIndex = 11
           end
           item
+            Action = actAlign
+            ImageIndex = 40
+          end
+          item
             Caption = '-'
           end
           item
@@ -2611,6 +2615,12 @@ object frmEditor: TfrmEditor
       Caption = #21407#22270#23610#23544
       OnExecute = actRestoreOriginBackgroundSizeExecute
       OnUpdate = actRestoreOriginBackgroundSizeUpdate
+    end
+    object actAlign: TAction
+      Category = #22270#20803#32534#36753
+      Caption = 'actAlign'
+      ImageIndex = 40
+      OnExecute = actAlignExecute
     end
   end
   object dlgOpenLayout: TOpenDialog
