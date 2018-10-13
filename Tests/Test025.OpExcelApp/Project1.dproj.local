@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2018-10-12 21:00:20.694,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2018-10-12 21:08:25.802,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test025.OpExcelApp\Unit1.dfm=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2018-10-12 21:08:25.802,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test025.OpExcelApp\Unit1.pas=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2018-10-12 21:08:28.706,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test025.OpExcelApp\Project1.dproj=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>
