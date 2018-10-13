@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.416,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\ufrmMain.pas=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.069,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.CoreUnits.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.400,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\FuncFrames\MeterList\ufraMeterList.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.270,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\TestUpdateParam.dproj=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.892,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.ExcelDataAccess.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.416,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\ufrmMain.dfm=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.593,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.HostTemplates.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.677,=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.703,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\ufraTerminal.dfm=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\Unit1.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.703,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\ufraTerminal.pas=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\Unit1.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.915,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.057,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2018-10-05 10:55:09.625,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2018-10-05 10:56:34.416,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\ufrmMain.pas=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2018-10-05 10:56:34.416,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\ufrmMain.dfm=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
-    <Transaction>2018-10-05 10:56:44.270,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\TestUpdateParam.dproj=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
-    <Transaction>2018-10-05 10:57:04.069,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.CoreUnits.pas</Transaction>
-    <Transaction>2018-10-05 10:57:04.892,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.ExcelDataAccess.pas</Transaction>
-    <Transaction>2018-10-05 11:09:45.400,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\FuncFrames\MeterList\ufraMeterList.pas</Transaction>
-    <Transaction>2018-10-05 11:16:29.593,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.HostTemplates.pas</Transaction>
-    <Transaction>2018-10-05 11:37:54.677,=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\Unit1.pas</Transaction>
-    <Transaction>2018-10-05 11:41:23.703,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\ufraTerminal.pas=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\Unit1.pas</Transaction>
-    <Transaction>2018-10-05 11:41:23.703,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\ufraTerminal.dfm=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test016.UpateParams\Unit1.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.625,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
   </Transactions>
 </BorlandProject>

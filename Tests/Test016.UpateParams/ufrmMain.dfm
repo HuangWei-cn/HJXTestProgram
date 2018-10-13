@@ -60,22 +60,58 @@ object frmMain: TfrmMain
       TabOrder = 1
     end
   end
-  inline fraTerminal1: TfraTerminal
-    Left = 224
-    Top = 24
-    Width = 445
-    Height = 289
+  object Panel2: TPanel
+    Left = 200
+    Top = 0
+    Width = 492
+    Height = 526
+    Align = alClient
+    Caption = 'Panel2'
+    Color = clWhite
+    ParentBackground = False
     TabOrder = 1
-    ExplicitLeft = 224
-    ExplicitTop = 24
-    ExplicitWidth = 445
-    ExplicitHeight = 289
-    inherited edtCmd: TEdit
-      Width = 428
+    inline fraTerminal1: TfraTerminal
+      Left = 1
+      Top = 1
+      Width = 490
+      Height = 289
+      Align = alTop
+      TabOrder = 0
+      ExplicitLeft = 1
+      ExplicitTop = 1
+      ExplicitHeight = 289
+      inherited edtCmd: TEdit
+        Height = 23
+        Ctl3D = False
+        ParentCtl3D = False
+        ExplicitTop = 254
+        ExplicitHeight = 23
+      end
+      inherited mmResult: TMemo
+        Height = 242
+        Ctl3D = False
+        ParentCtl3D = False
+        ExplicitHeight = 242
+      end
     end
-    inherited mmResult: TMemo
-      Width = 428
+    object Memo1: TMemo
+      Left = 1
+      Top = 290
+      Width = 490
       Height = 235
+      Align = alClient
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BorderStyle = bsNone
+      Color = clWhite
+      Lines.Strings = (
+        #25903#25345#30340#21629#20196#65306
+        'CLS - '#28165#31354#20449#24687#31383#21475
+        'ListParams - '#21015#20986#21487#26356#26032#30340#21442#25968#21517#31216
+        'UPDATEPARAM designname paramname=value')
+      TabOrder = 1
+      ExplicitLeft = 3
+      ExplicitTop = 286
     end
   end
 end

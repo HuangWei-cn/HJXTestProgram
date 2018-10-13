@@ -15,6 +15,8 @@ type
     Splitter1: TSplitter;
     pnlMtLst: TPanel;
     fraTerminal1: TfraTerminal;
+    Panel2: TPanel;
+    Memo1: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure btnOpenConfigClick(Sender: TObject);
   private
