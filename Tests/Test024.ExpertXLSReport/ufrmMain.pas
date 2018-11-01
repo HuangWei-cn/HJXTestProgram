@@ -8,7 +8,7 @@ uses
   Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.StdCtrls, bsSkinExCtrls, Vcl.Mask, bsSkinBoxCtrls,
   uHJX.Intf.AppServices, uHJX.Intf.FunctionDispatcher, uHJX.Classes.Meters,
   uHJX.Classes.Templates,
-  ufraMeterList;
+  ufraMeterList, ExcelXP, Vcl.OleServer;
 
 type
   TfrmMain = class(TForm)
@@ -42,15 +42,24 @@ type
     dlgSave: TSaveDialog;
     ProgressBar1: TProgressBar;
     bsSkinButton1: TbsSkinButton;
+    bsSkinButton2: TbsSkinButton;
+    bsSkinButton3: TbsSkinButton;
+    bsRibbonGroup4: TbsRibbonGroup;
+    chkNoExcel: TbsSkinCheckBox;
+    ExcelApplication1: TExcelApplication;
+    ExcelChart1: TExcelChart;
+    ExcelWorkbook1: TExcelWorkbook;
     procedure FormCreate(Sender: TObject);
     procedure btnOpenConfigClick(Sender: TObject);
     procedure btnDoExpertClick(Sender: TObject);
     procedure bsSkinButton1Click(Sender: TObject);
+    procedure bsSkinButton2Click(Sender: TObject);
+    procedure bsSkinButton3Click(Sender: TObject);
   private
     { Private declarations }
     FMeterList: TfraMeterList;
     procedure OnProjectLoaded(Sender: TObject);
-    function CreateEmptyWorkBook(BkName: string; MeterList: TStrings): Boolean;
+    function CreateEmptyWorkBook(XLApp: OleVariant; BkName: string; MeterList: TStrings): Boolean;
   public
     { Public declarations }
   end;
@@ -79,11 +88,58 @@ begin
   try
     (IAppServices.FuncDispatcher as IFunctionDispatcher)
       .CallFunction('PopupMeterSelector', slMeters);
-    if CreateEmptyWorkBook(sExpFile, slMeters) then
+    if CreateEmptyWorkBook(Null, sExpFile, slMeters) then
         ShowMessage('Create empty data file success!');
   finally
     slMeters.Free;
   end;
+end;
+
+{ test GetActiveOleObject function }
+procedure TfrmMain.bsSkinButton2Click(Sender: TObject);
+var
+  XLApp: OleVariant;
+begin
+  XLApp := Unassigned;
+  try
+    XLApp := GetActiveOleObject('Excel.Application');
+    if not VarIsNull(XLApp) then
+        ShowMessage('Get excel application success!');
+  except
+    on EOleSysError do
+    begin
+      ShowMessage(VarTypeAsText(vartype(XLApp)));
+      ShowMessage('Get excel application error');
+    end
+    else
+      ShowMessage('Other error');
+  end;
+end;
+
+procedure TfrmMain.bsSkinButton3Click(Sender: TObject);
+var
+  XLApp: OleVariant;
+begin
+  XLApp := Unassigned;
+  try
+    XLApp := GetActiveOleObject('Excel.Application');
+  except
+    try
+      XLApp := CreateOleObject('Excel.Application')
+    except
+    end;
+  end;
+
+  if VarIsNull(XLApp) or VarIsEmpty(XLApp) then
+  begin
+    ShowMessage('Can not get Excel application');
+    Exit;
+  end;
+
+  XLApp.Visible := True;
+  ShowMessage('Get or Create Excel Application success');
+  XLApp := Unassigned;
+  ShowMessage('Excel application is free.');
 end;
 
 procedure TfrmMain.btnDoExpertClick(Sender: TObject);
@@ -92,11 +148,14 @@ var
   mtGrps      : TStrings; // meter in group
   i, j        : Integer;
   sExpFile    : string;
-  tBook, rBook: IXLSWorkBook; //tBook: Template workbook, rBook: Result workbook
+  tBook, rBook: IXLSWorkBook; // tBook: Template workbook, rBook: Result workbook
   Meter       : TMeterDefine;
   xlTmpl      : TXLGridTemplate;
   grpItem     : TMeterGroupItem;
   bPreCreate  : Boolean; // 是否预先创建了数据表
+  XLApp       : OleVariant;
+  TagBk       : OleVariant;
+  TagSht      : OleVariant;
 begin
     // 导出文件
   if dlgSave.Execute then sExpFile := dlgSave.FileName
@@ -112,22 +171,51 @@ begin
     else
       for i := 0 to ExcelMeters.Count - 1 do slMeters.add(ExcelMeters.Items[i].DesignName);
 
-    tBook := TXLSWorkbook.Create;
-    rBook := TXLSWorkbook.Create;
-    tBook.open(ENV_XLTemplBook);
-
-    // 为每只仪器创建空数据表，如果选用本方法就不要使用下一句
-    if CreateEmptyWorkBook(sExpFile, slMeters) then
+    // 若使用Excel，则
+    bPreCreate := False;
+    if not chkNoExcel.Checked then
     begin
-      bPreCreate := True;
-      rBook.open(sExpFile); // 打开预创建的数据表
-    end
-    else
-    begin
-      rBook.SaveAs(sExpFile); // 将空工作簿保存为指定的文件名
-      bPreCreate := False;
+      XLApp := TExcelIO.GetExcelApp(False); // 取已经存在的Excel Application
+      if VarIsNull(XLApp) or VarIsEmpty(XLApp) then
+          XLApp := TExcelIO.GetExcelApp(True); // 创建新Excel实例
+      // 如果无法取得ExcelApplication，则
+      if VarIsNull(XLApp) or VarIsEmpty(XLApp) then
+          bPreCreate := False // 没有预先创建空数据文件，意味着只能用nExcel了
+      else
+      begin
+        if CreateEmptyWorkBook(XLApp, sExpFile, slMeters) = False then
+            bPreCreate := False
+        else
+        begin
+          TagBk := XLApp.WorkBooks.Open(sExpFile);
+          bPreCreate := True;
+          XLApp.Visible := True;
+        end;
+      end;
     end;
 
+    if not bPreCreate then
+    begin
+      tBook := TXLSWorkbook.Create;
+      rBook := TXLSWorkbook.Create;
+      tBook.Open(ENV_XLTemplBook);
+      rBook.SaveAs(sExpFile)
+    end;
+
+{
+      // 为每只仪器创建空数据表，如果选用本方法就不要使用下一句
+      if (not chkNoExcel.Checked) and CreateEmptyWorkBook(sExpFile, slMeters) then
+      begin
+        bPreCreate := True;
+        rBook.Open(sExpFile); // 打开预创建的数据表
+      end
+      else
+      begin
+        rBook.SaveAs(sExpFile); // 将空工作簿保存为指定的文件名
+        bPreCreate := False;
+      end;
+
+}
     ProgressBar1.Min := 0;
     ProgressBar1.Max := slMeters.Count;
     ProgressBar1.Position := 0;
@@ -137,6 +225,7 @@ begin
     for i := 0 to slMeters.Count - 1 do
     begin
       ProgressBar1.Position := i + 1;
+      ProgressBar1.Invalidate;
       // 同组的不处理
       if mtGrps.IndexOf(slMeters.Strings[i]) <> -1 then Continue;
 
@@ -158,14 +247,24 @@ begin
 
       // 开始处理数据
       if bPreCreate then
-          GenXLGrid(xlTmpl, slMeters.Strings[i], tBook, rBook, False) //最后一个参数False，该方法不复制模板表
+          GenXLGrid(xlTmpl, Meter, TagBk) // 最后一个参数False，该方法不复制模板表
+          //GenXLGrid(xlTmpl, slMeters.Strings[i], tBook, rBook, False)
       else
-          GenXLGrid(xlTmpl, slMeters.Strings[i], tBook, rBook, True); //需要复制模板表
+          GenXLGrid(xlTmpl, slMeters.Strings[i], tBook, rBook, True); // 需要复制模板表
     end;
-    rBook.save;
+
   finally
     slMeters.Free;
     mtGrps.Free;
+
+    if bPreCreate then
+    begin
+      TagBk.Save;
+      XLApp.WorkBooks.Close;
+      XLApp.Quit;
+    end
+    else
+        rBook.Save;
   end;
     // if rbSelectedMeters.Checked then
 
@@ -184,6 +283,7 @@ begin
   bsRibbonGroup1.Visible := False;
   bsRibbonGroup2.Visible := False;
   bsRibbonGroup3.Visible := False;
+  bsRibbonGroup4.Visible := False;
   deEndDate.Date := Now;
   if Assigned(IAppServices) then
       IAppServices.RegEventDemander('AfterConnectedEvent', OnProjectLoaded);
@@ -198,13 +298,23 @@ procedure TfrmMain.OnProjectLoaded(Sender: TObject);
 begin
     // ShowMessage('Project loaded');
   bsAppMenu.hide;
+  bsRibbonGroup4.Visible := True;
   bsRibbonGroup2.Visible := True;
   bsRibbonGroup3.Visible := True;
   bsRibbonGroup1.Visible := True;
   FMeterList.Visible := True;
 end;
 
-function TfrmMain.CreateEmptyWorkBook(BkName: string; MeterList: TStrings): Boolean;
+{ -----------------------------------------------------------------------------
+  Procedure  : CreateEmptyWorkBook
+  Description: 用Excel完成模板工作表复制到要导出数据的工作簿中，并将工作表的
+  名称改为仪器编号或组名称。本方法调用了Excel.IO单元的Exdel_CopySheet方法,
+  用该方法一次性复制所有需要导出数据的工作表模板。
+  使用Excel完成工作表的复制，可以将模板格式、图表100%地复制过去。用nExcel将
+  丢失一些格式、图形、Chart等内容。
+----------------------------------------------------------------------------- }
+function TfrmMain.CreateEmptyWorkBook(XLApp: OleVariant; BkName: string;
+  MeterList: TStrings): Boolean;
 var
   ShtLsts: String;
   i, j   : Integer;
@@ -219,6 +329,7 @@ begin
   Result := False;
   ShtLsts := '';
   grpMts := TStringList.Create;
+  Screen.Cursor := crHourGlass;
   try
     Tpls := IAppServices.Templates as TTemplates;
     for i := 0 to MeterList.Count - 1 do
@@ -244,9 +355,10 @@ begin
       ShtLsts := ShtLsts + tplName + ':' + tagName + #13#10;
     end;
 
-    Result := TExcelIO.Excel_CopySheet(ENV_XLTemplBook, BkName, ShtLsts);
+    Result := TExcelIO.Excel_CopySheet(XLApp, ENV_XLTemplBook, BkName, ShtLsts);
   finally
     grpMts.Free;
+    Screen.Cursor := crDefault;
   end;
 end;
 

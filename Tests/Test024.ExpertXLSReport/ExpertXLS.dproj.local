@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899-12-30 00:00:00.000.403,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.000,=D:\Develope\HJXProject\HJXProject\uHJX.ExcelDataAccess.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.580,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.000,=D:\Develope\HJXProject\HJXProject\uHJX.ExcelDataAccess.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.546,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.403,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.269,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.ExcelDataAccess.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.537,=D:\Develope\HJXProject\HJXProject\FuncFrames\MeterList\ufraMeterList.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.836,=D:\Develope\HJXProject\HJXProject\FuncFrames\MeterSelector\ufraMeterSelector.pas</Transaction>

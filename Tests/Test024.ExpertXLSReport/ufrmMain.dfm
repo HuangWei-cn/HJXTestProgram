@@ -456,6 +456,57 @@ object frmMain: TfrmMain
           Caption = #37096#20998#20202#22120
         end
       end
+      object bsRibbonGroup4: TbsRibbonGroup
+        Left = 529
+        Top = 0
+        Width = 120
+        Height = 86
+        ParentCustomHint = False
+        HintImageIndex = 0
+        TabOrder = 3
+        SkinData = bsSkinData1
+        SkinDataName = 'officegroup'
+        DefaultFont.Charset = DEFAULT_CHARSET
+        DefaultFont.Color = clWindowText
+        DefaultFont.Height = 13
+        DefaultFont.Name = 'Tahoma'
+        DefaultFont.Style = []
+        DefaultWidth = 0
+        DefaultHeight = 0
+        UseSkinFont = True
+        Align = alLeft
+        Caption = #20854#20182#36873#39033
+        ShowDialogButton = False
+        object chkNoExcel: TbsSkinCheckBox
+          Left = 6
+          Top = 11
+          Width = 103
+          Height = 25
+          HintImageIndex = 0
+          TabOrder = 0
+          SkinDataName = 'checkbox'
+          DefaultFont.Charset = DEFAULT_CHARSET
+          DefaultFont.Color = clWindowText
+          DefaultFont.Height = 13
+          DefaultFont.Name = 'Tahoma'
+          DefaultFont.Style = []
+          DefaultWidth = 0
+          DefaultHeight = 0
+          UseSkinFont = True
+          WordWrap = False
+          AllowGrayed = False
+          State = cbChecked
+          ImageIndex = 0
+          Flat = True
+          UseSkinFontColor = True
+          TabStop = True
+          CanFocused = True
+          Radio = False
+          Checked = True
+          GroupIndex = 0
+          Caption = #19981#20351#29992'Excel'
+        end
+      end
     end
   end
   object bsSkinStatusBar1: TbsSkinStatusBar
@@ -577,9 +628,9 @@ object frmMain: TfrmMain
       Visible = False
     end
     object bsSkinButton1: TbsSkinButton
-      Left = 105
-      Top = 308
-      Width = 75
+      Left = 17
+      Top = 96
+      Width = 184
       Height = 25
       HintImageIndex = 0
       TabOrder = 1
@@ -605,10 +656,78 @@ object frmMain: TfrmMain
       CanFocused = True
       Down = False
       GroupIndex = 0
-      Caption = 'bsSkinButton1'
+      Caption = #21019#24314#31354#25968#25454#25991#20214
       NumGlyphs = 1
       Spacing = 1
       OnClick = bsSkinButton1Click
+    end
+    object bsSkinButton2: TbsSkinButton
+      Left = 17
+      Top = 136
+      Width = 184
+      Height = 25
+      HintImageIndex = 0
+      TabOrder = 2
+      SkinDataName = 'button'
+      DefaultFont.Charset = DEFAULT_CHARSET
+      DefaultFont.Color = clWindowText
+      DefaultFont.Height = 13
+      DefaultFont.Name = 'Tahoma'
+      DefaultFont.Style = []
+      DefaultWidth = 0
+      DefaultHeight = 0
+      UseSkinFont = True
+      Transparent = False
+      CheckedMode = False
+      ImageIndex = -1
+      AlwaysShowLayeredFrame = False
+      UseSkinSize = True
+      UseSkinFontColor = True
+      RepeatMode = False
+      RepeatInterval = 100
+      AllowAllUp = False
+      TabStop = True
+      CanFocused = True
+      Down = False
+      GroupIndex = 0
+      Caption = 'GetActiveOleObject'
+      NumGlyphs = 1
+      Spacing = 1
+      OnClick = bsSkinButton2Click
+    end
+    object bsSkinButton3: TbsSkinButton
+      Left = 17
+      Top = 176
+      Width = 184
+      Height = 25
+      HintImageIndex = 0
+      TabOrder = 3
+      SkinDataName = 'button'
+      DefaultFont.Charset = DEFAULT_CHARSET
+      DefaultFont.Color = clWindowText
+      DefaultFont.Height = 13
+      DefaultFont.Name = 'Tahoma'
+      DefaultFont.Style = []
+      DefaultWidth = 0
+      DefaultHeight = 0
+      UseSkinFont = True
+      Transparent = False
+      CheckedMode = False
+      ImageIndex = -1
+      AlwaysShowLayeredFrame = False
+      UseSkinSize = True
+      UseSkinFontColor = True
+      RepeatMode = False
+      RepeatInterval = 100
+      AllowAllUp = False
+      TabStop = True
+      CanFocused = True
+      Down = False
+      GroupIndex = 0
+      Caption = 'Get, and free'
+      NumGlyphs = 1
+      Spacing = 1
+      OnClick = bsSkinButton3Click
     end
   end
   object bsAppMenu: TbsAppMenu
@@ -828,8 +947,8 @@ object frmMain: TfrmMain
     Magnetic = True
     MagneticSize = 5
     BorderIcons = [biSystemMenu, biMinimize, biMaximize, biRollUp]
-    Left = 248
-    Top = 328
+    Left = 84
+    Top = 400
   end
   object bsSkinData1: TbsSkinData
     DlgTreeViewDrawSkin = True
@@ -847,14 +966,14 @@ object frmMain: TfrmMain
     SkinIndex = 0
     ChangeSystemColors = False
     SystemColorHooks = [bsschHighLight]
-    Left = 368
-    Top = 328
+    Left = 80
+    Top = 452
   end
   object bsCompressedStoredSkin1: TbsCompressedStoredSkin
     FileName = 'Office2016_Green.skn'
     CompressedFileName = 'Office2016_Green.skn'
-    Left = 480
-    Top = 328
+    Left = 80
+    Top = 512
     CompressedData = {
       78DAECBD67705B5996E7094ACA542A8D3245794F398A5EF43214295AD148A249
       89124579EF32B36B63B6B6AABA2A763E6CC444ECF6F4C64ECCCEEC978E98D888
@@ -2284,7 +2403,26 @@ object frmMain: TfrmMain
     FileName = #35266#27979#25968#25454
     Filter = 'Excel2003'#24037#20316#31807'|*.xls'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
-    Left = 515
-    Top = 243
+    Left = 83
+    Top = 355
+  end
+  object ExcelApplication1: TExcelApplication
+    AutoConnect = False
+    ConnectKind = ckRunningOrNew
+    AutoQuit = False
+    Left = 471
+    Top = 395
+  end
+  object ExcelChart1: TExcelChart
+    AutoConnect = False
+    ConnectKind = ckRunningOrNew
+    Left = 519
+    Top = 471
+  end
+  object ExcelWorkbook1: TExcelWorkbook
+    AutoConnect = False
+    ConnectKind = ckRunningOrNew
+    Left = 327
+    Top = 431
   end
 end
