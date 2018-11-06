@@ -22,20 +22,21 @@ object frmMain: TfrmMain
   TextHeight = 13
   object bsSkinSplitter1: TbsSkinSplitter
     Left = 241
-    Top = 115
+    Top = 125
     Width = 10
-    Height = 489
+    Height = 479
     Transparent = False
     DefaultSize = 10
     SkinDataName = 'vsplitter'
     SkinData = bsSkinData1
+    ExplicitTop = 115
     ExplicitHeight = 436
   end
   object bsRibbon: TbsRibbon
     Left = 0
     Top = 0
     Width = 907
-    Height = 115
+    Height = 125
     HintImageIndex = 0
     TabOrder = 0
     SkinData = bsSkinData1
@@ -60,22 +61,23 @@ object frmMain: TfrmMain
     TabBoldStyle = False
     DesignSize = (
       907
-      115)
+      125)
     object bsRibbonPage1: TbsRibbonPage
       Left = 1
       Top = 26
       Width = 905
-      Height = 86
+      Height = 96
       HotScroll = False
       ScrollOffset = 0
       ScrollTimerInterval = 50
       CanScroll = True
       Caption = #23548#20986#25968#25454
+      ExplicitHeight = 86
       object bsRibbonGroup1: TbsRibbonGroup
         Left = 0
         Top = 0
         Width = 129
-        Height = 86
+        Height = 96
         HintImageIndex = 0
         TabOrder = 0
         SkinData = bsSkinData1
@@ -133,7 +135,7 @@ object frmMain: TfrmMain
         Left = 233
         Top = 0
         Width = 296
-        Height = 86
+        Height = 96
         HintImageIndex = 0
         TabOrder = 1
         SkinData = bsSkinData1
@@ -379,7 +381,7 @@ object frmMain: TfrmMain
         Left = 129
         Top = 0
         Width = 104
-        Height = 86
+        Height = 96
         HintImageIndex = 0
         TabOrder = 2
         SkinData = bsSkinData1
@@ -459,8 +461,8 @@ object frmMain: TfrmMain
       object bsRibbonGroup4: TbsRibbonGroup
         Left = 529
         Top = 0
-        Width = 120
-        Height = 86
+        Width = 164
+        Height = 96
         ParentCustomHint = False
         HintImageIndex = 0
         TabOrder = 3
@@ -477,6 +479,53 @@ object frmMain: TfrmMain
         Align = alLeft
         Caption = #20854#20182#36873#39033
         ShowDialogButton = False
+        object rdgWriteOption: TbsSkinRadioGroup
+          Left = 6
+          Top = 3
+          Width = 150
+          Height = 70
+          HintImageIndex = 0
+          TabOrder = 1
+          SkinDataName = 'groupbox'
+          DefaultFont.Charset = DEFAULT_CHARSET
+          DefaultFont.Color = clWindowText
+          DefaultFont.Height = 13
+          DefaultFont.Name = 'Tahoma'
+          DefaultFont.Style = []
+          DefaultWidth = 0
+          DefaultHeight = 0
+          UseSkinFont = True
+          EmptyDrawing = False
+          RibbonStyle = False
+          ImagePosition = bsipDefault
+          TransparentMode = False
+          CaptionImageIndex = -1
+          RealHeight = -1
+          AutoEnabledControls = True
+          CheckedMode = False
+          Checked = False
+          DefaultAlignment = taLeftJustify
+          DefaultCaptionHeight = 20
+          BorderStyle = bvFrame
+          CaptionMode = True
+          RollUpMode = False
+          RollUpState = False
+          NumGlyphs = 1
+          Spacing = 2
+          Caption = #20889#20837#36873#39033
+          UseSkinSize = True
+          ButtonSkinDataName = 'radiobox'
+          ButtonDefaultFont.Charset = DEFAULT_CHARSET
+          ButtonDefaultFont.Color = clWindowText
+          ButtonDefaultFont.Height = 13
+          ButtonDefaultFont.Name = 'Tahoma'
+          ButtonDefaultFont.Style = []
+          ItemIndex = 0
+          Items.Strings = (
+            #23436#20840#19981#20351#29992'Excel'
+            #20165#29992'Excel'#21019#24314#31354#25968#25454#34920
+            #23436#20840#20351#29992'Excel')
+        end
         object chkNoExcel: TbsSkinCheckBox
           Left = 6
           Top = 11
@@ -484,6 +533,7 @@ object frmMain: TfrmMain
           Height = 25
           HintImageIndex = 0
           TabOrder = 0
+          Visible = False
           SkinDataName = 'checkbox'
           DefaultFont.Charset = DEFAULT_CHARSET
           DefaultFont.Color = clWindowText
@@ -548,9 +598,9 @@ object frmMain: TfrmMain
   end
   object bsSkinPanel1: TbsSkinPanel
     Left = 0
-    Top = 115
+    Top = 125
     Width = 241
-    Height = 489
+    Height = 479
     HintImageIndex = 0
     TabOrder = 3
     SkinData = bsSkinData1
@@ -585,9 +635,9 @@ object frmMain: TfrmMain
   end
   object bsSkinPanel2: TbsSkinPanel
     Left = 251
-    Top = 115
+    Top = 125
     Width = 656
-    Height = 489
+    Height = 479
     HintImageIndex = 0
     TabOrder = 4
     SkinData = bsSkinData1
@@ -619,6 +669,16 @@ object frmMain: TfrmMain
     Spacing = 2
     Caption = 'bsSkinPanel2'
     Align = alClient
+    object lblExpMeter: TLabel
+      Left = 105
+      Top = 40
+      Width = 432
+      Height = 13
+      Alignment = taCenter
+      AutoSize = False
+      Caption = #23548#20986#36827#24230
+      Visible = False
+    end
     object ProgressBar1: TProgressBar
       Left = 105
       Top = 56
@@ -634,6 +694,7 @@ object frmMain: TfrmMain
       Height = 25
       HintImageIndex = 0
       TabOrder = 1
+      Visible = False
       SkinDataName = 'button'
       DefaultFont.Charset = DEFAULT_CHARSET
       DefaultFont.Color = clWindowText
@@ -668,6 +729,7 @@ object frmMain: TfrmMain
       Height = 25
       HintImageIndex = 0
       TabOrder = 2
+      Visible = False
       SkinDataName = 'button'
       DefaultFont.Charset = DEFAULT_CHARSET
       DefaultFont.Color = clWindowText
@@ -702,6 +764,7 @@ object frmMain: TfrmMain
       Height = 25
       HintImageIndex = 0
       TabOrder = 3
+      Visible = False
       SkinDataName = 'button'
       DefaultFont.Charset = DEFAULT_CHARSET
       DefaultFont.Color = clWindowText
@@ -728,6 +791,47 @@ object frmMain: TfrmMain
       NumGlyphs = 1
       Spacing = 1
       OnClick = bsSkinButton3Click
+    end
+    object bsSkinMemo1: TbsSkinMemo
+      Left = 17
+      Top = 88
+      Width = 324
+      Height = 205
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = 13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      Lines.Strings = (
+        #20889#20837#36873#39033#35828#26126#65306
+        '1'#12289#23436#20840#19981#29992'Excel'
+        #25805#20316#31616#21333#12289#36895#24230#26368#24555#12290#29992'NativeExcel'#23436#25104#31354#34920#21019#24314#12289#25968#25454#20889
+        #20837#31561#25805#20316#65292#20294#26159#21019#24314#30340#25991#20214#20013#27809#26377'Chart'#12290
+        ''
+        '2'#12289#20165#29992'Excel'#21019#24314#31354#25968#25454#34920
+        #25805#20316#22797#26434#12289#36895#24230#36739#24555#12290#29992'Excel'#21019#24314#31354#34920#65292#29992'NativeExcel'#20889#20837
+        #25968#25454#65292#20445#30041#20102'Chart'#12290#20294#26159#65292#20013#38388#30340#25805#20316#36739#20026#22797#26434#65292#19988'nExcel'
+        #20889#23436#20043#21518#36824#38656#35201#29992'Excel'#20877#25171#24320#12289#20445#23384#19968#36941#65292#21542#21017#25991#20214#23384#22312#38169
+        #35823#12290
+        ''
+        '3'#12289#23436#20840#20351#29992'Excel'
+        #25805#20316#31616#21333#12289#36895#24230#26368#24930#12290#25152#26377#25805#20316#22343#30001'Excel'#23436#25104#65292#21407#27713#21407#21619#8230
+        #8230#23601#26159#24040#24930#12290)
+      ParentFont = False
+      ReadOnly = True
+      ScrollBars = ssVertical
+      TabOrder = 4
+      Transparent = False
+      WallpaperStretch = False
+      DefaultFont.Charset = DEFAULT_CHARSET
+      DefaultFont.Color = clBlack
+      DefaultFont.Height = 13
+      DefaultFont.Name = 'Tahoma'
+      DefaultFont.Style = []
+      UseSkinFont = True
+      UseSkinFontColor = True
+      BitMapBG = True
+      SkinDataName = 'memo'
     end
   end
   object bsAppMenu: TbsAppMenu
@@ -2405,24 +2509,5 @@ object frmMain: TfrmMain
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
     Left = 83
     Top = 355
-  end
-  object ExcelApplication1: TExcelApplication
-    AutoConnect = False
-    ConnectKind = ckRunningOrNew
-    AutoQuit = False
-    Left = 471
-    Top = 395
-  end
-  object ExcelChart1: TExcelChart
-    AutoConnect = False
-    ConnectKind = ckRunningOrNew
-    Left = 519
-    Top = 471
-  end
-  object ExcelWorkbook1: TExcelWorkbook
-    AutoConnect = False
-    ConnectKind = ckRunningOrNew
-    Left = 327
-    Top = 431
   end
 end

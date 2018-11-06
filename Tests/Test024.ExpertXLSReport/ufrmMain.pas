@@ -8,7 +8,7 @@ uses
   Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.StdCtrls, bsSkinExCtrls, Vcl.Mask, bsSkinBoxCtrls,
   uHJX.Intf.AppServices, uHJX.Intf.FunctionDispatcher, uHJX.Classes.Meters,
   uHJX.Classes.Templates,
-  ufraMeterList, ExcelXP, Vcl.OleServer;
+  ufraMeterList {, ExcelXP, Vcl.OleServer};
 
 type
   TfrmMain = class(TForm)
@@ -46,9 +46,9 @@ type
     bsSkinButton3: TbsSkinButton;
     bsRibbonGroup4: TbsRibbonGroup;
     chkNoExcel: TbsSkinCheckBox;
-    ExcelApplication1: TExcelApplication;
-    ExcelChart1: TExcelChart;
-    ExcelWorkbook1: TExcelWorkbook;
+    rdgWriteOption: TbsSkinRadioGroup;
+    bsSkinMemo1: TbsSkinMemo;
+    lblExpMeter: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnOpenConfigClick(Sender: TObject);
     procedure btnDoExpertClick(Sender: TObject);
@@ -72,7 +72,7 @@ implementation
 uses
   nExcel, uHJX.EnvironmentVariables, uHJX.Template.XlGridProc, uHJX.Template.XLGrid,
   uHJX.Excel.IO,
-  ComObj;
+  ComObj, ShellAPI;
 {$R *.dfm}
 
 
@@ -143,6 +143,8 @@ begin
 end;
 
 procedure TfrmMain.btnDoExpertClick(Sender: TObject);
+type
+  TXLWriteOption = (woNoExcel, woUseExcel, woOnlyCreateBook);
 var
   slMeters    : TStrings; // selected meters
   mtGrps      : TStrings; // meter in group
@@ -153,6 +155,8 @@ var
   xlTmpl      : TXLGridTemplate;
   grpItem     : TMeterGroupItem;
   bPreCreate  : Boolean; // 是否预先创建了数据表
+  bUseExcel   : Boolean; // 是否用Excel完成写入操作
+  WriteOption : TXLWriteOption;
   XLApp       : OleVariant;
   TagBk       : OleVariant;
   TagSht      : OleVariant;
@@ -171,61 +175,83 @@ begin
     else
       for i := 0 to ExcelMeters.Count - 1 do slMeters.add(ExcelMeters.Items[i].DesignName);
 
+    case rdgWriteOption.ItemIndex of
+      0: WriteOption := woNoExcel;
+      1: WriteOption := woOnlyCreateBook;
+      2: WriteOption := woUseExcel;
+    end;
     // 若使用Excel，则
     bPreCreate := False;
-    if not chkNoExcel.Checked then
+    bUseExcel := False;
+    // if not chkNoExcel.Checked then
+    if WriteOption <> woNoExcel then
     begin
       XLApp := TExcelIO.GetExcelApp(False); // 取已经存在的Excel Application
       if VarIsNull(XLApp) or VarIsEmpty(XLApp) then
           XLApp := TExcelIO.GetExcelApp(True); // 创建新Excel实例
       // 如果无法取得ExcelApplication，则
       if VarIsNull(XLApp) or VarIsEmpty(XLApp) then
-          bPreCreate := False // 没有预先创建空数据文件，意味着只能用nExcel了
+      begin
+        bPreCreate := False; // 没有预先创建空数据文件，意味着只能用nExcel了
+        WriteOption := woNoExcel;
+      end
       else
       begin
         if CreateEmptyWorkBook(XLApp, sExpFile, slMeters) = False then
-            bPreCreate := False
+        begin
+          bPreCreate := False;
+          WriteOption := woNoExcel;
+        end
         else
         begin
-          TagBk := XLApp.WorkBooks.Open(sExpFile);
           bPreCreate := True;
-          XLApp.Visible := True;
+          if WriteOption = woOnlyCreateBook then
+          begin
+            ShellExecute(0, PChar('open'), PChar(sExpFile), nil, nil, SW_SHOWNORMAL);
+            ShowMessage('请用Excel(不是WPS电子表格)打开刚才生成的空工作簿，再保存一下，完成之后点击确定。');
+            XLApp.Quit;
+          end
+          else
+          begin
+            TagBk := XLApp.workbooks.Open(sExpFile);
+            XLApp.Visible := False;
+            Sleep(1000);
+          end;
         end;
       end;
     end;
 
-    if not bPreCreate then
+    if WriteOption <> woUseExcel then
     begin
       tBook := TXLSWorkbook.Create;
-      rBook := TXLSWorkbook.Create;
       tBook.Open(ENV_XLTemplBook);
-      rBook.SaveAs(sExpFile)
+
+      rBook := TXLSWorkbook.Create;
+      if WriteOption = woNoExcel then
+          rBook.SaveAs(sExpFile)
+      else
+          rBook.Open(sExpFile);
     end;
 
-{
-      // 为每只仪器创建空数据表，如果选用本方法就不要使用下一句
-      if (not chkNoExcel.Checked) and CreateEmptyWorkBook(sExpFile, slMeters) then
-      begin
-        bPreCreate := True;
-        rBook.Open(sExpFile); // 打开预创建的数据表
-      end
-      else
-      begin
-        rBook.SaveAs(sExpFile); // 将空工作簿保存为指定的文件名
-        bPreCreate := False;
-      end;
-
-}
     ProgressBar1.Min := 0;
     ProgressBar1.Max := slMeters.Count;
     ProgressBar1.Position := 0;
     ProgressBar1.Step := 1;
     ProgressBar1.Visible := True;
+    lblExpMeter.Visible := True;
+    Screen.Cursor := crHourGlass;
+    if WriteOption = woUseExcel then
+    begin
+      XLApp.ScreenUpdating := False;
+      XLApp.EnableEvents := False;
+    end;
 
     for i := 0 to slMeters.Count - 1 do
     begin
       ProgressBar1.Position := i + 1;
-      ProgressBar1.Invalidate;
+      lblExpMeter.Caption := slMeters.Strings[i];
+      ProgressBar1.Refresh;
+      lblExpMeter.Refresh;
       // 同组的不处理
       if mtGrps.IndexOf(slMeters.Strings[i]) <> -1 then Continue;
 
@@ -246,30 +272,52 @@ begin
         [Meter.DataSheetStru.XLTemplate] as TXLGridTemplate;
 
       // 开始处理数据
-      if bPreCreate then
-          GenXLGrid(xlTmpl, Meter, TagBk) // 最后一个参数False，该方法不复制模板表
-          //GenXLGrid(xlTmpl, slMeters.Strings[i], tBook, rBook, False)
-      else
-          GenXLGrid(xlTmpl, slMeters.Strings[i], tBook, rBook, True); // 需要复制模板表
+{
+        if bPreCreate then
+            // GenXLGrid(xlTmpl, Meter, TagBk) // 最后一个参数False，该方法不复制模板表
+            GenXLGrid(xlTmpl, slMeters.Strings[i], tBook, rBook, False)
+        else
+            GenXLGrid(xlTmpl, slMeters.Strings[i], tBook, rBook, True); // 需要复制模板表
+
+}
+      case WriteOption of
+        woNoExcel: { 完全不使用Excel，最快、最简单，但最终结果没有Chart }
+          GenXLGrid(xlTmpl, slMeters.Strings[i], tBook, rBook, True);
+        woUseExcel: { 完全使用Excel，慢的要死，但原汁原味，且简单 }
+          GenXLGrid(xlTmpl, Meter, TagBk);
+        woOnlyCreateBook: { 使用Excel创建工作簿，用nExcel写入，麻烦、较快、有Chart }
+          GenXLGrid(xlTmpl, slMeters.Strings[i], tBook, rBook, False);
+      end;
     end;
 
   finally
     slMeters.Free;
     mtGrps.Free;
 
-    if bPreCreate then
+    if WriteOption = woUseExcel then
     begin
       TagBk.Save;
-      XLApp.WorkBooks.Close;
+      XLApp.workbooks.Close;
+      XLApp.ScreenUpdating := True;
+      XLApp.EnableEvents := True;
       XLApp.Quit;
     end
     else
-        rBook.Save;
+    begin
+      rBook.Save;
+        { todo: 这里默默地用Excel打开、另存，再关闭Excel }
+    end;
+
+    Screen.Cursor := crDefault;
   end;
     // if rbSelectedMeters.Checked then
-
-  ShowMessage('数据导出完毕');
+  if WriteOption = woOnlyCreateBook then
+    ShowMessage('数据导出完毕，请用Excel打开导出的文件后另存为xlsx格式。若是WPS电子表格ET，'#13#10
+      +'则保存一下即可。导出的文件存在一定的格式问题，需要重新保存方能解决。')
+  else
+      ShowMessage('数据导出完毕，请享用。');
   ProgressBar1.Visible := False;
+  lblExpMeter.Visible := False;
 end;
 
 procedure TfrmMain.btnOpenConfigClick(Sender: TObject);
