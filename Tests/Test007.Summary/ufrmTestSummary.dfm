@@ -166,7 +166,7 @@ object frmTestSummary: TfrmTestSummary
     Top = 0
     Width = 734
     Height = 688
-    ActivePage = tabQuickView
+    ActivePage = tabDataReport
     Align = alClient
     TabOrder = 0
     object tabBaseParams: TTabSheet
@@ -189,6 +189,10 @@ object frmTestSummary: TfrmTestSummary
     object tabDataViewer: TTabSheet
       Caption = #35266#27979#25968#25454
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -272,6 +276,10 @@ object frmTestSummary: TfrmTestSummary
     object tabDataGraph: TTabSheet
       Caption = #36807#31243#32447
       ImageIndex = 8
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object scrTLList: TScrollBox
         Left = 0
         Top = 0
@@ -287,10 +295,18 @@ object frmTestSummary: TfrmTestSummary
     object tabDataLayout: TTabSheet
       Caption = #20998#24067#22270
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object tabEigenValue: TTabSheet
       Caption = #29305#24449#20540
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object tabDataReport: TTabSheet
       Caption = #35266#27979#25968#25454#25253#34920
@@ -299,6 +315,10 @@ object frmTestSummary: TfrmTestSummary
     object tabSummary: TTabSheet
       Caption = #27719#24635#34920
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object tabTools: TTabSheet
       Caption = #23567#24037#20855
@@ -408,7 +428,7 @@ object frmTestSummary: TfrmTestSummary
           ExplicitWidth = 444
           ExplicitHeight = 559
           inherited CategoryPanel3: TCategoryPanel
-            ExplicitWidth = 425
+            ExplicitWidth = 442
             inherited vleDataStru: TValueListEditor
               Width = 423
               ExplicitWidth = 423
@@ -429,7 +449,7 @@ object frmTestSummary: TfrmTestSummary
             end
           end
           inherited CategoryPanel2: TCategoryPanel
-            ExplicitWidth = 425
+            ExplicitWidth = 442
             inherited vlePrjParams: TValueListEditor
               Width = 423
               ExplicitWidth = 423
@@ -448,7 +468,7 @@ object frmTestSummary: TfrmTestSummary
             end
           end
           inherited CategoryPanel1: TCategoryPanel
-            ExplicitWidth = 425
+            ExplicitWidth = 442
             inherited vleMeterParams: TValueListEditor
               Width = 423
               ExplicitWidth = 423
