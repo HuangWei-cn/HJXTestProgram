@@ -61,9 +61,9 @@ object fraInclineCharts: TfraInclineCharts
       OnResize = tab2DResize
       object cht2DA: TChart
         Left = 0
-        Top = 41
+        Top = 0
         Width = 229
-        Height = 575
+        Height = 581
         BackWall.Brush.Gradient.Direction = gdBottomTop
         BackWall.Brush.Gradient.EndColor = clWhite
         BackWall.Brush.Gradient.StartColor = 15395562
@@ -133,8 +133,8 @@ object fraInclineCharts: TfraInclineCharts
         Color = clWhite
         PopupMenu = pmChartOp
         TabOrder = 0
-        ExplicitTop = 0
-        ExplicitHeight = 616
+        ExplicitTop = 41
+        ExplicitHeight = 575
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 13
         object LineA: THorizLineSeries
@@ -165,9 +165,9 @@ object fraInclineCharts: TfraInclineCharts
       end
       object cht2DB: TChart
         Left = 229
-        Top = 41
+        Top = 0
         Width = 206
-        Height = 575
+        Height = 581
         BackWall.Brush.Gradient.Direction = gdBottomTop
         BackWall.Brush.Gradient.EndColor = clWhite
         BackWall.Brush.Gradient.StartColor = 15395562
@@ -234,8 +234,8 @@ object fraInclineCharts: TfraInclineCharts
         Color = clWhite
         PopupMenu = pmChartOp
         TabOrder = 1
-        ExplicitTop = 0
-        ExplicitHeight = 616
+        ExplicitTop = 41
+        ExplicitHeight = 575
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 13
         object LineB: THorizLineSeries
@@ -266,13 +266,11 @@ object fraInclineCharts: TfraInclineCharts
       end
       object Panel2: TPanel
         Left = 0
-        Top = 0
+        Top = 581
         Width = 435
-        Height = 41
-        Align = alTop
-        Caption = 'Panel2'
+        Height = 35
+        Align = alBottom
         TabOrder = 2
-        ExplicitTop = -6
         object Label1: TLabel
           Left = 8
           Top = 8
@@ -301,8 +299,8 @@ object fraInclineCharts: TfraInclineCharts
           OnClick = opt2DAxisManualClick
         end
         object edt2DAxisValue: TEdit
-          Left = 184
-          Top = 6
+          Left = 188
+          Top = 5
           Width = 57
           Height = 21
           ImeMode = imDisable
