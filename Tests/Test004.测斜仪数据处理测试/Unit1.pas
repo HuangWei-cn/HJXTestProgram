@@ -18,7 +18,6 @@ type
         pnl1: TPanel;
         grdDatas: TStringGrid;
         pnl2: TPanel;
-        btnOpenExcelFile: TButton;
         dlgOpenExcelFile: TOpenDialog;
         lstDTScale: TListBox;
         btnGetData: TButton;
@@ -26,7 +25,6 @@ type
         sSkinManager1: TsSkinManager;
         sSkinProvider1: TsSkinProvider;
         ImageList1: TImageList;
-        sbtnGetHistoryDatas: TsSpeedButton;
         sSpeedButton2: TsSpeedButton;
         ImageList2: TImageList;
         sSpeedButton1: TsSpeedButton;

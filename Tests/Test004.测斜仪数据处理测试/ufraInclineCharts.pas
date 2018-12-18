@@ -104,6 +104,11 @@ type
         piCopyTwoChart: TMenuItem;
         dlgSave: TSaveDialog;
         piSaveToFile: TMenuItem;
+    Panel2: TPanel;
+    Label1: TLabel;
+    opt2DAxisAuto: TRadioButton;
+    opt2DAxisManual: TRadioButton;
+    edt2DAxisValue: TEdit;
         procedure tab2DResize(Sender: TObject);
         procedure piCopyAsWMFClick(Sender: TObject);
         procedure piCopyAsBitmapClick(Sender: TObject);
@@ -114,6 +119,9 @@ type
         procedure piEditChartClick(Sender: TObject);
         procedure piCopyTwoChartClick(Sender: TObject);
         procedure piSaveToFileClick(Sender: TObject);
+    procedure opt2DAxisAutoClick(Sender: TObject);
+    procedure opt2DAxisManualClick(Sender: TObject);
+    procedure edt2DAxisValueKeyPress(Sender: TObject; var Key: Char);
     private
         { Private declarations }
         FHoleInfo: TdtInclineHoleInfo;
@@ -628,6 +636,46 @@ begin
     cht2DB.BottomAxis.Minimum := dMin;
     cht2DA.Legend.Visible := True;
     cht2DB.Legend.Visible := True;
+end;
+
+procedure TfraInclineCharts.edt2DAxisValueKeyPress(Sender: TObject; var Key: Char);
+var i:Integer;
+begin
+  if key = #13 then
+    if opt2DAxisManual.Checked then
+      if TryStrToInt(edt2DAxisValue.Text, i) then
+        if i<> 0 then
+        begin
+          i:=abs(i);
+          cht2DA.BottomAxis.Automatic := false;
+          cht2db.BottomAxis.Automatic := false;
+          cht2da.BottomAxis.Maximum := i;
+          cht2da.BottomAxis.Minimum := i*-1;
+          cht2db.BottomAxis.maximum := i;
+          cht2DB.BottomAxis.Minimum := i * -1;
+        end;
+end;
+
+procedure TfraInclineCharts.opt2DAxisAutoClick(Sender: TObject);
+begin
+  cht2da.BottomAxis.Automatic := True;
+  cht2db.BottomAxis.Automatic := true;
+end;
+
+procedure TfraInclineCharts.opt2DAxisManualClick(Sender: TObject);
+var i:integer;
+begin
+  if TryStrToInt(edt2DAxisValue.Text, i) then
+    if i<> 0 then
+    begin
+      i := Abs(i);
+      cht2DA.BottomAxis.Automatic := false;
+      cht2db.BottomAxis.Automatic := false;
+      cht2da.BottomAxis.Maximum := i;
+      cht2da.BottomAxis.Minimum := i*-1;
+      cht2db.BottomAxis.maximum := i;
+      cht2DB.BottomAxis.Minimum := i * -1;
+    end;
 end;
 
 procedure TfraInclineCharts.SetHoleInfo(AInfo: TdtInclineHoleInfo);

@@ -25,9 +25,6 @@ Coordinates=350,111,104,36
 [btnGetData]
 Coordinates=247,10,80,58
 
-[btnOpenExcelFile]
-Coordinates=121,10,116,58
-
 [lstDTScale]
 Coordinates=10,10,101,124
 
@@ -47,6 +44,6 @@ Coordinates=153,269,88,36
 Coordinates=504,1,77,36
 
 []
-Coordinates=10,212,96,36
+Coordinates=121,10,116,58
 Visible=True
 

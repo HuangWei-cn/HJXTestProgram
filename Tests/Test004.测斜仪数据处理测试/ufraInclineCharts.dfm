@@ -61,9 +61,9 @@ object fraInclineCharts: TfraInclineCharts
       OnResize = tab2DResize
       object cht2DA: TChart
         Left = 0
-        Top = 0
+        Top = 41
         Width = 229
-        Height = 616
+        Height = 575
         BackWall.Brush.Gradient.Direction = gdBottomTop
         BackWall.Brush.Gradient.EndColor = clWhite
         BackWall.Brush.Gradient.StartColor = 15395562
@@ -133,6 +133,8 @@ object fraInclineCharts: TfraInclineCharts
         Color = clWhite
         PopupMenu = pmChartOp
         TabOrder = 0
+        ExplicitTop = 0
+        ExplicitHeight = 616
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 13
         object LineA: THorizLineSeries
@@ -163,9 +165,9 @@ object fraInclineCharts: TfraInclineCharts
       end
       object cht2DB: TChart
         Left = 229
-        Top = 0
+        Top = 41
         Width = 206
-        Height = 616
+        Height = 575
         BackWall.Brush.Gradient.Direction = gdBottomTop
         BackWall.Brush.Gradient.EndColor = clWhite
         BackWall.Brush.Gradient.StartColor = 15395562
@@ -232,6 +234,8 @@ object fraInclineCharts: TfraInclineCharts
         Color = clWhite
         PopupMenu = pmChartOp
         TabOrder = 1
+        ExplicitTop = 0
+        ExplicitHeight = 616
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 13
         object LineB: THorizLineSeries
@@ -258,6 +262,53 @@ object fraInclineCharts: TfraInclineCharts
         object AxisScrollTool2: TAxisScrollTool
           Limit = slBoth
           AxisID = 0
+        end
+      end
+      object Panel2: TPanel
+        Left = 0
+        Top = 0
+        Width = 435
+        Height = 41
+        Align = alTop
+        Caption = 'Panel2'
+        TabOrder = 2
+        ExplicitTop = -6
+        object Label1: TLabel
+          Left = 8
+          Top = 8
+          Width = 60
+          Height = 13
+          Caption = #27178#36724#33539#22260#20540
+        end
+        object opt2DAxisAuto: TRadioButton
+          Left = 80
+          Top = 6
+          Width = 49
+          Height = 17
+          Caption = #33258#21160
+          Checked = True
+          TabOrder = 0
+          TabStop = True
+          OnClick = opt2DAxisAutoClick
+        end
+        object opt2DAxisManual: TRadioButton
+          Left = 135
+          Top = 6
+          Width = 54
+          Height = 17
+          Caption = #25351#23450
+          TabOrder = 1
+          OnClick = opt2DAxisManualClick
+        end
+        object edt2DAxisValue: TEdit
+          Left = 184
+          Top = 6
+          Width = 57
+          Height = 21
+          ImeMode = imDisable
+          TabOrder = 2
+          Text = '5'
+          OnKeyPress = edt2DAxisValueKeyPress
         end
       end
     end
@@ -810,6 +861,8 @@ object fraInclineCharts: TfraInclineCharts
     Active = True
     AntiAliasText = gpfNormal
     TeePanel = cht3D
+    Left = 104
+    Top = 524
   end
   object dlgSave: TSaveDialog
     DefaultExt = 'jpg'

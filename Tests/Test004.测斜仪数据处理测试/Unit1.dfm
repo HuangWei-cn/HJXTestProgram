@@ -52,22 +52,6 @@ object frmMain: TfrmMain
     ParentFont = False
     Placement = svpLeft
     TabOrder = 0
-    object sbtnGetHistoryDatas: TsSpeedButton
-      Left = 7
-      Top = 479
-      Width = 131
-      Height = 37
-      Flat = True
-      Layout = blGlyphTop
-      Visible = False
-      OnClick = sbtnGetHistoryDatasClick
-      Images = ImageList1
-      ImageIndex = 0
-      ImageIndexHot = 2
-      ImageIndexPressed = 1
-      ImageIndexDisabled = 3
-      ImageIndexSelected = 2
-    end
     object sSpeedButton2: TsSpeedButton
       Left = 2
       Top = 359
@@ -5067,7 +5051,7 @@ object frmMain: TfrmMain
     end
     object btn1: TButton
       Left = 7
-      Top = 432
+      Top = 421
       Width = 137
       Height = 41
       Caption = #22810#26085#25968#25454#21516#22270
@@ -5081,22 +5065,6 @@ object frmMain: TfrmMain
       TabOrder = 0
       OnClick = btn1Click
     end
-    object btnOpenExcelFile: TButton
-      Left = 7
-      Top = 516
-      Width = 137
-      Height = 41
-      Caption = #25171#24320'Excel'#25968#25454#25991#20214
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = #40657#20307
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 1
-      Visible = False
-      OnClick = btnOpenExcelFileClick
-    end
     object lstDTScale: TListBox
       Left = 7
       Top = 126
@@ -5108,12 +5076,12 @@ object frmMain: TfrmMain
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 1
       OnDblClick = lstDTScaleDblClick
     end
     object btnGetData: TButton
       Left = 7
-      Top = 558
+      Top = 614
       Width = 137
       Height = 47
       Caption = #21462#22238#25968#25454
@@ -5124,7 +5092,7 @@ object frmMain: TfrmMain
       Font.Name = #40657#20307
       Font.Style = []
       ParentFont = False
-      TabOrder = 3
+      TabOrder = 2
       Visible = False
       OnClick = btnGetDataClick
     end
@@ -6956,7 +6924,7 @@ object frmMain: TfrmMain
     Left = 544
     Top = 504
     Bitmap = {
-      494C0101050008004C0082002300FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010105000800500082002300FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000008020000460000000100200000000000C038
       02000000000000000000000000000000000000000001000000050000000A0000
       00110000001A00000021000000270000002A0000002C0000002C0000002C0000
@@ -11668,7 +11636,7 @@ object frmMain: TfrmMain
     Left = 544
     Top = 456
     Bitmap = {
-      494C010104000800340094004600FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010104000800380094004600FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000500200008C0000000100200000000000000F
       0500000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
