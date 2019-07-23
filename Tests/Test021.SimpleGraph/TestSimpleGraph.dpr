@@ -1,14 +1,13 @@
 program TestSimpleGraph;
 
 uses
-  uHJX.CoreUnits in '..\..\..\HJXProject\uHJX.CoreUnits.pas',
-  uHJX.ExcelDataAccess in '..\..\..\HJXProject\uHJX.ExcelDataAccess.pas',
-  uHJX.HostTemplates in '..\..\..\HJXProject\uHJX.HostTemplates.pas',
   Vcl.Forms,
   ufrmMain in 'ufrmMain.pas' {Form1},
-  ufraDataLayout in '..\..\..\HJXProject\FuncFrames\DataLayout\ufraDataLayout.pas' {fraDataLayout: TFrame},
-  ufraDataPresentation in '..\..\..\HJXProject\FuncFrames\DataLayout\ufraDataPresentation.pas' {fraDataPresentation: TFrame};
-
+  uHJX.CoreUnits in '..\..\Client\ClientCommon\uHJX.CoreUnits.pas',
+  uHJX.ExcelDataAccess in '..\..\Client\ClientCommon\uHJX.ExcelDataAccess.pas',
+  uHJX.HostTemplates in '..\..\Client\ClientCommon\uHJX.HostTemplates.pas',
+  ufraDataLayout in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufraDataLayout.pas' {fraDataLayout: TFrame},
+  ufraDataPresentation in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufraDataPresentation.pas' {fraDataPresentation: TFrame};
 
 {$R *.res}
 
