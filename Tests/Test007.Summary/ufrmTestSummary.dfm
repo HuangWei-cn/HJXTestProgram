@@ -166,7 +166,7 @@ object frmTestSummary: TfrmTestSummary
     Top = 0
     Width = 734
     Height = 688
-    ActivePage = tabDataReport
+    ActivePage = tabDataGraph
     Align = alClient
     TabOrder = 0
     object tabBaseParams: TTabSheet
@@ -276,10 +276,6 @@ object frmTestSummary: TfrmTestSummary
     object tabDataGraph: TTabSheet
       Caption = #36807#31243#32447
       ImageIndex = 8
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object scrTLList: TScrollBox
         Left = 0
         Top = 0
@@ -513,6 +509,10 @@ object frmTestSummary: TfrmTestSummary
     object tabQuickView: TTabSheet
       Caption = #35266#27979#24773#20917#36895#35272
       ImageIndex = 9
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
   object pnlLeftPanel: TPanel
