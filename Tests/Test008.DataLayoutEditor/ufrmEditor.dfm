@@ -336,7 +336,7 @@ object frmEditor: TfrmEditor
       Left = 2
       Top = 205
       Width = 148
-      Height = 276
+      Height = 320
       Align = alTop
       Caption = #22806#35266#23646#24615
       TabOrder = 2
@@ -370,14 +370,14 @@ object frmEditor: TfrmEditor
       end
       object Label5: TLabel
         Left = 4
-        Top = 160
+        Top = 185
         Width = 36
         Height = 13
         Caption = #36879#26126#24230
       end
       object btnSetAsDefault: TSpeedButton
         Left = 64
-        Top = 243
+        Top = 268
         Width = 81
         Height = 22
         Caption = #35774#20026#40664#35748#26679#24335
@@ -389,6 +389,13 @@ object frmEditor: TfrmEditor
         Width = 36
         Height = 13
         Caption = #32447#39068#33394
+      end
+      object Label7: TLabel
+        Left = 41
+        Top = 163
+        Width = 24
+        Height = 13
+        Caption = #32447#23485
       end
       object cmbFonts: TComboBox
         Left = 7
@@ -440,7 +447,7 @@ object frmEditor: TfrmEditor
       end
       object trcTransparency: TTrackBar
         Left = 4
-        Top = 179
+        Top = 204
         Width = 137
         Height = 22
         Max = 100
@@ -450,7 +457,7 @@ object frmEditor: TfrmEditor
       end
       object chkBorder: TCheckBox
         Left = 4
-        Top = 204
+        Top = 229
         Width = 53
         Height = 17
         Caption = #36793#26694
@@ -467,7 +474,7 @@ object frmEditor: TfrmEditor
       end
       object chkTextAutoSize: TCheckBox
         Left = 67
-        Top = 204
+        Top = 229
         Width = 66
         Height = 17
         Caption = #36866#24212#25991#23383
@@ -476,12 +483,35 @@ object frmEditor: TfrmEditor
       end
       object chkUseGDIP: TCheckBox
         Left = 4
-        Top = 223
+        Top = 248
         Width = 57
         Height = 17
         Caption = 'GDI+'
         TabOrder = 8
         OnClick = chkUseGDIPClick
+      end
+      object cmbLineWidth: TComboBox
+        Left = 71
+        Top = 160
+        Width = 70
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 1
+        TabOrder = 9
+        Text = '1'
+        OnChange = cmbLineWidthChange
+        Items.Strings = (
+          '0'
+          '1'
+          '2'
+          '3'
+          '4'
+          '5'
+          '6'
+          '7'
+          '8'
+          '9'
+          '10')
       end
     end
   end
@@ -490,7 +520,7 @@ object frmEditor: TfrmEditor
     Left = 358
     Top = 422
     Bitmap = {
-      494C010136003800440010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010136003800480010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000E0000000010020000000000000E0
       0000000000000000000000000000000000000000000000000033000000330000
       0033000000330000003300000033000000000000000C00000033000000330000

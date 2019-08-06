@@ -81,6 +81,8 @@ type
     chkTextAutoSize: TCheckBox;
     chkUseGDIP: TCheckBox;
     actAlign: TAction;
+    Label7: TLabel;
+    cmbLineWidth: TComboBox;
     procedure actLoadLayoutExecute(Sender: TObject);
     procedure actSaveLayoutExecute(Sender: TObject);
     procedure actInsBackgroudExecute(Sender: TObject);
@@ -153,6 +155,7 @@ type
     procedure sgLayoutKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure sgLayoutKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure actAlignExecute(Sender: TObject);
+    procedure cmbLineWidthChange(Sender: TObject);
   private
         { Private declarations }
     FLayoutfile       : string;
@@ -168,6 +171,7 @@ type
     FdefLineColor: TColor;
     FdefTrans    : Integer;
     FdefBorder   : Boolean;
+    FdefLineWidth: Integer;
 
     FPreCmd      : TGraphCommandMode;
     FHoldSpaceKey: Boolean;
@@ -263,6 +267,7 @@ const
   FEO_SetLineColor    = 29;
   FEO_SetGDIP         = 30;
   FEO_SetAutoSize     = 31;
+  FEO_SetLineWidth    = 32;
 
 var
   ADragItem: TmeterNode; // 被用户拖放的TreeNode
@@ -364,6 +369,8 @@ begin
     FEO_SetGDIP:
       if GraphObject is TGPTextNode then
           TGPTextNode(GraphObject).UseGdipDrawText := chkUseGDIP.Checked;
+    FEO_SetLineWidth:
+      GraphObject.Pen.Width := cmbLineWidth.ItemIndex;
   else
     Result := False;
   end;
@@ -658,6 +665,7 @@ begin
   FdefLineColor := clbxLineColor.Selected;
   FdefTrans := round(trcTransparency.Position * 2.55);
   FdefBorder := chkBorder.Checked;
+  FdefLineWidth := cmbLineWidth.ItemIndex;
 end;
 
 procedure TfrmEditor.chkBorderClick(Sender: TObject);
@@ -754,6 +762,11 @@ begin
 // end;
 end;
 
+procedure TfrmEditor.cmbLineWidthChange(Sender: TObject);
+begin
+  sgLayout.ForEachObject(ForEachCallback, FEO_SetLineWidth, True);
+end;
+
 procedure TfrmEditor.edtDataNameChange(Sender: TObject);
 begin
   if FLoadingProperties then
@@ -819,7 +832,12 @@ var
 begin
   tp := sgLayout.ClientToGraph(X, Y);
   if ADragItem.NodeType = ntMeter then
-      go := TGPTextNode.CreateNew(sgLayout, Rect(tp.X, tp.Y, 10, 10))
+  begin
+    if ADragItem.Meter.Params.MeterType = '平面变形测点' then
+      // go := TdmcDeformationDirection.CreateNew(sgLayout,nil,[tp, Point(tp.X, tp.Y+10)],nil)
+    else
+        go := TGPTextNode.CreateNew(sgLayout, Rect(tp.X, tp.Y, 10, 10))
+  end
   else if ADragItem.NodeType = ntDataItem then
       go := TdmcDataItem.CreateNew(sgLayout, Rect(tp.X, tp.Y, 10, 10))
   else
@@ -846,6 +864,7 @@ begin
         TGPTextNode(go).Pen.Style := psSolid
     else
         TGPTextNode(go).Pen.Style := psClear;
+    go.Pen.Width := FdefLineWidth;
   end;
 end;
 
@@ -997,6 +1016,7 @@ begin
     if FdefFontName <> '' then
     begin
       GraphObject.Pen.Color := FdefLineColor;
+      GraphObject.Pen.Width := FdefLineWidth;
       GraphObject.Font.Name := FdefFontName;
       GraphObject.Font.Size := FdefFontSize;
       GraphObject.Options := GraphObject.Options - [goLinkable]; // 不允许连接
@@ -1030,7 +1050,7 @@ begin
   for i := 0 to ExcelMeters.Count - 1 do
   begin
     AMeter := ExcelMeters.Items[i];
-        // 增加一个工作部位
+    // 增加一个工作部位
     if AMeter.PrjParams.Position <> sPos then
     begin
       sPos := AMeter.PrjParams.Position;
