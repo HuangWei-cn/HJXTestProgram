@@ -83,6 +83,27 @@ type
     actAlign: TAction;
     Label7: TLabel;
     cmbLineWidth: TComboBox;
+    actInsDeformDirect: TAction;
+    CategoryPanelGroup1: TCategoryPanelGroup;
+    CategoryPanel1: TCategoryPanel;
+    CategoryPanel2: TCategoryPanel;
+    CategoryPanel3: TCategoryPanel;
+    CategoryPanel4: TCategoryPanel;
+    Splitter2: TSplitter;
+    Label8: TLabel;
+    edtFactor: TEdit;
+    Label9: TLabel;
+    Label10: TLabel;
+    edtAngle: TEdit;
+    Label11: TLabel;
+    cmbDeformName: TComboBox;
+    Label12: TLabel;
+    Label13: TLabel;
+    cmbXData: TComboBox;
+    cmbYData: TComboBox;
+    edtPointAngle: TEdit;
+    Label14: TLabel;
+    chkUseGlobalAngle: TCheckBox;
     procedure actLoadLayoutExecute(Sender: TObject);
     procedure actSaveLayoutExecute(Sender: TObject);
     procedure actInsBackgroudExecute(Sender: TObject);
@@ -156,6 +177,15 @@ type
     procedure sgLayoutKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure actAlignExecute(Sender: TObject);
     procedure cmbLineWidthChange(Sender: TObject);
+    procedure actInsDeformDirectExecute(Sender: TObject);
+    procedure actInsDeformDirectUpdate(Sender: TObject);
+    procedure edtAngleChange(Sender: TObject);
+    procedure edtFactorChange(Sender: TObject);
+    procedure cmbXDataChange(Sender: TObject);
+    procedure cmbYDataChange(Sender: TObject);
+    procedure edtPointAngleChange(Sender: TObject);
+    procedure chkUseGlobalAngleClick(Sender: TObject);
+    procedure cmbDeformNameChange(Sender: TObject);
   private
         { Private declarations }
     FLayoutfile       : string;
@@ -173,6 +203,7 @@ type
     FdefBorder   : Boolean;
     FdefLineWidth: Integer;
 
+    // 下面两条是用于按住空格键平移图形的。
     FPreCmd      : TGraphCommandMode;
     FHoldSpaceKey: Boolean;
 
@@ -465,6 +496,18 @@ begin
     (sgLayout.DefaultNodeClass = TdmcDataItem);
 end;
 
+procedure TfrmEditor.actInsDeformDirectExecute(Sender: TObject);
+begin
+  sgLayout.DefaultLinkClass := TdmcDeformationDirection;
+  sgLayout.CommandMode := cmInsertLink;
+end;
+
+procedure TfrmEditor.actInsDeformDirectUpdate(Sender: TObject);
+begin
+  actInsDeformDirect.Checked := (sgLayout.CommandMode = cmInsertLink) and
+    (sgLayout.DefaultLinkClass = TdmcDeformationDirection);
+end;
+
 procedure TfrmEditor.actInsLinkExecute(Sender: TObject);
 begin
   sgLayout.DefaultLinkClass := TGPGraphicLink;
@@ -473,7 +516,8 @@ end;
 
 procedure TfrmEditor.actInsLinkUpdate(Sender: TObject);
 begin
-  actInsLink.Checked := sgLayout.CommandMode = cmInsertLink;
+  actInsLink.Checked := (sgLayout.CommandMode = cmInsertLink) and
+    (sgLayout.DefaultLinkClass = TGPGraphicLink);
 end;
 
 procedure TfrmEditor.actInsTextExecute(Sender: TObject);
@@ -702,6 +746,15 @@ begin
 // TGPTextNode(FSelectedGObj).UseGdipDrawText := chkUseGDIP.Checked;
 end;
 
+procedure TfrmEditor.chkUseGlobalAngleClick(Sender: TObject);
+begin
+  if FLoadingProperties then Exit;
+  if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
+  then
+    if FSelectedGObj is TdmcDeformationDirection then
+        TdmcDeformationDirection(FSelectedGObj).UseGlobalAngle := chkUseGlobalAngle.Checked;
+end;
+
 procedure TfrmEditor.clbxBackColorChange(Sender: TObject);
 begin
   sgLayout.ForEachObject(ForEachCallback, FEO_SetBackColor, True);
@@ -731,6 +784,15 @@ begin
 // if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
 // then
 // FSelectedGObj.Pen.Color := clbxLineColor.Selected;
+end;
+
+procedure TfrmEditor.cmbDeformNameChange(Sender: TObject);
+begin
+  if FLoadingProperties then Exit;
+  if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
+  then
+    if FSelectedGObj is TdmcDeformationDirection then
+        TdmcDeformationDirection(FSelectedGObj).DesignName := cmbDeformName.Text;
 end;
 
 procedure TfrmEditor.cmbFontsChange(Sender: TObject);
@@ -767,6 +829,33 @@ begin
   sgLayout.ForEachObject(ForEachCallback, FEO_SetLineWidth, True);
 end;
 
+procedure TfrmEditor.cmbXDataChange(Sender: TObject);
+begin
+  if FLoadingProperties then Exit;
+  if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
+  then
+    if FSelectedGObj is TdmcDeformationDirection then
+        TdmcDeformationDirection(FSelectedGObj).XDataName := cmbXData.Text;
+end;
+
+procedure TfrmEditor.cmbYDataChange(Sender: TObject);
+begin
+  if FLoadingProperties then Exit;
+  if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
+  then
+    if FSelectedGObj is TdmcDeformationDirection then
+        TdmcDeformationDirection(FSelectedGObj).YDataName := cmbYData.Text;
+end;
+
+procedure TfrmEditor.edtAngleChange(Sender: TObject);
+begin
+  if FLoadingProperties then Exit;
+  if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
+  then
+    if FSelectedGObj is TdmcMap then
+        TdmcMap(FSelectedGObj).AngleFromNorth := StrToFloat(edtAngle.Text);
+end;
+
 procedure TfrmEditor.edtDataNameChange(Sender: TObject);
 begin
   if FLoadingProperties then
@@ -787,6 +876,15 @@ begin
         TdmcDataItem(FSelectedGObj).DataUnit := edtDataUnit.Text;
 end;
 
+procedure TfrmEditor.edtFactorChange(Sender: TObject);
+begin
+  if FLoadingProperties then Exit;
+  if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
+  then
+    if FSelectedGObj is TdmcMap then
+        TdmcMap(FSelectedGObj).OneMMLength := StrToInt(edtFactor.Text);
+end;
+
 procedure TfrmEditor.edtIDChange(Sender: TObject);
 begin
   if FLoadingProperties then
@@ -795,6 +893,15 @@ begin
   then
     if FSelectedGObj is TdmcDataItem then
         TdmcDataItem(FSelectedGObj).DesignName := edtID.Text;
+end;
+
+procedure TfrmEditor.edtPointAngleChange(Sender: TObject);
+begin
+  if FLoadingProperties then Exit;
+  if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
+  then
+    if FSelectedGObj is TdmcDeformationDirection then
+        TdmcDeformationDirection(FSelectedGObj).AngleFromNorth := StrToFloat(edtPointAngle.Text);
 end;
 
 procedure TfrmEditor.edtSeekChange(Sender: TObject);
@@ -833,10 +940,10 @@ begin
   tp := sgLayout.ClientToGraph(X, Y);
   if ADragItem.NodeType = ntMeter then
   begin
-    if ADragItem.Meter.Params.MeterType = '平面变形测点' then
+    // if ADragItem.Meter.Params.MeterType = '平面变形测点' then
       // go := TdmcDeformationDirection.CreateNew(sgLayout,nil,[tp, Point(tp.X, tp.Y+10)],nil)
-    else
-        go := TGPTextNode.CreateNew(sgLayout, Rect(tp.X, tp.Y, 10, 10))
+    // else
+    go := TGPTextNode.CreateNew(sgLayout, Rect(tp.X, tp.Y, 10, 10))
   end
   else if ADragItem.NodeType = ntDataItem then
       go := TdmcDataItem.CreateNew(sgLayout, Rect(tp.X, tp.Y, 10, 10))
@@ -957,13 +1064,10 @@ begin
     edtDataName.Enabled := edtID.Enabled;
     chkBorder.Enabled := GraphObject is TGPTextNode;
 
-    if GraphObject is TGPGraphNode then
+    if GraphObject is TGPTextNode then // 标签类
     begin
-      trcTransparency.Enabled := True;
-      trcTransparency.Position := round(TGPGraphNode(GraphObject).Transparency / 255 * 100);
-    end
-    else if GraphObject is TGPTextNode then
-    begin
+      CategoryPanel2.Collapsed := True;
+      CategoryPanel3.Collapsed := True;
       trcTransparency.Enabled := True;
       trcTransparency.Position := round(TGPTextNode(GraphObject).Transparency / 255 * 100);
       chkBorder.Checked := GraphObject.Pen.Style <> psClear;
@@ -976,6 +1080,35 @@ begin
         edtDataUnit.Text := TdmcDataItem(GraphObject).DataUnit;
       end;
     end
+    else if GraphObject is TdmcMap then
+    begin
+      CategoryPanel2.Collapsed := False; // 展开
+      CategoryPanel3.Collapsed := True;
+      edtAngle.Text := FormatFloat('0.00', (GraphObject as TdmcMap).AngleFromNorth);
+      edtFactor.Text := IntToStr((GraphObject as TdmcMap).OneMMLength);
+    end
+    else if GraphObject is TdmcDeformationDirection then
+    begin
+      CategoryPanel3.Collapsed := False;
+      with GraphObject as TdmcDeformationDirection do
+      begin
+        cmbDeformName.ItemIndex := cmbDeformName.Items.IndexOf(DesignName);
+        cmbXData.ItemIndex := cmbXData.Items.IndexOf(XDataName);
+        cmbYData.ItemIndex := cmbYData.Items.IndexOf(YDataName);
+      // cmbDeformName.Text := (GraphObject as TdmcDeformationDirection).DesignName;
+        // cmbXData.Text := (GraphObject as TdmcDeformationDirection).XDataName;
+        // cmbYData.Text := (GraphObject as TdmcDeformationDirection).YDataName;
+        edtPointAngle.Text := FormatFloat('0.00', AngleFromNorth);
+        chkUseGlobalAngle.Checked := UseGlobalAngle;
+      end;
+    end
+    else if GraphObject is TGPGraphNode then
+    begin
+      CategoryPanel2.Collapsed := True;
+      CategoryPanel3.Collapsed := True;
+      trcTransparency.Enabled := True;
+      trcTransparency.Position := round(TGPGraphNode(GraphObject).Transparency / 255 * 100);
+    end
     else
         trcTransparency.Enabled := False;
 
@@ -983,12 +1116,16 @@ begin
   end;
 end;
 
-procedure TfrmEditor.sgLayoutObjectDblClick(Graph: TSimpleGraph; GraphObject: TGraphObject);
+procedure TfrmEditor.sgLayoutObjectDblClick(Graph: TSimpleGraph;
+  GraphObject:
+  TGraphObject);
 begin
   actProperty.Execute;
 end;
 
-procedure TfrmEditor.sgLayoutObjectInsert(Graph: TSimpleGraph; GraphObject: TGraphObject);
+procedure TfrmEditor.sgLayoutObjectInsert(Graph: TSimpleGraph;
+  GraphObject:
+  TGraphObject);
 begin
   if FLoading then // 加载图形时，也会引起Insert事件，此时不做处理
       Exit;
@@ -1010,6 +1147,17 @@ begin
     if TGPTextNode(GraphObject).Text = '' then
         TGPTextNode(GraphObject).Text := 'Text';
   end
+  else if GraphObject is TdmcDeformationDirection then { 2019-08-08 }
+  begin
+    if FdefFontName <> '' then
+    begin
+      GraphObject.Pen.Color := FdefLineColor;
+      GraphObject.Pen.Width := FdefLineWidth;
+      GraphObject.Font.Name := FdefFontName;
+      GraphObject.Font.Size := FdefFontSize;
+      GraphObject.Options := GraphObject.Options - [goLinkable]; // 不允许连接
+    end;
+  end
   else if GraphObject is TGraphLink then
   begin
         // 考虑自动将Caption设置为仪器编号？
@@ -1027,7 +1175,8 @@ begin
   end;
 end;
 
-procedure TfrmEditor.sgLayoutObjectSelect(Graph: TSimpleGraph; GraphObject: TGraphObject);
+procedure TfrmEditor.sgLayoutObjectSelect(Graph: TSimpleGraph;
+  GraphObject: TGraphObject);
 begin
   if sgLayout.SelectedObjects.Count = 1 then
       sgLayoutObjectChange(sgLayout, sgLayout.SelectedObjects.Items[0]);
@@ -1047,6 +1196,9 @@ begin
   sType := '';
   nPos := nil;
   nType := nil;
+  cmbDeformName.Clear; // 清空平面变形测点列表
+  cmbXData.Clear;
+  cmbYData.Clear;
   for i := 0 to ExcelMeters.Count - 1 do
   begin
     AMeter := ExcelMeters.Items[i];
@@ -1060,14 +1212,14 @@ begin
       TmeterNode(nPos).NodeType := ntClass;
       TmeterNode(nType).NodeType := ntClass;
     end;
-        // 增加一个仪器类型
+    // 增加一个仪器类型
     if AMeter.Params.MeterType <> sType then
     begin
       sType := AMeter.Params.MeterType;
       nType := tvwMeters.Items.AddChild(nPos, sType);
       TmeterNode(nType).NodeType := ntClass;
     end;
-        // 增加仪器
+    // 增加仪器
     nMeter := tvwMeters.Items.AddChild(nType, AMeter.DesignName);
     if nMeter is TmeterNode then
     begin
@@ -1077,7 +1229,7 @@ begin
           TmeterNode(nMeter).Valid := False
       else
           TmeterNode(nMeter).Valid := True;
-            // 增加仪器的数据项
+      // 增加仪器的数据项
       for k := 0 to AMeter.PDDefines.Count - 1 do
       begin
         nDataItem := tvwMeters.Items.AddChild(nMeter, AMeter.PDDefine[k].Name);
@@ -1087,6 +1239,17 @@ begin
       end;
     end;
 
+    // 将平面变形测点添加到cmbDeformName中
+    if AMeter.Params.MeterType = '平面位移测点' then
+    begin
+      cmbDeformName.Items.Add(AMeter.DesignName);
+      if cmbXData.Items.Count = 0 then
+        for k := 0 to AMeter.PDDefines.Count - 1 do
+        begin
+          cmbXData.Items.Add(AMeter.PDName(k));
+          cmbYData.Items.Add(AMeter.PDName(k));
+        end;
+    end;
   end;
 end;
 
@@ -1110,17 +1273,21 @@ begin
 end;
 
 procedure TfrmEditor.tvwMetersCreateNodeClass(Sender: TCustomTreeView;
-  var NodeClass: TTreeNodeClass);
+  var
+  NodeClass: TTreeNodeClass);
 begin
   NodeClass := TmeterNode;
 end;
 
-procedure TfrmEditor.tvwMetersEndDrag(Sender, Target: TObject; X, Y: Integer);
+procedure TfrmEditor.tvwMetersEndDrag(Sender, Target: TObject;
+  X, Y: Integer);
 begin
   ADragItem := nil;
 end;
 
-procedure TfrmEditor.tvwMetersMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+procedure TfrmEditor.tvwMetersMouseMove(Sender: TObject;
+  Shift: TShiftState;
+  X, Y: Integer);
 begin
     // tvwMeters.GetHitTestInfoAt()
   if ssLeft in Shift then
