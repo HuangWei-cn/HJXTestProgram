@@ -70,7 +70,9 @@ uses
   uHJX.Template.XLGridProc in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridProc.pas',
   uHJX.Classes.Templates in '..\..\Client\ClientCommon\Core\uHJX.Classes.Templates.pas',
   ufrmQuerySetupDate in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmQuerySetupDate.pas' {frmQuerySetupDate},
-  ufraEigenvalueGrid in '..\..\Client\ClientCommon\FuncFrames\Eigenvalue\ufraEigenvalueGrid.pas' {fraEigenvalueGrid: TFrame};
+  ufraEigenvalueGrid in '..\..\Client\ClientCommon\FuncFrames\Eigenvalue\ufraEigenvalueGrid.pas' {fraEigenvalueGrid: TFrame},
+  ufraDeformMap in '..\..\Client\ClientCommon\FuncFrames\Tools\ufraDeformMap.pas' {fraDeformMap: TFrame},
+  ufrmShowDeformMap in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmShowDeformMap.pas' {frmShowDeformPoints};
 
 {$R *.res}
 
@@ -81,6 +83,7 @@ begin
     Application.Title := '黄金峡观测数据处理辅助工具（功能测试程序）';
   Application.CreateForm(TfrmTestSummary, frmTestSummary);
   Application.CreateForm(TfrmQuerySetupDate, frmQuerySetupDate);
+  Application.CreateForm(TfrmShowDeformPoints, frmShowDeformPoints);
   //Application.CreateForm(TfrmMeterSelector, frmMeterSelector);
   Application.Run;
 

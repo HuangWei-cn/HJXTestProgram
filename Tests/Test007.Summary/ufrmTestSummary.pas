@@ -84,6 +84,7 @@ type
     btnListSetupDate: TButton;
     Splitter2: TSplitter;
     Button3: TButton;
+    Button4: TButton;
     procedure actLoadParamsExecute(Sender: TObject);
     procedure actLoadDataFileListExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -99,6 +100,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure btnListSetupDateClick(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
   private
         { Private declarations }
     FParamLoaded,
@@ -127,7 +129,7 @@ implementation
 
 uses uHJX.Excel.InitParams, {uHJX.Excel.Meters} uHJX.Classes.Meters, uHJX.EnvironmentVariables,
   uHJX.Excel.DataQuery, uHJX.IntfImp.FuncCompManager, uHJX.Intf.FunctionDispatcher,
-  ufrmDataCounts, ufraMeterSelector, ufrmQuerySetupDate;
+  ufrmDataCounts, ufraMeterSelector, ufrmQuerySetupDate, ufrmShowDeformMap;
 {$R *.dfm}
 
 
@@ -303,6 +305,14 @@ begin
   finally
     frm.Release;
   end;
+end;
+
+procedure TfrmTestSummary.Button4Click(Sender: TObject);
+var frm: TfrmShowDeformPoints;
+begin
+  frm := TfrmShowDeformPoints.Create(Self);
+  frm.OnClose := Self.FormClose;
+  frm.Show;
 end;
 
 procedure TfrmTestSummary.FormClose(Sender: TObject; var Action: TCloseAction);

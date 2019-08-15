@@ -166,7 +166,7 @@ object frmTestSummary: TfrmTestSummary
     Top = 0
     Width = 734
     Height = 688
-    ActivePage = tabDataGraph
+    ActivePage = tabTools
     Align = alClient
     TabOrder = 0
     object tabBaseParams: TTabSheet
@@ -189,10 +189,6 @@ object frmTestSummary: TfrmTestSummary
     object tabDataViewer: TTabSheet
       Caption = #35266#27979#25968#25454
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -291,18 +287,10 @@ object frmTestSummary: TfrmTestSummary
     object tabDataLayout: TTabSheet
       Caption = #20998#24067#22270
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tabEigenValue: TTabSheet
       Caption = #29305#24449#20540
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tabDataReport: TTabSheet
       Caption = #35266#27979#25968#25454#25253#34920
@@ -311,10 +299,6 @@ object frmTestSummary: TfrmTestSummary
     object tabSummary: TTabSheet
       Caption = #27719#24635#34920
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tabTools: TTabSheet
       Caption = #23567#24037#20855
@@ -375,6 +359,16 @@ object frmTestSummary: TfrmTestSummary
         TabOrder = 4
         OnClick = Button3Click
       end
+      object Button4: TButton
+        Left = 12
+        Top = 128
+        Width = 175
+        Height = 41
+        Caption = #26174#31034#21464#24418#30417#27979#28857
+        Style = bsCommandLink
+        TabOrder = 5
+        OnClick = Button4Click
+      end
     end
     object tabParamsEditor: TTabSheet
       Caption = #27979#35797#65306#23646#24615#32534#36753#22120
@@ -424,7 +418,7 @@ object frmTestSummary: TfrmTestSummary
           ExplicitWidth = 444
           ExplicitHeight = 559
           inherited CategoryPanel3: TCategoryPanel
-            ExplicitWidth = 442
+            ExplicitWidth = 425
             inherited vleDataStru: TValueListEditor
               Width = 423
               ExplicitWidth = 423
@@ -445,7 +439,7 @@ object frmTestSummary: TfrmTestSummary
             end
           end
           inherited CategoryPanel2: TCategoryPanel
-            ExplicitWidth = 442
+            ExplicitWidth = 425
             inherited vlePrjParams: TValueListEditor
               Width = 423
               ExplicitWidth = 423
@@ -464,7 +458,7 @@ object frmTestSummary: TfrmTestSummary
             end
           end
           inherited CategoryPanel1: TCategoryPanel
-            ExplicitWidth = 442
+            ExplicitWidth = 425
             inherited vleMeterParams: TValueListEditor
               Width = 423
               ExplicitWidth = 423
@@ -509,10 +503,6 @@ object frmTestSummary: TfrmTestSummary
     object tabQuickView: TTabSheet
       Caption = #35266#27979#24773#20917#36895#35272
       ImageIndex = 9
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
   end
   object pnlLeftPanel: TPanel
