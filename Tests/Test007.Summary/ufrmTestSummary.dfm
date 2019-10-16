@@ -369,11 +369,20 @@ object frmTestSummary: TfrmTestSummary
         TabOrder = 5
         OnClick = Button4Click
       end
+      object btnToolFindNewSheets: TButton
+        Left = 12
+        Top = 164
+        Width = 175
+        Height = 41
+        Caption = #20202#22120#35745#31639#34920#26597#26032
+        Style = bsCommandLink
+        TabOrder = 6
+        OnClick = btnToolFindNewSheetsClick
+      end
     end
     object tabParamsEditor: TTabSheet
       Caption = #27979#35797#65306#23646#24615#32534#36753#22120
       ImageIndex = 5
-      TabVisible = False
       object lstTestMeters: TListBox
         Left = 0
         Top = 0
@@ -417,14 +426,29 @@ object frmTestSummary: TfrmTestSummary
           Height = 559
           ExplicitWidth = 444
           ExplicitHeight = 559
-          inherited CategoryPanel3: TCategoryPanel
+          inherited CategoryPanel5: TCategoryPanel
+            ExplicitWidth = 425
+            inherited cmbGraphDefine: TComboBox
+              Width = 295
+              ExplicitWidth = 295
+            end
+            inherited cmbGridFormat: TComboBox
+              Width = 295
+              ExplicitWidth = 295
+            end
+            inherited cmbXLSFormat: TComboBox
+              Width = 295
+              ExplicitWidth = 295
+            end
+          end
+          inherited CategoryPanel4: TCategoryPanel
             ExplicitWidth = 425
             inherited vleDataStru: TValueListEditor
               Width = 423
               ExplicitWidth = 423
               ColWidths = (
-                150
-                318)
+                133
+                267)
               RowHeights = (
                 18
                 18
@@ -438,6 +462,17 @@ object frmTestSummary: TfrmTestSummary
                 18)
             end
           end
+          inherited CategoryPanel3: TCategoryPanel
+            ExplicitWidth = 425
+            inherited cmbPreDefineDataStruc: TComboBox
+              Width = 255
+              ExplicitWidth = 255
+            end
+            inherited memPreDDSContent: TMemo
+              Width = 255
+              ExplicitWidth = 255
+            end
+          end
           inherited CategoryPanel2: TCategoryPanel
             ExplicitWidth = 425
             inherited vlePrjParams: TValueListEditor
@@ -445,7 +480,7 @@ object frmTestSummary: TfrmTestSummary
               ExplicitWidth = 423
               ColWidths = (
                 150
-                318)
+                267)
               RowHeights = (
                 18
                 18
@@ -464,7 +499,7 @@ object frmTestSummary: TfrmTestSummary
               ExplicitWidth = 423
               ColWidths = (
                 98
-                370)
+                319)
               RowHeights = (
                 18
                 18

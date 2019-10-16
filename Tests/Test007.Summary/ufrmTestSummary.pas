@@ -85,6 +85,7 @@ type
     Splitter2: TSplitter;
     Button3: TButton;
     Button4: TButton;
+    btnToolFindNewSheets: TButton;
     procedure actLoadParamsExecute(Sender: TObject);
     procedure actLoadDataFileListExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -101,6 +102,7 @@ type
     procedure btnListSetupDateClick(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure btnToolFindNewSheetsClick(Sender: TObject);
   private
         { Private declarations }
     FParamLoaded,
@@ -129,7 +131,7 @@ implementation
 
 uses uHJX.Excel.InitParams, {uHJX.Excel.Meters} uHJX.Classes.Meters, uHJX.EnvironmentVariables,
   uHJX.Excel.DataQuery, uHJX.IntfImp.FuncCompManager, uHJX.Intf.FunctionDispatcher,
-  ufrmDataCounts, ufraMeterSelector, ufrmQuerySetupDate, ufrmShowDeformMap;
+  ufrmDataCounts, ufraMeterSelector, ufrmQuerySetupDate, ufrmShowDeformMap,ufrmFindNewSheets;
 {$R *.dfm}
 
 
@@ -264,6 +266,15 @@ begin
       lstTestMeters.AddItem(ExcelMeters.Items[i].DesignName, ExcelMeters.Items[i]);
   fraXLSParamEditor1.vleMeterParams.ItemProps['仪器类型'].PickList := PG_MeterTypes;
   fraXLSParamEditor1.vlePrjParams.ItemProps['工程部位'].PickList := pg_locations;
+end;
+
+procedure TfrmTestSummary.btnToolFindNewSheetsClick(Sender: TObject);
+var
+  frm:TfrmFindNewSheets;
+begin
+  frm := TfrmFindNewSheets.Create(Self);
+  frm.ShowModal;
+  frm.Release;
 end;
 
 procedure TfrmTestSummary.Button1Click(Sender: TObject);

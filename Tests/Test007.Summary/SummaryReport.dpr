@@ -72,7 +72,9 @@ uses
   ufrmQuerySetupDate in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmQuerySetupDate.pas' {frmQuerySetupDate},
   ufraEigenvalueGrid in '..\..\Client\ClientCommon\FuncFrames\Eigenvalue\ufraEigenvalueGrid.pas' {fraEigenvalueGrid: TFrame},
   ufraDeformMap in '..\..\Client\ClientCommon\FuncFrames\Tools\ufraDeformMap.pas' {fraDeformMap: TFrame},
-  ufrmShowDeformMap in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmShowDeformMap.pas' {frmShowDeformPoints};
+  ufrmShowDeformMap in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmShowDeformMap.pas' {frmShowDeformPoints},
+  ufrmFindNewSheets in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmFindNewSheets.pas' {frmFindNewSheets},
+  ufrmEVGraph in '..\..\Client\ClientCommon\FuncFrames\Eigenvalue\ufrmEVGraph.pas' {frmEVGraph};
 
 {$R *.res}
 
@@ -82,8 +84,6 @@ begin
     Application.MainFormOnTaskbar := True;
     Application.Title := '黄金峡观测数据处理辅助工具（功能测试程序）';
   Application.CreateForm(TfrmTestSummary, frmTestSummary);
-  Application.CreateForm(TfrmQuerySetupDate, frmQuerySetupDate);
-  Application.CreateForm(TfrmShowDeformPoints, frmShowDeformPoints);
   //Application.CreateForm(TfrmMeterSelector, frmMeterSelector);
   Application.Run;
 

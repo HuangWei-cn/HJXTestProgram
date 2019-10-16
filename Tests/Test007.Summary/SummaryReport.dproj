@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>SummaryReport.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -105,8 +105,8 @@
         <UWP_DelphiLogo150>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_256px_510906_easyicon.net.png</UWP_DelphiLogo150>
         <UWP_DelphiLogo44>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_64px_510906_easyicon.net.png</UWP_DelphiLogo44>
         <Icon_MainIcon>SummaryReport_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.320;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_Build>320</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.323;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>323</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -129,8 +129,8 @@
         <UWP_DelphiLogo44>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_64px_510906_easyicon.net.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_256px_510906_easyicon.net.png</UWP_DelphiLogo150>
         <Icon_MainIcon>SummaryReport_Icon1.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.123;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_Build>123</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.131;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>131</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -319,6 +319,14 @@
             <Form>frmShowDeformPoints</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\..\Client\ClientCommon\FuncFrames\Tools\ufrmFindNewSheets.pas">
+            <Form>frmFindNewSheets</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\Client\ClientCommon\FuncFrames\Eigenvalue\ufrmEVGraph.pas">
+            <Form>frmEVGraph</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <None Include="说明.txt"/>
         <None Include="..\..\Client\ClientCommon\各模块注册方法.txt"/>
         <None Include="..\..\Client\ClientCommon\常用事件.txt"/>
@@ -348,6 +356,12 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
+                <DeployFile LocalName="..\..\Client\ClientCommon\常用事件.txt" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="..\..\..\Resource\图标\report_256px_510906_easyicon.net.png" Configuration="Release" Class="UWP_DelphiLogo150">
                     <Platform Name="Win32">
                         <RemoteDir>Assets\</RemoteDir>
@@ -395,6 +409,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="说明.txt" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="..\..\Client\ClientCommon\各模块注册方法.txt" Configuration="Release" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
