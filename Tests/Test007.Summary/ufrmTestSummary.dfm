@@ -166,7 +166,7 @@ object frmTestSummary: TfrmTestSummary
     Top = 0
     Width = 734
     Height = 688
-    ActivePage = tabTools
+    ActivePage = tabQuickView
     Align = alClient
     TabOrder = 0
     object tabBaseParams: TTabSheet
@@ -278,6 +278,7 @@ object frmTestSummary: TfrmTestSummary
         Width = 726
         Height = 660
         VertScrollBar.Smooth = True
+        VertScrollBar.Tracking = True
         Align = alClient
         Ctl3D = True
         ParentCtl3D = False
@@ -429,16 +430,16 @@ object frmTestSummary: TfrmTestSummary
           inherited CategoryPanel5: TCategoryPanel
             ExplicitWidth = 425
             inherited cmbGraphDefine: TComboBox
-              Width = 295
-              ExplicitWidth = 295
+              Width = 261
+              ExplicitWidth = 261
             end
             inherited cmbGridFormat: TComboBox
-              Width = 295
-              ExplicitWidth = 295
+              Width = 261
+              ExplicitWidth = 261
             end
             inherited cmbXLSFormat: TComboBox
-              Width = 295
-              ExplicitWidth = 295
+              Width = 261
+              ExplicitWidth = 261
             end
           end
           inherited CategoryPanel4: TCategoryPanel
@@ -465,12 +466,12 @@ object frmTestSummary: TfrmTestSummary
           inherited CategoryPanel3: TCategoryPanel
             ExplicitWidth = 425
             inherited cmbPreDefineDataStruc: TComboBox
-              Width = 255
-              ExplicitWidth = 255
+              Width = 221
+              ExplicitWidth = 221
             end
             inherited memPreDDSContent: TMemo
-              Width = 255
-              ExplicitWidth = 255
+              Width = 221
+              ExplicitWidth = 221
             end
           end
           inherited CategoryPanel2: TCategoryPanel
@@ -678,5 +679,10 @@ object frmTestSummary: TfrmTestSummary
       Caption = #35774#32622#20026#32570#30465#23485#24230#21644#39640#24230
       OnClick = piSetDefaultTLSizeClick
     end
+  end
+  object ApplicationEvents1: TApplicationEvents
+    OnIdle = ApplicationEvents1Idle
+    Left = 92
+    Top = 460
   end
 end

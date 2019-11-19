@@ -15,7 +15,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, SimpleGraph, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.ToolWin,
   System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, Vcl.StdCtrls, Vcl.ButtonGroup,
   Vcl.ActnMan, Vcl.ActnCtrls, Vcl.PlatformDefaultStyleActnCtrls, Vcl.Clipbrd,
-  Vcl.Imaging.jpeg, uhwSGEx, uhwSGEx.DataMapClasses, Vcl.Buttons, Vcl.Menus;
+  Vcl.Imaging.jpeg, uhwSGEx, uhwSGEx.DataMapClasses, Vcl.Buttons, Vcl.Menus, Vcl.AppEvnts;
 
 type
   TfrmEditor = class(TForm)
@@ -104,6 +104,7 @@ type
     edtPointAngle: TEdit;
     Label14: TLabel;
     chkUseGlobalAngle: TCheckBox;
+    ApplicationEvents1: TApplicationEvents;
     procedure actLoadLayoutExecute(Sender: TObject);
     procedure actSaveLayoutExecute(Sender: TObject);
     procedure actInsBackgroudExecute(Sender: TObject);
@@ -186,6 +187,7 @@ type
     procedure edtPointAngleChange(Sender: TObject);
     procedure chkUseGlobalAngleClick(Sender: TObject);
     procedure cmbDeformNameChange(Sender: TObject);
+    procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
   private
         { Private declarations }
     FLayoutfile       : string;
@@ -698,6 +700,15 @@ end;
 procedure TfrmEditor.actZoomOutUpdate(Sender: TObject);
 begin
   actZoomOut.Enabled := sgLayout.Zoom > Low(TZoom);
+end;
+
+procedure TfrmEditor.ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
+begin
+  if sgLayout.PZState = 1 then
+  begin
+    sgLayout.PZState := 0;
+    sglayout.Invalidate;
+  end;
 end;
 
 procedure TfrmEditor.btnSetAsDefaultClick(Sender: TObject);

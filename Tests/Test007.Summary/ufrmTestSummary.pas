@@ -30,7 +30,7 @@ uses
     {ufraTrendLineShell,} ufraMeterList, ufraEigenvalueWeb, uHJX.ProjectGlobal, ufraRptDataHTMLGrid,
   ufraQuickViewer, ufraEigenvalueGrid,
     {--------}
-  AdvPanel, Vcl.Menus {, acPathDialog};
+  AdvPanel, Vcl.Menus, Vcl.AppEvnts {, acPathDialog};
 
 type
   TfrmTestSummary = class(TForm)
@@ -86,6 +86,7 @@ type
     Button3: TButton;
     Button4: TButton;
     btnToolFindNewSheets: TButton;
+    ApplicationEvents1: TApplicationEvents;
     procedure actLoadParamsExecute(Sender: TObject);
     procedure actLoadDataFileListExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -103,6 +104,7 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure btnToolFindNewSheetsClick(Sender: TObject);
+    procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
   private
         { Private declarations }
     FParamLoaded,
@@ -233,6 +235,11 @@ procedure TfrmTestSummary.actShowDataLayoutExecute(Sender: TObject);
 begin
   if dlgOpenDataLayout.Execute then
         // fraDataLayout.LoadDataLayout(dlgOpenDataLayout.FileName);
+end;
+
+procedure TfrmTestSummary.ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
+begin
+  IAppServices.OnIdle;
 end;
 
 procedure TfrmTestSummary.btnDataCountsClick(Sender: TObject);

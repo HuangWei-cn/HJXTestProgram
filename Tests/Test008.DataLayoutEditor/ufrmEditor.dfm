@@ -236,7 +236,6 @@ object frmEditor: TfrmEditor
     OnObjectChange = sgLayoutObjectChange
     OnObjectSelect = sgLayoutObjectSelect
     OnObjectDblClick = sgLayoutObjectDblClick
-    ExplicitWidth = 569
   end
   object ActionToolBar1: TActionToolBar
     Left = 0
@@ -290,7 +289,6 @@ object frmEditor: TfrmEditor
       BevelKind = bkSoft
       Caption = #24555#36895#35774#32622
       TabOrder = 0
-      ExplicitWidth = 159
     end
     object GroupBox1: TGroupBox
       Left = 2
@@ -300,8 +298,6 @@ object frmEditor: TfrmEditor
       Align = alTop
       Caption = #25991#23383#21450#25968#25454
       TabOrder = 1
-      ExplicitLeft = 3
-      ExplicitTop = 14
       object edtText: TLabeledEdit
         Left = 12
         Top = 32
@@ -360,21 +356,16 @@ object frmEditor: TfrmEditor
       HeaderFont.Name = 'Tahoma'
       HeaderFont.Style = []
       TabOrder = 2
-      ExplicitLeft = 3
       object CategoryPanel4: TCategoryPanel
         Top = 341
         Height = 81
         Caption = #26410#20351#29992
         TabOrder = 0
-        ExplicitTop = 559
-        ExplicitWidth = 152
       end
       object CategoryPanel3: TCategoryPanel
         Top = 141
         Caption = #24179#38754#21464#24418#31661#22836#23646#24615
         TabOrder = 1
-        ExplicitTop = 359
-        ExplicitWidth = 152
         object Label11: TLabel
           Left = 8
           Top = 8
@@ -505,12 +496,11 @@ object frmEditor: TfrmEditor
         Caption = #22806#35266#23646#24615
         Collapsed = True
         TabOrder = 3
-        ExplicitWidth = 152
         ExpandedHeight = 329
         object GroupBox2: TGroupBox
           Left = 0
           Top = 0
-          Width = 155
+          Width = 167
           Height = 300
           Align = alTop
           Caption = #22806#35266#23646#24615
@@ -697,7 +687,7 @@ object frmEditor: TfrmEditor
     Left = 374
     Top = 478
     Bitmap = {
-      494C01013900A0005C0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01013900A000600010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000F0000000010020000000000000F0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3137,5 +3127,10 @@ object frmEditor: TfrmEditor
     object piOriginBackgroundSize: TMenuItem
       Action = actRestoreOriginBackgroundSize
     end
+  end
+  object ApplicationEvents1: TApplicationEvents
+    OnIdle = ApplicationEvents1Idle
+    Left = 100
+    Top = 364
   end
 end
