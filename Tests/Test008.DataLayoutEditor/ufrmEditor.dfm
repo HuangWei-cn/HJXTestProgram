@@ -159,7 +159,7 @@ object frmEditor: TfrmEditor
     ExplicitHeight = 100
   end
   object Splitter2: TSplitter
-    Left = 733
+    Left = 709
     Top = 26
     Height = 740
     Align = alRight
@@ -220,12 +220,14 @@ object frmEditor: TfrmEditor
   object sgLayout: TSimpleGraph
     Left = 176
     Top = 26
-    Width = 557
+    Width = 533
     Height = 740
     Align = alClient
+    HorzScrollBar.Tracking = True
     PopupMenu = popSG
     SnapToGrid = False
     TabOrder = 1
+    VertScrollBar.Tracking = True
     OnDragDrop = sgLayoutDragDrop
     OnDragOver = sgLayoutDragOver
     OnKeyDown = sgLayoutKeyDown
@@ -236,6 +238,7 @@ object frmEditor: TfrmEditor
     OnObjectChange = sgLayoutObjectChange
     OnObjectSelect = sgLayoutObjectSelect
     OnObjectDblClick = sgLayoutObjectDblClick
+    ExplicitWidth = 557
   end
   object ActionToolBar1: TActionToolBar
     Left = 0
@@ -267,9 +270,9 @@ object frmEditor: TfrmEditor
     Panels = <>
   end
   object Panel2: TPanel
-    Left = 736
+    Left = 712
     Top = 26
-    Width = 175
+    Width = 199
     Height = 740
     Align = alRight
     BevelOuter = bvNone
@@ -281,7 +284,7 @@ object frmEditor: TfrmEditor
     object StaticText1: TStaticText
       Left = 2
       Top = 2
-      Width = 171
+      Width = 195
       Height = 17
       Align = alTop
       Alignment = taCenter
@@ -289,19 +292,21 @@ object frmEditor: TfrmEditor
       BevelKind = bkSoft
       Caption = #24555#36895#35774#32622
       TabOrder = 0
+      ExplicitWidth = 171
     end
     object GroupBox1: TGroupBox
       Left = 2
       Top = 19
-      Width = 171
+      Width = 195
       Height = 186
       Align = alTop
       Caption = #25991#23383#21450#25968#25454
       TabOrder = 1
+      ExplicitWidth = 171
       object edtText: TLabeledEdit
         Left = 12
         Top = 32
-        Width = 121
+        Width = 165
         Height = 21
         EditLabel.Width = 48
         EditLabel.Height = 13
@@ -312,7 +317,7 @@ object frmEditor: TfrmEditor
       object edtID: TLabeledEdit
         Left = 12
         Top = 76
-        Width = 121
+        Width = 165
         Height = 21
         EditLabel.Width = 48
         EditLabel.Height = 13
@@ -323,7 +328,7 @@ object frmEditor: TfrmEditor
       object edtDataName: TLabeledEdit
         Left = 12
         Top = 116
-        Width = 121
+        Width = 165
         Height = 21
         EditLabel.Width = 48
         EditLabel.Height = 13
@@ -334,7 +339,7 @@ object frmEditor: TfrmEditor
       object edtDataUnit: TLabeledEdit
         Left = 12
         Top = 155
-        Width = 121
+        Width = 165
         Height = 21
         EditLabel.Width = 48
         EditLabel.Height = 13
@@ -346,8 +351,9 @@ object frmEditor: TfrmEditor
     object CategoryPanelGroup1: TCategoryPanelGroup
       Left = 2
       Top = 205
-      Width = 171
+      Width = 195
       Height = 533
+      VertScrollBar.Position = 20
       VertScrollBar.Tracking = True
       Align = alClient
       HeaderFont.Charset = DEFAULT_CHARSET
@@ -356,15 +362,18 @@ object frmEditor: TfrmEditor
       HeaderFont.Name = 'Tahoma'
       HeaderFont.Style = []
       TabOrder = 2
+      ExplicitWidth = 171
       object CategoryPanel4: TCategoryPanel
-        Top = 341
+        Top = 450
         Height = 81
         Caption = #26410#20351#29992
         TabOrder = 0
       end
       object CategoryPanel3: TCategoryPanel
-        Top = 141
+        Top = 420
+        Height = 30
         Caption = #24179#38754#21464#24418#31661#22836#23646#24615
+        Collapsed = True
         TabOrder = 1
         object Label11: TLabel
           Left = 8
@@ -444,7 +453,7 @@ object frmEditor: TfrmEditor
         end
       end
       object CategoryPanel2: TCategoryPanel
-        Top = 30
+        Top = 309
         Height = 111
         Caption = #24213#22270#23646#24615
         TabOrder = 2
@@ -491,20 +500,19 @@ object frmEditor: TfrmEditor
         end
       end
       object CategoryPanel1: TCategoryPanel
-        Top = 0
-        Height = 30
+        Top = -20
+        Height = 329
         Caption = #22806#35266#23646#24615
-        Collapsed = True
         TabOrder = 3
-        ExpandedHeight = 329
         object GroupBox2: TGroupBox
           Left = 0
           Top = 0
-          Width = 167
+          Width = 174
           Height = 300
           Align = alTop
           Caption = #22806#35266#23646#24615
           TabOrder = 0
+          ExplicitWidth = 167
           object Label1: TLabel
             Left = 7
             Top = 20
@@ -520,7 +528,7 @@ object frmEditor: TfrmEditor
             Caption = #23383#20307#22823#23567
           end
           object Label3: TLabel
-            Left = 75
+            Left = 85
             Top = 66
             Width = 48
             Height = 13
@@ -541,22 +549,22 @@ object frmEditor: TfrmEditor
             Caption = #36879#26126#24230
           end
           object btnSetAsDefault: TSpeedButton
-            Left = 64
-            Top = 268
+            Left = 76
+            Top = 267
             Width = 81
             Height = 22
             Caption = #35774#20026#40664#35748#26679#24335
             OnClick = btnSetAsDefaultClick
           end
           object Label6: TLabel
-            Left = 71
+            Left = 85
             Top = 113
             Width = 36
             Height = 13
             Caption = #32447#39068#33394
           end
           object Label7: TLabel
-            Left = 41
+            Left = 55
             Top = 163
             Width = 24
             Height = 13
@@ -565,7 +573,7 @@ object frmEditor: TfrmEditor
           object cmbFonts: TComboBox
             Left = 7
             Top = 39
-            Width = 134
+            Width = 150
             Height = 21
             TabOrder = 0
             OnChange = cmbFontsChange
@@ -573,7 +581,7 @@ object frmEditor: TfrmEditor
           object cmbFontSize: TComboBox
             Left = 4
             Top = 85
-            Width = 61
+            Width = 75
             Height = 21
             ItemIndex = 0
             TabOrder = 1
@@ -595,25 +603,27 @@ object frmEditor: TfrmEditor
               '48')
           end
           object clbxFontColor: TColorBox
-            Left = 71
+            Left = 85
             Top = 85
-            Width = 70
+            Width = 75
             Height = 22
+            Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeNone, cbIncludeDefault, cbCustomColor, cbPrettyNames, cbCustomColors]
             TabOrder = 2
             OnChange = clbxFontColorChange
           end
           object clbxBackColor: TColorBox
             Left = 4
             Top = 132
-            Width = 61
+            Width = 75
             Height = 22
+            Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeNone, cbIncludeDefault, cbCustomColor, cbPrettyNames, cbCustomColors]
             TabOrder = 3
             OnChange = clbxBackColorChange
           end
           object trcTransparency: TTrackBar
             Left = 4
             Top = 204
-            Width = 137
+            Width = 165
             Height = 22
             Max = 100
             Position = 80
@@ -630,10 +640,11 @@ object frmEditor: TfrmEditor
             OnClick = chkBorderClick
           end
           object clbxLineColor: TColorBox
-            Left = 71
+            Left = 85
             Top = 132
-            Width = 70
+            Width = 75
             Height = 22
+            Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeNone, cbIncludeDefault, cbCustomColor, cbPrettyNames, cbCustomColors]
             TabOrder = 6
             OnChange = clbxLineColorChange
           end
@@ -656,9 +667,9 @@ object frmEditor: TfrmEditor
             OnClick = chkUseGDIPClick
           end
           object cmbLineWidth: TComboBox
-            Left = 71
+            Left = 85
             Top = 160
-            Width = 70
+            Width = 75
             Height = 21
             Style = csDropDownList
             ItemIndex = 1
@@ -687,7 +698,7 @@ object frmEditor: TfrmEditor
     Left = 374
     Top = 478
     Bitmap = {
-      494C01013900A000600010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01013900A0006C0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000F0000000010020000000000000F0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2921,6 +2932,30 @@ object frmEditor: TfrmEditor
             Action = actInsLink
             Caption = 'actIns&Link'
             ImageIndex = 28
+          end
+          item
+            Caption = '-'
+          end
+          item
+            Action = actInsElliptic
+            ImageIndex = 32
+          end
+          item
+            Action = actInsTriangular
+            ImageIndex = 33
+          end
+          item
+            Action = actInsRhomboidal
+            Caption = 'actInsR&homboidal'
+            ImageIndex = 34
+          end
+          item
+            Action = actInsPentagonal
+            ImageIndex = 35
+          end
+          item
+            Action = actInsRectangular
+            ImageIndex = 30
           end>
         ActionBar = ActionToolBar1
       end>
@@ -3100,6 +3135,46 @@ object frmEditor: TfrmEditor
       OnExecute = actInsDeformDirectExecute
       OnUpdate = actInsDeformDirectUpdate
     end
+    object actInsElliptic: TAction
+      Category = #25554#20837#22270#24418
+      Caption = 'actInsElliptic'
+      Hint = #25554#20837#26925#22278
+      ImageIndex = 32
+      OnExecute = actInsEllipticExecute
+      OnUpdate = actInsEllipticUpdate
+    end
+    object actInsTriangular: TAction
+      Category = #25554#20837#22270#24418
+      Caption = 'actInsTriangular'
+      Hint = #25554#20837#19977#35282#24418
+      ImageIndex = 33
+      OnExecute = actInsTriangularExecute
+      OnUpdate = actInsTriangularUpdate
+    end
+    object actInsRhomboidal: TAction
+      Category = #25554#20837#22270#24418
+      Caption = 'actInsRhomboidal'
+      Hint = #25554#20837#33777#24418
+      ImageIndex = 34
+      OnExecute = actInsRhomboidalExecute
+      OnUpdate = actInsRhomboidalUpdate
+    end
+    object actInsPentagonal: TAction
+      Category = #25554#20837#22270#24418
+      Caption = 'actInsPentagonal'
+      Hint = #25554#20837#20116#35282#26143
+      ImageIndex = 35
+      OnExecute = actInsPentagonalExecute
+      OnUpdate = actInsPentagonalUpdate
+    end
+    object actInsRectangular: TAction
+      Category = #25554#20837#22270#24418
+      Caption = 'actInsRectangular'
+      Hint = #25554#20837#30697#24418
+      ImageIndex = 30
+      OnExecute = actInsRectangularExecute
+      OnUpdate = actInsRectangularUpdate
+    end
   end
   object dlgOpenLayout: TOpenDialog
     Filter = #20998#24067#22270#25991#20214'|*.sg;*.sgp'
@@ -3118,6 +3193,7 @@ object frmEditor: TfrmEditor
   end
   object dlgOpenPrjConfig: TOpenDialog
     Filter = 'Excel'#24037#20316#31807#25991#20214'|*.xls;*.xlsx'
+    Options = [ofPathMustExist, ofFileMustExist, ofEnableSizing]
     Left = 296
     Top = 420
   end

@@ -105,6 +105,11 @@ type
     Label14: TLabel;
     chkUseGlobalAngle: TCheckBox;
     ApplicationEvents1: TApplicationEvents;
+    actInsElliptic: TAction;
+    actInsTriangular: TAction;
+    actInsRhomboidal: TAction;
+    actInsPentagonal: TAction;
+    actInsRectangular: TAction;
     procedure actLoadLayoutExecute(Sender: TObject);
     procedure actSaveLayoutExecute(Sender: TObject);
     procedure actInsBackgroudExecute(Sender: TObject);
@@ -188,6 +193,16 @@ type
     procedure chkUseGlobalAngleClick(Sender: TObject);
     procedure cmbDeformNameChange(Sender: TObject);
     procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
+    procedure actInsEllipticExecute(Sender: TObject);
+    procedure actInsEllipticUpdate(Sender: TObject);
+    procedure actInsTriangularExecute(Sender: TObject);
+    procedure actInsTriangularUpdate(Sender: TObject);
+    procedure actInsRhomboidalExecute(Sender: TObject);
+    procedure actInsRhomboidalUpdate(Sender: TObject);
+    procedure actInsPentagonalExecute(Sender: TObject);
+    procedure actInsPentagonalUpdate(Sender: TObject);
+    procedure actInsRectangularExecute(Sender: TObject);
+    procedure actInsRectangularUpdate(Sender: TObject);
   private
         { Private declarations }
     FLayoutfile       : string;
@@ -209,8 +224,12 @@ type
     FPreCmd      : TGraphCommandMode;
     FHoldSpaceKey: Boolean;
 
+    // 上次访问的路径
+    FLastPrjPath: String;
+    FLastMapPath: String;
     function ForEachCallback(GraphObject: TGraphObject; Action: Integer): Boolean;
     procedure ShowMeters;
+    procedure Modified;
   public
         { Public declarations }
   end;
@@ -510,6 +529,18 @@ begin
     (sgLayout.DefaultLinkClass = TdmcDeformationDirection);
 end;
 
+procedure TfrmEditor.actInsEllipticExecute(Sender: TObject);
+begin
+  sgLayout.DefaultNodeClass := TGPEllipticNode;
+  sgLayout.CommandMode := cmInsertNode;
+end;
+
+procedure TfrmEditor.actInsEllipticUpdate(Sender: TObject);
+begin
+  actInsElliptic.Checked := (sgLayout.CommandMode = cmInsertNode) and
+    (sgLayout.DefaultNodeClass = TGPEllipticNode);
+end;
+
 procedure TfrmEditor.actInsLinkExecute(Sender: TObject);
 begin
   sgLayout.DefaultLinkClass := TGPGraphicLink;
@@ -520,6 +551,42 @@ procedure TfrmEditor.actInsLinkUpdate(Sender: TObject);
 begin
   actInsLink.Checked := (sgLayout.CommandMode = cmInsertLink) and
     (sgLayout.DefaultLinkClass = TGPGraphicLink);
+end;
+
+procedure TfrmEditor.actInsPentagonalExecute(Sender: TObject);
+begin
+  sgLayout.DefaultNodeClass := TGPPentagonalNode;
+  sgLayout.CommandMode := cmInsertNode;
+end;
+
+procedure TfrmEditor.actInsPentagonalUpdate(Sender: TObject);
+begin
+  actInsPentagonal.Checked := (sgLayout.CommandMode = cmInsertNode) and
+    (sgLayout.DefaultNodeClass = TGPPentagonalNode);
+end;
+
+procedure TfrmEditor.actInsRectangularExecute(Sender: TObject);
+begin
+  sgLayout.DefaultNodeClass := TGPRectangularNode;
+  sgLayout.CommandMode := cmInsertNode;
+end;
+
+procedure TfrmEditor.actInsRectangularUpdate(Sender: TObject);
+begin
+  actInsRectangular.Checked := (sgLayout.CommandMode = cmInsertNode) and
+    (sgLayout.DefaultNodeClass = TGPRectangularNode);
+end;
+
+procedure TfrmEditor.actInsRhomboidalExecute(Sender: TObject);
+begin
+  sgLayout.DefaultNodeClass := TGPRhomboidalNode;
+  sgLayout.CommandMode := cmInsertNode;
+end;
+
+procedure TfrmEditor.actInsRhomboidalUpdate(Sender: TObject);
+begin
+  actInsRhomboidal.Checked := (sgLayout.CommandMode = cmInsertNode) and
+    (sgLayout.DefaultNodeClass = TGPRhomboidalNode);
 end;
 
 procedure TfrmEditor.actInsTextExecute(Sender: TObject);
@@ -534,10 +601,26 @@ begin
     (sgLayout.DefaultNodeClass = TGPTextNode);
 end;
 
+procedure TfrmEditor.actInsTriangularExecute(Sender: TObject);
+begin
+  sgLayout.DefaultNodeClass := TGPTriangularNode;
+  sgLayout.CommandMode := cmInsertNode;
+end;
+
+procedure TfrmEditor.actInsTriangularUpdate(Sender: TObject);
+begin
+  actInsTriangular.Checked := (sgLayout.CommandMode = cmInsertNode) and
+    (sgLayout.DefaultNodeClass = TGPTriangularNode);
+end;
+
 procedure TfrmEditor.actLinkDatabaseExecute(Sender: TObject);
 begin
+  if FLastPrjPath <> '' then
+      dlgOpenPrjConfig.InitialDir := FLastPrjPath;
+
   if dlgOpenPrjConfig.Execute then
   begin
+    FLastPrjPath := ExtractFileDir(dlgOpenPrjConfig.FileName);
     tvwMeters.Items.Clear;
     LoadProjectConfig(dlgOpenPrjConfig.FileName);
     if ExcelMeters.Count > 0 then
@@ -557,8 +640,12 @@ begin
     end;
   end;
 
+  if FLastMapPath <> '' then
+      dlgOpenLayout.InitialDir := FLastMapPath;
+
   if dlgOpenLayout.Execute then
   begin
+    FLastMapPath := ExtractFileDir(dlgOpenLayout.FileName);
     FLoading := True;
     FLayoutfile := dlgOpenLayout.FileName;
     sgLayout.LoadFromFile(dlgOpenLayout.FileName);
@@ -707,7 +794,7 @@ begin
   if sgLayout.PZState = 1 then
   begin
     sgLayout.PZState := 0;
-    sglayout.Invalidate;
+    sgLayout.Invalidate;
   end;
 end;
 
@@ -859,12 +946,30 @@ begin
 end;
 
 procedure TfrmEditor.edtAngleChange(Sender: TObject);
+var
+  i: Integer;
 begin
   if FLoadingProperties then Exit;
+  // 如果选中对象是底图，则设置之
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
+  begin
     if FSelectedGObj is TdmcMap then
+    begin
         TdmcMap(FSelectedGObj).AngleFromNorth := StrToFloat(edtAngle.Text);
+        Modified;
+    end;
+  end
+  else // 如果没有选中底图，则自动查找，对找到的第一个底图进行此项操作
+  begin
+    for i := 0 to sgLayout.Objects.Count - 1 do
+      if sgLayout.Objects.Items[i] is TdmcMap then
+      begin
+        TdmcMap(sgLayout.Objects.Items[i]).AngleFromNorth := StrToFloat(edtAngle.Text);
+        Modified;
+        Break;
+      end;
+  end;
 end;
 
 procedure TfrmEditor.edtDataNameChange(Sender: TObject);
@@ -888,12 +993,24 @@ begin
 end;
 
 procedure TfrmEditor.edtFactorChange(Sender: TObject);
+var
+  i: Integer;
 begin
   if FLoadingProperties then Exit;
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
+  begin
     if FSelectedGObj is TdmcMap then
         TdmcMap(FSelectedGObj).OneMMLength := StrToInt(edtFactor.Text);
+  end
+  else
+    for i := 0 to sgLayout.Objects.Count - 1 do
+      if sgLayout.Objects.Items[i] is TdmcMap then
+      begin
+        TdmcMap(sgLayout.Objects.Items[i]).OneMMLength := StrToInt(edtFactor.Text);
+        Break;
+      end;
+  Modified;
 end;
 
 procedure TfrmEditor.edtIDChange(Sender: TObject);
@@ -1183,6 +1300,23 @@ begin
           TGraphLink(GraphObject).Text := TdmcDataItem(TGraphLink(GraphObject).Source)
           .DesignName;
     end;
+  end
+  else
+  begin
+    if FdefFontName <> '' then
+    begin
+      GraphObject.Pen.Color := FdefLineColor;
+      GraphObject.Pen.Width := FdefLineWidth;
+      GraphObject.Font.Name := FdefFontName;
+      GraphObject.Font.Size := FdefFontSize;
+      GraphObject.Brush.Color := FdefBackColor;
+      TGPPolygonalNode(GraphObject).Transparency := FdefTrans;
+      if FdefBorder then
+          TGPPolygonalNode(GraphObject).Pen.Style := psSolid
+      else
+          TGPPolygonalNode(GraphObject).Pen.Style := psClear;
+      GraphObject.Pen.Width := FdefLineWidth;
+    end;
   end;
 end;
 
@@ -1308,6 +1442,11 @@ begin
         Exit;
     tvwMeters.BeginDrag(False, 5);
   end;
+end;
+
+procedure TfrmEditor.Modified;
+begin
+  sglayout.Modified := True;
 end;
 
 end.
