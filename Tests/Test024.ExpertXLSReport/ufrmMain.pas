@@ -312,8 +312,8 @@ begin
   end;
     // if rbSelectedMeters.Checked then
   if WriteOption = woOnlyCreateBook then
-    ShowMessage('数据导出完毕，请用Excel打开导出的文件后另存为xlsx格式。若是WPS电子表格ET，'#13#10
-      +'则保存一下即可。导出的文件存在一定的格式问题，需要重新保存方能解决。')
+      ShowMessage('数据导出完毕，请用Excel打开导出的文件后另存为xlsx格式。若是WPS电子表格ET，'#13#10
+      + '则保存一下即可。导出的文件存在一定的格式问题，需要重新保存方能解决。')
   else
       ShowMessage('数据导出完毕，请享用。');
   ProgressBar1.Visible := False;
@@ -393,7 +393,9 @@ begin
       begin
         tagName := Meter.PrjParams.GroupID;
         grpItem := MeterGroup.ItemByName[Meter.PrjParams.GroupID];
-        for j := 0 to grpItem.Count - 1 do grpMts.add(grpItem.Items[j]);
+        { TODO -ohw -c此处添加对grpItem是否为nil的判断，用户设置可能有误 : ActionItem }
+        if grpItem <> nil then
+          for j := 0 to grpItem.Count - 1 do grpMts.add(grpItem.Items[j]);
       end
       else tagName := Meter.DesignName;
 

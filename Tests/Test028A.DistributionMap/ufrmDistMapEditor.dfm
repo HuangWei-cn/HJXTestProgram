@@ -30,14 +30,14 @@ object frmDMEditor: TfrmDMEditor
     Caption = #22270#24418#26631#39064
   end
   object lbl3: TLabel
-    Left = 42
+    Left = 36
     Top = 80
     Width = 48
     Height = 14
     Caption = #20202#22120#31867#22411
   end
   object lbl4: TLabel
-    Left = 54
+    Left = 48
     Top = 108
     Width = 36
     Height = 14
@@ -108,7 +108,7 @@ object frmDMEditor: TfrmDMEditor
     Top = 44
     Width = 75
     Height = 25
-    Caption = #27979#35797
+    Caption = #32472#22270'('#27979#35797')'
     TabOrder = 7
     OnClick = btnTestClick
   end

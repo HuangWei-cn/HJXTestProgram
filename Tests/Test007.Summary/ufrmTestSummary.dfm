@@ -166,7 +166,7 @@ object frmTestSummary: TfrmTestSummary
     Top = 0
     Width = 734
     Height = 688
-    ActivePage = tabQuickView
+    ActivePage = tabTools
     Align = alClient
     TabOrder = 0
     object tabBaseParams: TTabSheet
@@ -430,16 +430,16 @@ object frmTestSummary: TfrmTestSummary
           inherited CategoryPanel5: TCategoryPanel
             ExplicitWidth = 425
             inherited cmbGraphDefine: TComboBox
-              Width = 261
-              ExplicitWidth = 261
+              Width = 244
+              ExplicitWidth = 244
             end
             inherited cmbGridFormat: TComboBox
-              Width = 261
-              ExplicitWidth = 261
+              Width = 244
+              ExplicitWidth = 244
             end
             inherited cmbXLSFormat: TComboBox
-              Width = 261
-              ExplicitWidth = 261
+              Width = 244
+              ExplicitWidth = 244
             end
           end
           inherited CategoryPanel4: TCategoryPanel
@@ -466,12 +466,12 @@ object frmTestSummary: TfrmTestSummary
           inherited CategoryPanel3: TCategoryPanel
             ExplicitWidth = 425
             inherited cmbPreDefineDataStruc: TComboBox
-              Width = 221
-              ExplicitWidth = 221
+              Width = 204
+              ExplicitWidth = 204
             end
             inherited memPreDDSContent: TMemo
-              Width = 221
-              ExplicitWidth = 221
+              Width = 204
+              ExplicitWidth = 204
             end
           end
           inherited CategoryPanel2: TCategoryPanel

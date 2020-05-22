@@ -11,37 +11,101 @@ object fraDistMap: TfraDistMap
     Height = 41
     Align = alTop
     Caption = 'pnlFunc'
+    ShowCaption = False
     TabOrder = 0
-    ExplicitLeft = 204
-    ExplicitTop = 128
-    ExplicitWidth = 185
+    DesignSize = (
+      649
+      41)
+    object btnShowCustomPanel: TSpeedButton
+      Left = 620
+      Top = 9
+      Width = 23
+      Height = 22
+      Anchors = [akTop, akRight]
+      Caption = #9660
+      Flat = True
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+      OnClick = btnShowCustomPanelClick
+    end
     object btnLastData: TButton
-      Left = 60
-      Top = 8
+      Left = 8
+      Top = 9
       Width = 75
       Height = 25
       Caption = #26368#26032#25968#25454
       TabOrder = 0
       OnClick = btnLastDataClick
     end
+    object btnSpecialDate: TButton
+      Left = 89
+      Top = 10
+      Width = 75
+      Height = 25
+      Caption = #25351#23450#26085#26399
+      TabOrder = 1
+      OnClick = btnSpecialDateClick
+    end
+    object dtpData: TDateTimePicker
+      Left = 170
+      Top = 13
+      Width = 107
+      Height = 21
+      Date = 43964.698127569440000000
+      Time = 43964.698127569440000000
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Courier Std'
+      Font.Style = [fsBold]
+      ImeMode = imDisable
+      ParentFont = False
+      TabOrder = 2
+    end
+    object btnAddNewLine: TButton
+      Left = 328
+      Top = 10
+      Width = 75
+      Height = 25
+      Caption = #26032#22686#26354#32447
+      TabOrder = 3
+      OnClick = btnAddNewLineClick
+    end
+    object dtpNewLineDate: TDateTimePicker
+      Left = 409
+      Top = 13
+      Width = 85
+      Height = 21
+      Date = 43965.833526296290000000
+      Time = 43965.833526296290000000
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Courier Std'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 4
+    end
   end
   object chtDistMap: TChart
     Left = 0
-    Top = 41
+    Top = 105
     Width = 649
-    Height = 295
+    Height = 231
     BackWall.Brush.Gradient.Direction = gdBottomTop
     BackWall.Brush.Gradient.EndColor = clWhite
     BackWall.Brush.Gradient.StartColor = 15395562
-    BackWall.Brush.Gradient.Visible = True
-    BackWall.Transparent = False
+    Border.Visible = True
     Foot.Font.Color = clBlue
     Foot.Font.Name = 'Verdana'
     Gradient.Direction = gdBottomTop
     Gradient.EndColor = clWhite
     Gradient.MidColor = 15395562
     Gradient.StartColor = 15395562
-    Gradient.Visible = True
     LeftWall.Color = 14745599
     Legend.Alignment = laTop
     Legend.Font.Name = 'Verdana'
@@ -53,8 +117,9 @@ object fraDistMap: TfraDistMap
     Title.Text.Strings = (
       #35266#27979#25968#25454#20998#24067#22270)
     BottomAxis.Axis.Color = 4210752
-    BottomAxis.Grid.Color = 11119017
-    BottomAxis.LabelsFormat.Font.Name = 'Verdana'
+    BottomAxis.Grid.Color = 15000804
+    BottomAxis.Grid.Style = psDash
+    BottomAxis.LabelsFormat.Font.Name = 'Courier New'
     BottomAxis.TicksInner.Color = 11119017
     BottomAxis.Title.Caption = #20202#22120#32534#21495
     BottomAxis.Title.Font.Name = 'Verdana'
@@ -69,8 +134,10 @@ object fraDistMap: TfraDistMap
     DepthTopAxis.TicksInner.Color = 11119017
     DepthTopAxis.Title.Font.Name = 'Verdana'
     LeftAxis.Axis.Color = 4210752
-    LeftAxis.Grid.Color = 11119017
-    LeftAxis.LabelsFormat.Font.Name = 'Verdana'
+    LeftAxis.AxisValuesFormat = '0.00'
+    LeftAxis.Grid.Color = 15000804
+    LeftAxis.Grid.Style = psDash
+    LeftAxis.LabelsFormat.Font.Name = 'Courier New'
     LeftAxis.TicksInner.Color = 11119017
     LeftAxis.Title.Caption = #29289#29702#37327
     LeftAxis.Title.Font.Name = 'Verdana'
@@ -86,17 +153,30 @@ object fraDistMap: TfraDistMap
     TopAxis.Title.Font.Name = 'Verdana'
     View3D = False
     Align = alClient
+    BevelOuter = bvNone
+    BorderWidth = 1
+    Color = clWhite
+    PopupMenu = PopupMenu1
     TabOrder = 1
-    ExplicitLeft = 120
-    ExplicitTop = 112
-    ExplicitWidth = 400
-    ExplicitHeight = 250
     DefaultCanvas = 'TGDIPlusCanvas'
     ColorPaletteIndex = 13
-    object Series1: TLineSeries
+    object pgbLoadDatas: TProgressBar
+      Left = 1
+      Top = 225
+      Width = 647
+      Height = 5
+      Align = alBottom
+      Smooth = True
+      TabOrder = 0
+      Visible = False
+    end
+    object srsFirst: TLineSeries
       Title = '2019-06-30'
+      Brush.BackColor = clDefault
+      Pointer.HorizSize = 3
       Pointer.InflateMargins = True
       Pointer.Style = psRectangle
+      Pointer.VertSize = 3
       Pointer.Visible = True
       XValues.Name = 'X'
       XValues.Order = loAscending
@@ -110,9 +190,58 @@ object fraDistMap: TfraDistMap
       Detail = {0000000000}
     end
   end
+  object pnlCustom: TPanel
+    Left = 0
+    Top = 41
+    Width = 649
+    Height = 64
+    Align = alTop
+    TabOrder = 2
+    Visible = False
+    object edtChartTitle: TLabeledEdit
+      Left = 113
+      Top = 6
+      Width = 313
+      Height = 21
+      EditLabel.Width = 84
+      EditLabel.Height = 13
+      EditLabel.Caption = #33258#23450#20041#22270#34920#26631#39064
+      EditLabel.Layout = tlCenter
+      LabelPosition = lpLeft
+      TabOrder = 0
+      OnKeyPress = edtChartTitleKeyPress
+    end
+    object edtAxisTitle: TLabeledEdit
+      Left = 113
+      Top = 33
+      Width = 313
+      Height = 21
+      EditLabel.Width = 96
+      EditLabel.Height = 13
+      EditLabel.Caption = #33258#23450#20041#22352#26631#36724#26631#39064
+      LabelPosition = lpLeft
+      TabOrder = 1
+      OnKeyPress = edtAxisTitleKeyPress
+    end
+  end
   object TeeGDIPlus1: TTeeGDIPlus
     Active = True
     AntiAliasText = gpfBest
     TeePanel = chtDistMap
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 504
+    Top = 61
+    object piSetup: TMenuItem
+      Caption = #35774#32622
+      OnClick = piSetupClick
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object piCopyChartAsBitmap: TMenuItem
+      Caption = #25335#36125#22270#20687
+      OnClick = piCopyChartAsBitmapClick
+    end
   end
 end
