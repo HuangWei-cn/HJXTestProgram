@@ -1,0 +1,104 @@
+object framDistributionMap: TframDistributionMap
+  Left = 0
+  Top = 0
+  Width = 731
+  Height = 348
+  TabOrder = 0
+  object Chart1: TChart
+    Left = 0
+    Top = 41
+    Width = 731
+    Height = 307
+    BackWall.Brush.Gradient.Direction = gdBottomTop
+    BackWall.Brush.Gradient.EndColor = clWhite
+    BackWall.Brush.Gradient.StartColor = 15395562
+    BackWall.Brush.Gradient.Visible = True
+    BackWall.Transparent = False
+    Foot.Font.Color = clBlue
+    Foot.Font.Name = 'Verdana'
+    Gradient.Direction = gdBottomTop
+    Gradient.EndColor = clWhite
+    Gradient.MidColor = 15395562
+    Gradient.StartColor = 15395562
+    Gradient.Visible = True
+    LeftWall.Color = 14745599
+    Legend.Alignment = laTop
+    Legend.Font.Name = 'Verdana'
+    Legend.LegendStyle = lsSeries
+    Legend.Shadow.Transparency = 0
+    RightWall.Color = 14745599
+    Title.Font.Height = -16
+    Title.Font.Name = #40657#20307
+    Title.Text.Strings = (
+      #38170#26438#24212#21147#35745#27979#20540#20998#24067#22270)
+    BottomAxis.Axis.Color = 4210752
+    BottomAxis.Grid.Color = 11119017
+    BottomAxis.LabelsFormat.Font.Name = 'Verdana'
+    BottomAxis.TicksInner.Color = 11119017
+    BottomAxis.Title.Font.Name = 'Verdana'
+    DepthAxis.Axis.Color = 4210752
+    DepthAxis.Grid.Color = 11119017
+    DepthAxis.LabelsFormat.Font.Name = 'Verdana'
+    DepthAxis.TicksInner.Color = 11119017
+    DepthAxis.Title.Font.Name = 'Verdana'
+    DepthTopAxis.Axis.Color = 4210752
+    DepthTopAxis.Grid.Color = 11119017
+    DepthTopAxis.LabelsFormat.Font.Name = 'Verdana'
+    DepthTopAxis.TicksInner.Color = 11119017
+    DepthTopAxis.Title.Font.Name = 'Verdana'
+    LeftAxis.Axis.Color = 4210752
+    LeftAxis.Grid.Color = 11119017
+    LeftAxis.LabelsFormat.Font.Name = 'Verdana'
+    LeftAxis.TicksInner.Color = 11119017
+    LeftAxis.Title.Font.Name = 'Verdana'
+    Panning.MouseWheel = pmwNone
+    RightAxis.Axis.Color = 4210752
+    RightAxis.Grid.Color = 11119017
+    RightAxis.LabelsFormat.Font.Name = 'Verdana'
+    RightAxis.TicksInner.Color = 11119017
+    RightAxis.Title.Font.Name = 'Verdana'
+    TopAxis.Axis.Color = 4210752
+    TopAxis.Grid.Color = 11119017
+    TopAxis.LabelsFormat.Font.Name = 'Verdana'
+    TopAxis.TicksInner.Color = 11119017
+    TopAxis.Title.Font.Name = 'Verdana'
+    View3D = False
+    Align = alClient
+    TabOrder = 0
+    ExplicitWidth = 665
+    ExplicitHeight = 356
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = 13
+    object Series1: TLineSeries
+      Title = '2019-06-25'
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      Pointer.Visible = True
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+      Data = {
+        04050000000000000000048A40FF030000005230310000000000648940FF0300
+        00005230320000000000148940FF030000005230330000000000EC8840FF0300
+        00005230340000000000948640FF03000000523035}
+      Detail = {0000000000}
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 731
+    Height = 41
+    Align = alTop
+    TabOrder = 1
+    ExplicitLeft = 204
+    ExplicitTop = 368
+    ExplicitWidth = 185
+  end
+  object TeeGDIPlus1: TTeeGDIPlus
+    Active = True
+    AntiAliasText = gpfBest
+    TeePanel = Chart1
+  end
+end

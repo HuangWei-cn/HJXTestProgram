@@ -238,7 +238,6 @@ object frmEditor: TfrmEditor
     OnObjectChange = sgLayoutObjectChange
     OnObjectSelect = sgLayoutObjectSelect
     OnObjectDblClick = sgLayoutObjectDblClick
-    ExplicitWidth = 557
   end
   object ActionToolBar1: TActionToolBar
     Left = 0
@@ -292,7 +291,6 @@ object frmEditor: TfrmEditor
       BevelKind = bkSoft
       Caption = #24555#36895#35774#32622
       TabOrder = 0
-      ExplicitWidth = 171
     end
     object GroupBox1: TGroupBox
       Left = 2
@@ -302,7 +300,6 @@ object frmEditor: TfrmEditor
       Align = alTop
       Caption = #25991#23383#21450#25968#25454
       TabOrder = 1
-      ExplicitWidth = 171
       object edtText: TLabeledEdit
         Left = 12
         Top = 32
@@ -353,7 +350,6 @@ object frmEditor: TfrmEditor
       Top = 205
       Width = 195
       Height = 533
-      VertScrollBar.Position = 20
       VertScrollBar.Tracking = True
       Align = alClient
       HeaderFont.Charset = DEFAULT_CHARSET
@@ -362,15 +358,14 @@ object frmEditor: TfrmEditor
       HeaderFont.Name = 'Tahoma'
       HeaderFont.Style = []
       TabOrder = 2
-      ExplicitWidth = 171
       object CategoryPanel4: TCategoryPanel
-        Top = 450
+        Top = 470
         Height = 81
         Caption = #26410#20351#29992
         TabOrder = 0
       end
       object CategoryPanel3: TCategoryPanel
-        Top = 420
+        Top = 440
         Height = 30
         Caption = #24179#38754#21464#24418#31661#22836#23646#24615
         Collapsed = True
@@ -453,7 +448,7 @@ object frmEditor: TfrmEditor
         end
       end
       object CategoryPanel2: TCategoryPanel
-        Top = 309
+        Top = 329
         Height = 111
         Caption = #24213#22270#23646#24615
         TabOrder = 2
@@ -500,7 +495,7 @@ object frmEditor: TfrmEditor
         end
       end
       object CategoryPanel1: TCategoryPanel
-        Top = -20
+        Top = 0
         Height = 329
         Caption = #22806#35266#23646#24615
         TabOrder = 3
@@ -512,7 +507,6 @@ object frmEditor: TfrmEditor
           Align = alTop
           Caption = #22806#35266#23646#24615
           TabOrder = 0
-          ExplicitWidth = 167
           object Label1: TLabel
             Left = 7
             Top = 20
@@ -698,7 +692,7 @@ object frmEditor: TfrmEditor
     Left = 374
     Top = 478
     Bitmap = {
-      494C01013900A0006C0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01013900A000700010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000F0000000010020000000000000F0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

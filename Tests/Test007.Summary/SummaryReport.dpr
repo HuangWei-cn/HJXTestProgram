@@ -75,7 +75,8 @@ uses
   ufrmShowDeformMap in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmShowDeformMap.pas' {frmShowDeformPoints},
   ufrmFindNewSheets in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmFindNewSheets.pas' {frmFindNewSheets},
   ufrmEVGraph in '..\..\Client\ClientCommon\FuncFrames\Eigenvalue\ufrmEVGraph.pas' {frmEVGraph},
-  SimpleGraph in '..\..\Client\ClientCommon\Tools\SimpleGraph.pas';
+  SimpleGraph in '..\..\Client\ClientCommon\Tools\SimpleGraph.pas',
+  ufrmSetNewSheetParams in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmSetNewSheetParams.pas' {frmSetNewSheetParam};
 
 {$R *.res}
 
