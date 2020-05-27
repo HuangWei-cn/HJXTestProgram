@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.646,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\SizeDlg.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.519,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Core\uHJX.EnvironmentVariables.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.764,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\AlignDlg.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.823,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SimpleGraph.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.357,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.340,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\LinkProp.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.646,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\SizeDlg.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.764,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\AlignDlg.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.808,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\DataInfImp\uHJX.Excel.DataQuery.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.895,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\DataInfImp\uHJX.Excel.IO.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.421,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\ObjectProp.pas</Transaction>

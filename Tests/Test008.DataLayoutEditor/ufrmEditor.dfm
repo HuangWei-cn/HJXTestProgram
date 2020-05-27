@@ -2,8 +2,8 @@ object frmEditor: TfrmEditor
   Left = 0
   Top = 0
   Caption = #20998#24067#22270#32534#36753#22120
-  ClientHeight = 785
-  ClientWidth = 911
+  ClientHeight = 816
+  ClientWidth = 943
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -152,16 +152,16 @@ object frmEditor: TfrmEditor
   object Splitter1: TSplitter
     Left = 173
     Top = 26
-    Height = 740
+    Height = 771
     Beveled = True
     ExplicitLeft = 476
     ExplicitTop = 324
     ExplicitHeight = 100
   end
   object Splitter2: TSplitter
-    Left = 709
+    Left = 741
     Top = 26
-    Height = 740
+    Height = 771
     Align = alRight
     Beveled = True
     ExplicitLeft = 464
@@ -172,7 +172,7 @@ object frmEditor: TfrmEditor
     Left = 0
     Top = 26
     Width = 173
-    Height = 740
+    Height = 771
     Align = alLeft
     TabOrder = 0
     object btngrpFuncs: TButtonGroup
@@ -197,7 +197,7 @@ object frmEditor: TfrmEditor
       Left = 1
       Top = 81
       Width = 171
-      Height = 637
+      Height = 668
       Align = alClient
       HideSelection = False
       Indent = 19
@@ -209,7 +209,7 @@ object frmEditor: TfrmEditor
     end
     object edtSeek: TEdit
       Left = 1
-      Top = 718
+      Top = 749
       Width = 171
       Height = 21
       Align = alBottom
@@ -220,8 +220,8 @@ object frmEditor: TfrmEditor
   object sgLayout: TSimpleGraph
     Left = 176
     Top = 26
-    Width = 533
-    Height = 740
+    Width = 565
+    Height = 771
     Align = alClient
     HorzScrollBar.Tracking = True
     PopupMenu = popSG
@@ -238,11 +238,12 @@ object frmEditor: TfrmEditor
     OnObjectChange = sgLayoutObjectChange
     OnObjectSelect = sgLayoutObjectSelect
     OnObjectDblClick = sgLayoutObjectDblClick
+    PZState = 0
   end
   object ActionToolBar1: TActionToolBar
     Left = 0
     Top = 0
-    Width = 911
+    Width = 943
     Height = 26
     ActionManager = ActionManager1
     Caption = 'ActionToolBar1'
@@ -263,16 +264,16 @@ object frmEditor: TfrmEditor
   end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 766
-    Width = 911
+    Top = 797
+    Width = 943
     Height = 19
     Panels = <>
   end
   object Panel2: TPanel
-    Left = 712
+    Left = 744
     Top = 26
     Width = 199
-    Height = 740
+    Height = 771
     Align = alRight
     BevelOuter = bvNone
     Padding.Left = 2
@@ -349,7 +350,7 @@ object frmEditor: TfrmEditor
       Left = 2
       Top = 205
       Width = 195
-      Height = 533
+      Height = 564
       VertScrollBar.Tracking = True
       Align = alClient
       HeaderFont.Charset = DEFAULT_CHARSET
@@ -502,7 +503,7 @@ object frmEditor: TfrmEditor
         object GroupBox2: TGroupBox
           Left = 0
           Top = 0
-          Width = 174
+          Width = 191
           Height = 300
           Align = alTop
           Caption = #22806#35266#23646#24615
@@ -543,8 +544,8 @@ object frmEditor: TfrmEditor
             Caption = #36879#26126#24230
           end
           object btnSetAsDefault: TSpeedButton
-            Left = 76
-            Top = 267
+            Left = 80
+            Top = 266
             Width = 81
             Height = 22
             Caption = #35774#20026#40664#35748#26679#24335
@@ -565,9 +566,9 @@ object frmEditor: TfrmEditor
             Caption = #32447#23485
           end
           object cmbFonts: TComboBox
-            Left = 7
+            Left = 4
             Top = 39
-            Width = 150
+            Width = 157
             Height = 21
             TabOrder = 0
             OnChange = cmbFontsChange
@@ -683,6 +684,15 @@ object frmEditor: TfrmEditor
               '9'
               '10')
           end
+          object chkDataAlighRight: TCheckBox
+            Left = 67
+            Top = 248
+            Width = 78
+            Height = 17
+            Caption = #21491#20391#23545#40784
+            TabOrder = 10
+            OnClick = chkDataAlighRightClick
+          end
         end
       end
     end
@@ -692,7 +702,7 @@ object frmEditor: TfrmEditor
     Left = 374
     Top = 478
     Bitmap = {
-      494C01013900A000700010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01013900A000780010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000F0000000010020000000000000F0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3169,6 +3179,11 @@ object frmEditor: TfrmEditor
       OnExecute = actInsRectangularExecute
       OnUpdate = actInsRectangularUpdate
     end
+    object actDisableSelectMap: TAction
+      Category = 'Popmenu'
+      Caption = #31105#36873#24213#22270
+      OnExecute = actDisableSelectMapExecute
+    end
   end
   object dlgOpenLayout: TOpenDialog
     Filter = #20998#24067#22270#25991#20214'|*.sg;*.sgp'
@@ -3196,6 +3211,12 @@ object frmEditor: TfrmEditor
     Top = 268
     object piOriginBackgroundSize: TMenuItem
       Action = actRestoreOriginBackgroundSize
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object piDisableSelectMap: TMenuItem
+      Action = actDisableSelectMap
     end
   end
   object ApplicationEvents1: TApplicationEvents

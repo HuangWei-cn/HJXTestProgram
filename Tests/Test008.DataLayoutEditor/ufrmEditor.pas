@@ -110,6 +110,10 @@ type
     actInsRhomboidal: TAction;
     actInsPentagonal: TAction;
     actInsRectangular: TAction;
+    chkDataAlighRight: TCheckBox;
+    N1: TMenuItem;
+    piDisableSelectMap: TMenuItem;
+    actDisableSelectMap: TAction;
     procedure actLoadLayoutExecute(Sender: TObject);
     procedure actSaveLayoutExecute(Sender: TObject);
     procedure actInsBackgroudExecute(Sender: TObject);
@@ -203,6 +207,8 @@ type
     procedure actInsPentagonalUpdate(Sender: TObject);
     procedure actInsRectangularExecute(Sender: TObject);
     procedure actInsRectangularUpdate(Sender: TObject);
+    procedure chkDataAlighRightClick(Sender: TObject);
+    procedure actDisableSelectMapExecute(Sender: TObject);
   private
         { Private declarations }
     FLayoutfile       : string;
@@ -211,14 +217,15 @@ type
     FLoadingProperties: Boolean;
     FSelectedGObj     : TGraphObject;
         { 缺省设置 }
-    FdefFontName : string;
-    FdefFontSize : Integer;
-    FdefFontColor: TColor;
-    FdefBackColor: TColor;
-    FdefLineColor: TColor;
-    FdefTrans    : Integer;
-    FdefBorder   : Boolean;
-    FdefLineWidth: Integer;
+    FdefFontName  : string;
+    FdefFontSize  : Integer;
+    FdefFontColor : TColor;
+    FdefBackColor : TColor;
+    FdefLineColor : TColor;
+    FdefTrans     : Integer;
+    FdefBorder    : Boolean;
+    FdefLineWidth : Integer;
+    FdefAlignRight: Boolean;
 
     // 下面两条是用于按住空格键平移图形的。
     FPreCmd      : TGraphCommandMode;
@@ -251,7 +258,6 @@ uses
   uHJX.Excel.Meters,
   uHJX.Excel.InitParams;
 {$R *.dfm}
-
 
 type
   TNodeType = (ntClass, ntMeter, ntDataItem);
@@ -289,40 +295,42 @@ resourcestring
 
 const
   // ForEachObject Actions
-  FEO_DELETE             = 00;
-  FEO_SELECT             = 01;
-  FEO_INVERTSELECTION    = 02;
-  FEO_SENDTOBACK         = 03;
-  FEO_BRINGTOFRONT       = 04;
-  FEO_MAKESELECTABLE     = 05;
-  FEO_SETFONTFACE        = 06;
-  FEO_SETFONTSIZE        = 07;
-  FEO_SETFONTBOLD        = 08;
-  FEO_SETFONTITALIC      = 09;
-  FEO_SETFONTUNDERLINE   = 10;
-  FEO_RESETFONTBOLD      = 11;
-  FEO_RESETFONTITALIC    = 12;
+  FEO_DELETE = 00;
+  FEO_SELECT = 01;
+  FEO_INVERTSELECTION = 02;
+  FEO_SENDTOBACK = 03;
+  FEO_BRINGTOFRONT = 04;
+  FEO_MAKESELECTABLE = 05;
+  FEO_SETFONTFACE = 06;
+  FEO_SETFONTSIZE = 07;
+  FEO_SETFONTBOLD = 08;
+  FEO_SETFONTITALIC = 09;
+  FEO_SETFONTUNDERLINE = 10;
+  FEO_RESETFONTBOLD = 11;
+  FEO_RESETFONTITALIC = 12;
   FEO_RESETFONTUNDERLINE = 13;
-  FEO_SETALIGNMENTLEFT   = 14;
+  FEO_SETALIGNMENTLEFT = 14;
   FEO_SETALIGNMENTCENTER = 15;
-  FEO_SETALIGNMENTRIGHT  = 16;
-  FEO_SETLAYOUTTOP       = 17;
-  FEO_SETLAYOUTCENTER    = 18;
-  FEO_SETLAYOUTBOTTOM    = 19;
-  FEO_REVERSEDIRECTION   = 20;
-  FEO_ROTATE90CW         = 21;
-  FEO_ROTATE90CCW        = 22;
-  FEO_GROW25             = 23;
-  FEO_SHRINK25           = 24;
+  FEO_SETALIGNMENTRIGHT = 16;
+  FEO_SETLAYOUTTOP = 17;
+  FEO_SETLAYOUTCENTER = 18;
+  FEO_SETLAYOUTBOTTOM = 19;
+  FEO_REVERSEDIRECTION = 20;
+  FEO_ROTATE90CW = 21;
+  FEO_ROTATE90CCW = 22;
+  FEO_GROW25 = 23;
+  FEO_SHRINK25 = 24;
     /// ////
-  FEO_SetBorder       = 25;
+  FEO_SetBorder = 25;
   FEO_SetTransparency = 26;
-  FEO_SetFontColor    = 27;
-  FEO_SetBackColor    = 28;
-  FEO_SetLineColor    = 29;
-  FEO_SetGDIP         = 30;
-  FEO_SetAutoSize     = 31;
-  FEO_SetLineWidth    = 32;
+  FEO_SetFontColor = 27;
+  FEO_SetBackColor = 28;
+  FEO_SetLineColor = 29;
+  FEO_SetGDIP = 30;
+  FEO_SetAutoSize = 31;
+  FEO_SetLineWidth = 32;
+  FEO_SetDataAlignRight = 33; // set TGPTextNode anchors right-top.
+  FEO_DisableSelectMap = 34;  // disable select map, or not.
 
 var
   ADragItem: TmeterNode; // 被用户拖放的TreeNode
@@ -333,61 +341,107 @@ var
 begin
   Result := True;
   case Action of
-    FEO_DELETE: Result := GraphObject.Delete;
-    FEO_SELECT: GraphObject.Selected := True;
-    FEO_INVERTSELECTION: GraphObject.Selected := not GraphObject.Selected;
-    FEO_SENDTOBACK: GraphObject.SendToBack;
-    FEO_BRINGTOFRONT: GraphObject.BringToFront;
-    FEO_MAKESELECTABLE: GraphObject.Options := GraphObject.Options + [goSelectable];
-    FEO_SETFONTFACE: GraphObject.Font.Name := cmbFonts.Text;
-    FEO_SETFONTSIZE: GraphObject.Font.Size := cmbFontSize.Tag; // cbxFontSize.Tag;
-    FEO_SETFONTBOLD: GraphObject.Font.Style := GraphObject.Font.Style + [fsBold];
-    FEO_SETFONTITALIC: GraphObject.Font.Style := GraphObject.Font.Style + [fsItalic];
-    FEO_SETFONTUNDERLINE: GraphObject.Font.Style := GraphObject.Font.Style + [fsUnderline];
-    FEO_RESETFONTBOLD: GraphObject.Font.Style := GraphObject.Font.Style - [fsBold];
-    FEO_RESETFONTITALIC: GraphObject.Font.Style := GraphObject.Font.Style - [fsItalic];
-    FEO_RESETFONTUNDERLINE: GraphObject.Font.Style := GraphObject.Font.Style - [fsUnderline];
-    FEO_SETALIGNMENTLEFT: if GraphObject is TGraphNode then
-          TGraphNode(GraphObject).Alignment := taLeftJustify;
-    FEO_SETALIGNMENTCENTER: if GraphObject is TGraphNode then
-          TGraphNode(GraphObject).Alignment := taCenter;
-    FEO_SETALIGNMENTRIGHT: if GraphObject is TGraphNode then
-          TGraphNode(GraphObject).Alignment := taRightJustify;
-    FEO_SETLAYOUTTOP: if GraphObject is TGraphNode then TGraphNode(GraphObject).Layout := tlTop;
-    FEO_SETLAYOUTCENTER: if GraphObject is TGraphNode then
-          TGraphNode(GraphObject).Layout := tlCenter;
-    FEO_SETLAYOUTBOTTOM: if GraphObject is TGraphNode then
-          TGraphNode(GraphObject).Layout := tlBottom;
-    FEO_REVERSEDIRECTION: if GraphObject is TGraphLink then TGraphLink(GraphObject).Reverse;
-    FEO_ROTATE90CW: if GraphObject is TGraphLink then
+    FEO_DELETE:
+      Result := GraphObject.Delete;
+    FEO_SELECT:
+      GraphObject.Selected := True;
+    FEO_INVERTSELECTION:
+      GraphObject.Selected := not GraphObject.Selected;
+    FEO_SENDTOBACK:
+      GraphObject.SendToBack;
+    FEO_BRINGTOFRONT:
+      GraphObject.BringToFront;
+    FEO_MAKESELECTABLE:
+      GraphObject.Options := GraphObject.Options + [goSelectable];
+    FEO_SETFONTFACE:
+      GraphObject.Font.Name := cmbFonts.Text;
+    FEO_SETFONTSIZE:
+      GraphObject.Font.Size := cmbFontSize.Tag; // cbxFontSize.Tag;
+    FEO_SETFONTBOLD:
+      GraphObject.Font.Style := GraphObject.Font.Style + [fsBold];
+    FEO_SETFONTITALIC:
+      GraphObject.Font.Style := GraphObject.Font.Style + [fsItalic];
+    FEO_SETFONTUNDERLINE:
+      GraphObject.Font.Style := GraphObject.Font.Style + [fsUnderline];
+    FEO_RESETFONTBOLD:
+      GraphObject.Font.Style := GraphObject.Font.Style - [fsBold];
+    FEO_RESETFONTITALIC:
+      GraphObject.Font.Style := GraphObject.Font.Style - [fsItalic];
+    FEO_RESETFONTUNDERLINE:
+      GraphObject.Font.Style := GraphObject.Font.Style - [fsUnderline];
+    FEO_SETALIGNMENTLEFT:
+      if GraphObject is TGraphNode then
+        TGraphNode(GraphObject).Alignment := taLeftJustify;
+    FEO_SETALIGNMENTCENTER:
+      if GraphObject is TGraphNode then
+        TGraphNode(GraphObject).Alignment := taCenter;
+    FEO_SETALIGNMENTRIGHT:
+      if GraphObject is TGraphNode then
+        TGraphNode(GraphObject).Alignment := taRightJustify;
+    FEO_SETLAYOUTTOP:
+      if GraphObject is TGraphNode then
+        TGraphNode(GraphObject).Layout := tlTop;
+    FEO_SETLAYOUTCENTER:
+      if GraphObject is TGraphNode then
+        TGraphNode(GraphObject).Layout := tlCenter;
+    FEO_SETLAYOUTBOTTOM:
+      if GraphObject is TGraphNode then
+        TGraphNode(GraphObject).Layout := tlBottom;
+    FEO_REVERSEDIRECTION:
+      if GraphObject is TGraphLink then
+        TGraphLink(GraphObject).Reverse;
+    FEO_ROTATE90CW:
+      if GraphObject is TGraphLink then
         with TGraphLink(GraphObject) do
         begin
           RotateOrg := CenterOfPoints(Polyline);
           Rotate(+Pi / 2, RotateOrg);
         end;
-    FEO_ROTATE90CCW: if GraphObject is TGraphLink then
+    FEO_ROTATE90CCW:
+      if GraphObject is TGraphLink then
         with TGraphLink(GraphObject) do
         begin
           RotateOrg := CenterOfPoints(Polyline);
           Rotate(-Pi / 2, RotateOrg);
         end;
-    FEO_GROW25: if GraphObject is TGraphLink then TGraphLink(GraphObject).Scale(1.25);
-    FEO_SHRINK25: if GraphObject is TGraphLink then TGraphLink(GraphObject).Scale(0.75);
-    FEO_SetFontColor: GraphObject.Font.Color := clbxFontColor.Color;
-    FEO_SetBorder: if chkBorder.Checked then GraphObject.Pen.Style := psSolid
-      else GraphObject.Pen.Style := psClear;
-    FEO_SetLineColor: GraphObject.Pen.Color := clbxLineColor.Selected;
-    FEO_SetBackColor: GraphObject.Brush.Color := clbxBackColor.Selected;
-    FEO_SetAutoSize: if GraphObject is TGPTextNode then
-          TGPTextNode(GraphObject).AutoSize := chkTextAutoSize.Checked;
-    FEO_SetTransparency: if GraphObject is TGPGraphNode then
-          TGPGraphNode(GraphObject).Transparency := trcTransparency.Tag
+    FEO_GROW25:
+      if GraphObject is TGraphLink then
+        TGraphLink(GraphObject).Scale(1.25);
+    FEO_SHRINK25:
+      if GraphObject is TGraphLink then
+        TGraphLink(GraphObject).Scale(0.75);
+    FEO_SetFontColor:
+      GraphObject.Font.Color := clbxFontColor.Color;
+    FEO_SetBorder:
+      if chkBorder.Checked then
+        GraphObject.Pen.Style := psSolid
+      else
+        GraphObject.Pen.Style := psClear;
+    FEO_SetLineColor:
+      GraphObject.Pen.Color := clbxLineColor.Selected;
+    FEO_SetBackColor:
+      GraphObject.Brush.Color := clbxBackColor.Selected;
+    FEO_SetAutoSize:
+      if GraphObject is TGPTextNode then
+        TGPTextNode(GraphObject).AutoSize := chkTextAutoSize.Checked;
+    FEO_SetTransparency:
+      if GraphObject is TGPGraphNode then
+        TGPGraphNode(GraphObject).Transparency := trcTransparency.Tag
       else if GraphObject is TGPPolygonalNode then
-          TGPPolygonalNode(GraphObject).Transparency := trcTransparency.Tag;
-    FEO_SetGDIP: if GraphObject is TGPTextNode then
-          TGPTextNode(GraphObject).UseGdipDrawText := chkUseGDIP.Checked;
-    FEO_SetLineWidth: GraphObject.Pen.Width := cmbLineWidth.ItemIndex;
-  else Result := False;
+        TGPPolygonalNode(GraphObject).Transparency := trcTransparency.Tag;
+    FEO_SetGDIP:
+      if GraphObject is TGPTextNode then
+        TGPTextNode(GraphObject).UseGdipDrawText := chkUseGDIP.Checked;
+    FEO_SetLineWidth:
+      GraphObject.Pen.Width := cmbLineWidth.ItemIndex;
+    FEO_SetDataAlignRight:
+      if GraphObject is TGPTextNode then
+        (GraphObject as TGPTextNode).DataAlignRight := chkDataAlighRight.Checked;
+    FEO_DisableSelectMap:
+      if GraphObject is TdmcMap then
+        (graphobject as tdmcmap).Selectable := not actDisableSelectMap.Checked;
+    else
+      Result := False;
   end;
 end;
 
@@ -412,7 +466,8 @@ var
   H: THAlignOption;
   V: TVAlignOption;
 begin
-  if TAlignDialog.Execute(H, V) then sgLayout.AlignSelection(H, V);
+  if TAlignDialog.Execute(H, V) then
+    sgLayout.AlignSelection(H, V);
 end;
 
 procedure TfrmEditor.actBringToFrontExecute(Sender: TObject);
@@ -454,6 +509,13 @@ end;
 procedure TfrmEditor.actDeleteUpdate(Sender: TObject);
 begin
   actDelete.Enabled := sgLayout.SelectedObjects.Count > 0;
+end;
+
+procedure TfrmEditor.actDisableSelectMapExecute(Sender: TObject);
+begin
+  actDisableSelectMap.Checked := not actDisableSelectMap.Checked;
+  piDisableSelectMap.Checked := actDisableSelectMap.Checked;
+  sgLayout.ForEachObject(ForEachCallback, FEO_DisableSelectMap);
 end;
 
 procedure TfrmEditor.actInsBackgroudExecute(Sender: TObject);
@@ -578,14 +640,16 @@ end;
 
 procedure TfrmEditor.actLinkDatabaseExecute(Sender: TObject);
 begin
-  if FLastPrjPath <> '' then dlgOpenPrjConfig.InitialDir := FLastPrjPath;
+  if FLastPrjPath <> '' then
+    dlgOpenPrjConfig.InitialDir := FLastPrjPath;
 
   if dlgOpenPrjConfig.Execute then
   begin
     FLastPrjPath := ExtractFileDir(dlgOpenPrjConfig.FileName);
     tvwMeters.Items.Clear;
     LoadProjectConfig(dlgOpenPrjConfig.FileName);
-    if ExcelMeters.Count > 0 then ShowMeters;
+    if ExcelMeters.Count > 0 then
+      ShowMeters;
   end;
 end;
 
@@ -594,12 +658,15 @@ begin
   if sgLayout.Modified then
   begin
     case MessageBox(0, '正在编辑的图形已经改变，是否先保存？', '注意！', MB_ICONWARNING or MB_YESNOCANCEL) of
-      mrYes: actSaveLayout.Execute;
-      mrCancel: Exit;
+      mrYes:
+        actSaveLayout.Execute;
+      mrCancel:
+        Exit;
     end;
   end;
 
-  if FLastMapPath <> '' then dlgOpenLayout.InitialDir := FLastMapPath;
+  if FLastMapPath <> '' then
+    dlgOpenLayout.InitialDir := FLastMapPath;
 
   if dlgOpenLayout.Execute then
   begin
@@ -618,8 +685,10 @@ begin
   if sgLayout.Modified then
   begin
     case MessageBox(0, '正在编辑的图形已经改变，是否先保存？', '注意！', MB_ICONWARNING or MB_YESNOCANCEL) of
-      mrYes: actSaveLayout.Execute;
-      mrCancel: Exit;
+      mrYes:
+        actSaveLayout.Execute;
+      mrCancel:
+        Exit;
     end;
   end;
 
@@ -639,7 +708,7 @@ procedure TfrmEditor.actPanModeUpdate(Sender: TObject);
 begin
   actPanMode.Checked := sgLayout.CommandMode = cmPan;
   actPanMode.Enabled := (sgLayout.HorzScrollBar.IsScrollBarVisible or
-    sgLayout.VertScrollBar.IsScrollBarVisible);
+      sgLayout.VertScrollBar.IsScrollBarVisible);
 end;
 
 procedure TfrmEditor.actPasteExecute(Sender: TObject);
@@ -656,14 +725,17 @@ procedure TfrmEditor.actPropertyExecute(Sender: TObject);
 var
   LinkCount: Integer;
 begin
-  if sgLayout.SelectedObjects.Count = 0 then TDesignerProperties.Execute(sgLayout)
+  if sgLayout.SelectedObjects.Count = 0 then
+    TDesignerProperties.Execute(sgLayout)
   else
   begin
     LinkCount := sgLayout.SelectedObjectsCount(TGraphLink);
-    if LinkCount = 0 then TNodeProperties.Execute(sgLayout.SelectedObjects)
+    if LinkCount = 0 then
+      TNodeProperties.Execute(sgLayout.SelectedObjects)
     else if LinkCount = sgLayout.SelectedObjects.Count then
-        TLinkProperties.Execute(sgLayout.SelectedObjects)
-    else TObjectProperties.Execute(sgLayout.SelectedObjects);
+      TLinkProperties.Execute(sgLayout.SelectedObjects)
+    else
+      TObjectProperties.Execute(sgLayout.SelectedObjects);
   end;
 end;
 
@@ -671,10 +743,11 @@ procedure TfrmEditor.actRestoreOriginBackgroundSizeExecute(Sender: TObject);
 var
   i: Integer;
 begin
-  if sgLayout.SelectedObjects.Count = 0 then Exit;
+  if sgLayout.SelectedObjects.Count = 0 then
+    Exit;
   for i := 0 to sgLayout.SelectedObjects.Count - 1 do
     if sgLayout.SelectedObjects.Items[i] is TdmcMap then
-        TdmcMap(sgLayout.SelectedObjects.Items[i]).SetBoundRectOriginal;
+      TdmcMap(sgLayout.SelectedObjects.Items[i]).SetBoundRectOriginal;
 end;
 
 procedure TfrmEditor.actRestoreOriginBackgroundSizeUpdate(Sender: TObject);
@@ -760,6 +833,7 @@ begin
   FdefTrans := round(trcTransparency.Position * 2.55);
   FdefBorder := chkBorder.Checked;
   FdefLineWidth := cmbLineWidth.ItemIndex;
+  FdefAlignRight := chkDataAlighRight.Checked;
 end;
 
 procedure TfrmEditor.chkBorderClick(Sender: TObject);
@@ -774,6 +848,11 @@ begin
 // TGPTextNode(FSelectedGObj).Pen.Style := psSolid
 // else
 // TGPTextNode(FSelectedGObj).Pen.Style := psClear;
+end;
+
+procedure TfrmEditor.chkDataAlighRightClick(Sender: TObject);
+begin
+  sgLayout.ForEachObject(ForEachCallback, FEO_SetDataAlignRight, True);
 end;
 
 procedure TfrmEditor.chkTextAutoSizeClick(Sender: TObject);
@@ -798,11 +877,12 @@ end;
 
 procedure TfrmEditor.chkUseGlobalAngleClick(Sender: TObject);
 begin
-  if FLoadingProperties then Exit;
+  if FLoadingProperties then
+    Exit;
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
     if FSelectedGObj is TdmcDeformationDirection then
-        TdmcDeformationDirection(FSelectedGObj).UseGlobalAngle := chkUseGlobalAngle.Checked;
+      TdmcDeformationDirection(FSelectedGObj).UseGlobalAngle := chkUseGlobalAngle.Checked;
 end;
 
 procedure TfrmEditor.clbxBackColorChange(Sender: TObject);
@@ -838,11 +918,12 @@ end;
 
 procedure TfrmEditor.cmbDeformNameChange(Sender: TObject);
 begin
-  if FLoadingProperties then Exit;
+  if FLoadingProperties then
+    Exit;
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
     if FSelectedGObj is TdmcDeformationDirection then
-        TdmcDeformationDirection(FSelectedGObj).DesignName := cmbDeformName.Text;
+      TdmcDeformationDirection(FSelectedGObj).DesignName := cmbDeformName.Text;
 end;
 
 procedure TfrmEditor.cmbFontsChange(Sender: TObject);
@@ -881,27 +962,30 @@ end;
 
 procedure TfrmEditor.cmbXDataChange(Sender: TObject);
 begin
-  if FLoadingProperties then Exit;
+  if FLoadingProperties then
+    Exit;
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
     if FSelectedGObj is TdmcDeformationDirection then
-        TdmcDeformationDirection(FSelectedGObj).XDataName := cmbXData.Text;
+      TdmcDeformationDirection(FSelectedGObj).XDataName := cmbXData.Text;
 end;
 
 procedure TfrmEditor.cmbYDataChange(Sender: TObject);
 begin
-  if FLoadingProperties then Exit;
+  if FLoadingProperties then
+    Exit;
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
     if FSelectedGObj is TdmcDeformationDirection then
-        TdmcDeformationDirection(FSelectedGObj).YDataName := cmbYData.Text;
+      TdmcDeformationDirection(FSelectedGObj).YDataName := cmbYData.Text;
 end;
 
 procedure TfrmEditor.edtAngleChange(Sender: TObject);
 var
   i: Integer;
 begin
-  if FLoadingProperties then Exit;
+  if FLoadingProperties then
+    Exit;
   // 如果选中对象是底图，则设置之
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
@@ -926,29 +1010,35 @@ end;
 
 procedure TfrmEditor.edtDataNameChange(Sender: TObject);
 begin
-  if FLoadingProperties then Exit;
+  if FLoadingProperties then
+    Exit;
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
-    if FSelectedGObj is TdmcDataItem then TdmcDataItem(FSelectedGObj).DataName := edtDataName.Text;
+    if FSelectedGObj is TdmcDataItem then
+      TdmcDataItem(FSelectedGObj).DataName := edtDataName.Text;
 end;
 
 procedure TfrmEditor.edtDataUnitChange(Sender: TObject);
 begin
-  if FLoadingProperties then Exit;
+  if FLoadingProperties then
+    Exit;
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
-    if FSelectedGObj is TdmcDataItem then TdmcDataItem(FSelectedGObj).DataUnit := edtDataUnit.Text;
+    if FSelectedGObj is TdmcDataItem then
+      TdmcDataItem(FSelectedGObj).DataUnit := edtDataUnit.Text;
 end;
 
 procedure TfrmEditor.edtFactorChange(Sender: TObject);
 var
   i: Integer;
 begin
-  if FLoadingProperties then Exit;
+  if FLoadingProperties then
+    Exit;
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
   begin
-    if FSelectedGObj is TdmcMap then TdmcMap(FSelectedGObj).OneMMLength := StrToInt(edtFactor.Text);
+    if FSelectedGObj is TdmcMap then
+      TdmcMap(FSelectedGObj).OneMMLength := StrToInt(edtFactor.Text);
   end
   else
     for i := 0 to sgLayout.Objects.Count - 1 do
@@ -962,19 +1052,22 @@ end;
 
 procedure TfrmEditor.edtIDChange(Sender: TObject);
 begin
-  if FLoadingProperties then Exit;
+  if FLoadingProperties then
+    Exit;
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
-    if FSelectedGObj is TdmcDataItem then TdmcDataItem(FSelectedGObj).DesignName := edtID.Text;
+    if FSelectedGObj is TdmcDataItem then
+      TdmcDataItem(FSelectedGObj).DesignName := edtID.Text;
 end;
 
 procedure TfrmEditor.edtPointAngleChange(Sender: TObject);
 begin
-  if FLoadingProperties then Exit;
+  if FLoadingProperties then
+    Exit;
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
   then
     if FSelectedGObj is TdmcDeformationDirection then
-        TdmcDeformationDirection(FSelectedGObj).AngleFromNorth := StrToFloat(edtPointAngle.Text);
+      TdmcDeformationDirection(FSelectedGObj).AngleFromNorth := StrToFloat(edtPointAngle.Text);
 end;
 
 procedure TfrmEditor.edtSeekChange(Sender: TObject);
@@ -982,7 +1075,8 @@ var
   i: Integer;
   s: string;
 begin
-  if edtSeek.Text = '' then Exit;
+  if edtSeek.Text = '' then
+    Exit;
     // 查找：
   s := UpperCase(edtSeek.Text);
   for i := 0 to tvwMeters.Items.Count - 1 do
@@ -997,53 +1091,62 @@ end;
 
 procedure TfrmEditor.edtTextChange(Sender: TObject);
 begin
-  if FLoadingProperties then Exit;
+  if FLoadingProperties then
+    Exit;
   if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = FSelectedGObj)
-  then FSelectedGObj.Text := edtText.Text;
+  then
+    FSelectedGObj.Text := edtText.Text;
 end;
 
 procedure TfrmEditor.sgLayoutDragDrop(Sender, Source: TObject; X, Y: Integer);
 var
-  go    : TGraphNode;
-  oo    : TGraphObject;
-  tpSnap: TPoint;
-  bSnap : Boolean;
-  tp    : TPoint;
+  go         : TGraphNode;
+  tp         : TPoint;
+  bNeedAlign : Boolean; // 需要设置对齐
+  bSetDefault: Boolean; // 需要设置缺省值
+  oo         : TGraphObject;
 begin
   tp := sgLayout.ClientToGraph(X, Y);
-  // 2020-05-26 检查X,Y处是否有东西
-  bSnap := False;
-  tpSnap.X := tp.X;
-  tpSnap.Y := tp.Y;
   oo := sgLayout.FindObjectAt(tp.X, tp.Y);
-  if (oo is TGPTextNode) then
+  if FdefFontName <> '' then // 当缺省字体名不为空，说明已经设置过缺省值了
+    bSetDefault := True
+  else
+    bSetDefault := False;
+
+// 如果X，Y处有东西，且为TGPTEXTNODE对象，则需要对齐
+  if (oo <> nil) and (oo is TGPTextNode) then
   begin
-    // TGPTextNode一般是TdmcDataItem, TdmcMeterLabel, TGPText等几类，一般不覆盖，而是对齐。暂时仅
-    // 支持靠左、靠下对齐
-    tpSnap.X := (oo as TGPTextNode).Left;
-    tpSnap.Y := (oo as TGPTextNode).Top + (oo as TGPTextNode).Height + 2;
-    bSnap := True;
-  end;
-  // 创建对象
+    bNeedAlign := True;
+    if not FdefAlignRight then
+    begin
+      tp.X := (oo as TGPTextNode).Left;
+      tp.Y := (oo as TGPTextNode).BoundsRect.Bottom + 2;
+    end
+    else
+    begin
+      tp.X := (oo as TGPTextNode).BoundsRect.Right - 10;
+      tp.Y := (oo as TGPTextNode).BoundsRect.Bottom + 2;
+    end;
+  end
+  else
+    bNeedAlign := False;
+
   if ADragItem.NodeType = ntMeter then
   begin
     // if ADragItem.Meter.Params.MeterType = '平面变形测点' then
       // go := TdmcDeformationDirection.CreateNew(sgLayout,nil,[tp, Point(tp.X, tp.Y+10)],nil)
     // else
     // go := TGPTextNode.CreateNew(sgLayout, Rect(tp.X, tp.Y, 10, 10))
-    if bSnap then
-        go := TdmcMeterLabel.CreateNew(sgLayout, Rect(tpSnap.X, tpSnap.Y, 10, 10))
-    else
-        go := TdmcMeterLabel.CreateNew(sgLayout, Rect(tp.X, tp.Y, 10, 10));
+    go := TdmcMeterLabel.CreateNew(sgLayout, Rect(tp.X, tp.Y, tp.X + 10, tp.Y + 10));
+    (go as TGPTextNode).DataAlignRight := FdefAlignRight;
   end
   else if ADragItem.NodeType = ntDataItem then
   begin
-    if bSnap then
-        go := TdmcDataItem.CreateNew(sgLayout, Rect(tpSnap.X, tpSnap.Y, 10, 10))
-    else
-        go := TdmcDataItem.CreateNew(sgLayout, Rect(tp.X, tp.Y, 10, 10))
+    go := TdmcDataItem.CreateNew(sgLayout, Rect(tp.X, tp.Y, tp.X + 10, tp.Y + 10));
+    (go as TGPTextNode).DataAlignRight := FdefAlignRight;
   end
-  else Exit;
+  else
+    Exit;
 
   go.Text := ADragItem.Meter.DesignName;
   if go is TdmcDataItem then
@@ -1061,15 +1164,22 @@ begin
     end;
 
     { 如果FdefFontName<>''，说明已经设置过了缺省属性 }
-  if FdefFontName <> '' then
+  if bSetDefault then
   begin
     go.Font.Name := FdefFontName;
     go.Font.Size := FdefFontSize;
     go.Font.Color := FdefFontColor;
     go.Brush.Color := FdefBackColor;
     TGPTextNode(go).Transparency := FdefTrans;
-    if FdefBorder then TGPTextNode(go).Pen.Style := psSolid
-    else TGPTextNode(go).Pen.Style := psClear;
+    if FdefBorder then
+      TGPTextNode(go).Pen.Style := psSolid
+    else
+      TGPTextNode(go).Pen.Style := psClear;
+    TGPTextNode(go).DataAlignRight := FdefAlignRight;
+
+    if FdefAlignRight then
+      TGPTextNode(go).Left := (oo as TGPTextNode).BoundsRect.Right - TGPTextNode(go).Width;
+
     go.Pen.Width := FdefLineWidth;
   end;
 end;
@@ -1102,7 +1212,8 @@ begin
       if sgLayout.CommandMode = cmPan then
       begin
         sgLayout.CommandMode := FPreCmd;
-        if FPreCmd <> cmPan then sgLayout.Invalidate;
+        if FPreCmd <> cmPan then
+          sgLayout.Invalidate;
       end;
     end;
   end;
@@ -1170,6 +1281,7 @@ begin
       chkBorder.Checked := GraphObject.Pen.Style <> psClear;
       chkTextAutoSize.Checked := TGPTextNode(GraphObject).AutoSize;
       chkUseGDIP.Checked := TGPTextNode(GraphObject).UseGdipDrawText;
+      chkDataAlighRight.Checked := TGPTextNode(graphobject).DataAlignRight;
       if GraphObject is TdmcDataItem then
       begin
         edtID.Text := TdmcDataItem(GraphObject).DesignName;
@@ -1212,7 +1324,8 @@ begin
       trcTransparency.Enabled := True;
       trcTransparency.Position := round(TGPGraphNode(GraphObject).Transparency / 255 * 100);
     end
-    else trcTransparency.Enabled := False;
+    else
+      trcTransparency.Enabled := False;
 
     FLoadingProperties := False;
   end;
@@ -1226,20 +1339,24 @@ end;
 procedure TfrmEditor.sgLayoutObjectInsert(Graph: TSimpleGraph; GraphObject: TGraphObject);
 begin
   if FLoading then // 加载图形时，也会引起Insert事件，此时不做处理
-      Exit;
+    Exit;
 
     // 这时候应该是用户插入的新图形了
   if GraphObject is TdmcDataItem then
     with GraphObject as TdmcDataItem do
     begin
       if Text = '' then
-        if DesignName = '' then Text := '观测数据(未指定仪器)'
-        else if DataName = '' then Text := DesignName + ':未指定数据'
-        else Text := DesignName + ':' + DataName;
+        if DesignName = '' then
+          Text := '观测数据(未指定仪器)'
+        else if DataName = '' then
+          Text := DesignName + ':未指定数据'
+        else
+          Text := DesignName + ':' + DataName;
     end
   else if GraphObject is TGPTextNode then
   begin
-    if TGPTextNode(GraphObject).Text = '' then TGPTextNode(GraphObject).Text := 'Text';
+    if TGPTextNode(GraphObject).Text = '' then
+      TGPTextNode(GraphObject).Text := 'Text';
   end
   else if GraphObject is TdmcDeformationDirection then { 2019-08-08 }
   begin
@@ -1263,7 +1380,7 @@ begin
       GraphObject.Font.Size := FdefFontSize;
       GraphObject.Options := GraphObject.Options - [goLinkable]; // 不允许连接
       if TGraphLink(GraphObject).Source is TdmcDataItem then
-          TGraphLink(GraphObject).Text := TdmcDataItem(TGraphLink(GraphObject).Source).DesignName;
+        TGraphLink(GraphObject).Text := TdmcDataItem(TGraphLink(GraphObject).Source).DesignName;
     end;
   end
   else
@@ -1276,8 +1393,10 @@ begin
       GraphObject.Font.Size := FdefFontSize;
       GraphObject.Brush.Color := FdefBackColor;
       TGPPolygonalNode(GraphObject).Transparency := FdefTrans;
-      if FdefBorder then TGPPolygonalNode(GraphObject).Pen.Style := psSolid
-      else TGPPolygonalNode(GraphObject).Pen.Style := psClear;
+      if FdefBorder then
+        TGPPolygonalNode(GraphObject).Pen.Style := psSolid
+      else
+        TGPPolygonalNode(GraphObject).Pen.Style := psClear;
       GraphObject.Pen.Width := FdefLineWidth;
     end;
   end;
@@ -1286,7 +1405,7 @@ end;
 procedure TfrmEditor.sgLayoutObjectSelect(Graph: TSimpleGraph; GraphObject: TGraphObject);
 begin
   if sgLayout.SelectedObjects.Count = 1 then
-      sgLayoutObjectChange(sgLayout, sgLayout.SelectedObjects.Items[0]);
+    sgLayoutObjectChange(sgLayout, sgLayout.SelectedObjects.Items[0]);
 end;
 
 procedure TfrmEditor.ShowMeters;
@@ -1332,8 +1451,10 @@ begin
     begin
       TmeterNode(nMeter).Meter := AMeter;
       TmeterNode(nMeter).NodeType := ntMeter;
-      if AMeter.DataBook = '' then TmeterNode(nMeter).Valid := False
-      else TmeterNode(nMeter).Valid := True;
+      if AMeter.DataBook = '' then
+        TmeterNode(nMeter).Valid := False
+      else
+        TmeterNode(nMeter).Valid := True;
       // 增加仪器的数据项
       for k := 0 to AMeter.PDDefines.Count - 1 do
       begin
@@ -1394,7 +1515,8 @@ begin
   if ssLeft in Shift then
   begin
     ADragItem := tvwMeters.GetNodeAt(X, Y) as TmeterNode;
-    if ADragItem = nil then Exit;
+    if ADragItem = nil then
+      Exit;
     tvwMeters.BeginDrag(False, 5);
   end;
 end;
@@ -1425,9 +1547,20 @@ begin
 {$IFDEF DEBUG}
       OutputDebugString(PChar('覆盖了这个东西：' + (Obj as TGPTextNode).Text + #13#10));
 {$ENDIF}
-      // 下面将Snap到Obj的下方，并且左对齐
-      (GraphObject as TGraphNode).Left := (Obj as TGraphNode).Left;
-      (GraphObject as TGraphNode).Top := (Obj as TGraphNode).Top + (Obj as TGraphNode).Height + 2;
+      // 下面将Snap到Obj的下方，并且对齐
+      // align right side
+      if (GraphObject as TGPTextNode).DataAlignRight then
+        with GraphObject as TGraphNode do
+        begin
+          Left := (Obj as TGraphNode).BoundsRect.Right - Width;
+          Top := (Obj as TGraphNode).BoundsRect.Bottom + 2;
+        end
+      else // align left side
+        with GraphObject as TGraphNode do
+        begin
+          Left := (Obj as TGraphNode).Left;
+          Top := (Obj as TGraphNode).BoundsRect.Bottom + 2;
+        end;
     end;
   end;
 end;
