@@ -83,13 +83,13 @@ begin
   chtDistMap.AddSeries(srs);
   FLastDate := False;
   for i := 0 to FMeterList.Count - 1 do srs.Add(0, FMeterList[i]);
-  ShowMap(srs,dtpNewLineDate.Date);
+  ShowMap(srs, dtpNewLineDate.Date);
 end;
 
 procedure TfraDistMap.btnLastDataClick(Sender: TObject);
 begin
   FLastDate := True;
-  ShowMap(srsFirst,now); //日期非必须，随便填一个即可
+  ShowMap(srsFirst, now); // 日期非必须，随便填一个即可
 end;
 
 procedure TfraDistMap.btnShowCustomPanelClick(Sender: TObject);
@@ -109,7 +109,7 @@ end;
 procedure TfraDistMap.btnSpecialDateClick(Sender: TObject);
 begin
   FLastDate := False;
-  ShowMap(srsFirst,dtpData.Date);
+  ShowMap(srsFirst, dtpData.Date);
 end;
 
 constructor TfraDistMap.Create(AOwner: TComponent);
@@ -117,8 +117,8 @@ begin
   inherited;
   FMeterList := TStringList.Create;
   TeeSetChineseSimp;
-  dtpData.Date := Now;
-  dtpNewLineDate.Date := Now;
+  dtpData.Date := now;
+  dtpNewLineDate.Date := now;
 end;
 
 destructor TfraDistMap.Destroy;
@@ -186,6 +186,8 @@ begin
     srsFirst.Clear;
     // add meters
     for i := 0 to FMeterList.Count - 1 do srsFirst.Add(0, FMeterList[i]);
+    if FTitle <> '' then
+        chtDistMap.Title.Caption := FTitle;
     chtDistMap.Axes.Left.Title.Caption := FPDName;
     chtDistMap.Axes.bottom.Title.Caption := FMeterType;
     //
