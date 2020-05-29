@@ -485,7 +485,7 @@ object frmMain: TfrmMain
           Width = 150
           Height = 70
           HintImageIndex = 0
-          TabOrder = 1
+          TabOrder = 0
           SkinDataName = 'groupbox'
           DefaultFont.Charset = DEFAULT_CHARSET
           DefaultFont.Color = clWindowText
@@ -525,36 +525,6 @@ object frmMain: TfrmMain
             #23436#20840#19981#20351#29992'Excel'
             #20165#29992'Excel'#21019#24314#31354#25968#25454#34920
             #23436#20840#20351#29992'Excel')
-        end
-        object chkNoExcel: TbsSkinCheckBox
-          Left = 6
-          Top = 11
-          Width = 103
-          Height = 25
-          HintImageIndex = 0
-          TabOrder = 0
-          Visible = False
-          SkinDataName = 'checkbox'
-          DefaultFont.Charset = DEFAULT_CHARSET
-          DefaultFont.Color = clWindowText
-          DefaultFont.Height = 13
-          DefaultFont.Name = 'Tahoma'
-          DefaultFont.Style = []
-          DefaultWidth = 0
-          DefaultHeight = 0
-          UseSkinFont = True
-          WordWrap = False
-          AllowGrayed = False
-          State = cbChecked
-          ImageIndex = 0
-          Flat = True
-          UseSkinFontColor = True
-          TabStop = True
-          CanFocused = True
-          Radio = False
-          Checked = True
-          GroupIndex = 0
-          Caption = #19981#20351#29992'Excel'
         end
       end
     end

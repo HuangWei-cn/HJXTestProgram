@@ -45,7 +45,6 @@ type
     bsSkinButton2: TbsSkinButton;
     bsSkinButton3: TbsSkinButton;
     bsRibbonGroup4: TbsRibbonGroup;
-    chkNoExcel: TbsSkinCheckBox;
     rdgWriteOption: TbsSkinRadioGroup;
     bsSkinMemo1: TbsSkinMemo;
     lblExpMeter: TLabel;
@@ -169,6 +168,8 @@ begin
   slMeters := TStringList.Create;
   mtGrps := TStringList.Create;
   try
+    ExcelMeters.SortByPosition; // 空计算表按照部位和设计编号排序，使相同部位的数据表相邻
+
     if rbSelectedMeters.Checked then
       (IAppServices.FuncDispatcher as IFunctionDispatcher)
         .CallFunction('PopupMeterSelector', slMeters)
@@ -245,6 +246,8 @@ begin
       XLApp.ScreenUpdating := False;
       XLApp.EnableEvents := False;
     end;
+
+    { TODO: 创建空表之后，将所选仪器按照仪器类型重新排序，减少导出时打开工作簿的次数 }
 
     for i := 0 to slMeters.Count - 1 do
     begin
