@@ -166,7 +166,7 @@ object frmTestSummary: TfrmTestSummary
     Top = 0
     Width = 734
     Height = 688
-    ActivePage = tabTools
+    ActivePage = tabBaseParams
     Align = alClient
     TabOrder = 0
     object tabBaseParams: TTabSheet
@@ -300,6 +300,7 @@ object frmTestSummary: TfrmTestSummary
     object tabSummary: TTabSheet
       Caption = #27719#24635#34920
       ImageIndex = 1
+      TabVisible = False
     end
     object tabTools: TTabSheet
       Caption = #23567#24037#20855
@@ -384,6 +385,7 @@ object frmTestSummary: TfrmTestSummary
     object tabParamsEditor: TTabSheet
       Caption = #27979#35797#65306#23646#24615#32534#36753#22120
       ImageIndex = 5
+      TabVisible = False
       object lstTestMeters: TListBox
         Left = 0
         Top = 0
@@ -430,16 +432,16 @@ object frmTestSummary: TfrmTestSummary
           inherited CategoryPanel5: TCategoryPanel
             ExplicitWidth = 425
             inherited cmbGraphDefine: TComboBox
-              Width = 244
-              ExplicitWidth = 244
+              Width = 227
+              ExplicitWidth = 227
             end
             inherited cmbGridFormat: TComboBox
-              Width = 244
-              ExplicitWidth = 244
+              Width = 227
+              ExplicitWidth = 227
             end
             inherited cmbXLSFormat: TComboBox
-              Width = 244
-              ExplicitWidth = 244
+              Width = 227
+              ExplicitWidth = 227
             end
           end
           inherited CategoryPanel4: TCategoryPanel
@@ -466,12 +468,12 @@ object frmTestSummary: TfrmTestSummary
           inherited CategoryPanel3: TCategoryPanel
             ExplicitWidth = 425
             inherited cmbPreDefineDataStruc: TComboBox
-              Width = 204
-              ExplicitWidth = 204
+              Width = 187
+              ExplicitWidth = 187
             end
             inherited memPreDDSContent: TMemo
-              Width = 204
-              ExplicitWidth = 204
+              Width = 187
+              ExplicitWidth = 187
             end
           end
           inherited CategoryPanel2: TCategoryPanel
