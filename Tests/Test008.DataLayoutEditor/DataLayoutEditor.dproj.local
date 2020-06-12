@@ -1,31 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.774,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test008.DataLayoutEditor\ufrmEditor.pas=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.823,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SimpleGraph.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.730,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\MarginsProp.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.646,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\SizeDlg.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.519,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Core\uHJX.EnvironmentVariables.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.823,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SimpleGraph.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.357,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.340,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\LinkProp.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.764,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\AlignDlg.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.808,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\DataInfImp\uHJX.Excel.DataQuery.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.895,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\DataInfImp\uHJX.Excel.IO.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.421,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\ObjectProp.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.730,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\MarginsProp.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.819,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test008.DataLayoutEditor\DataLayoutEditor.dproj=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
     <Transaction>1899-12-30 00:00:00.000.542,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.CoreUnits.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.973,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\DesignProp.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.774,C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test008.DataLayoutEditor\ufrmEditor.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.140,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Interfaces\uHJX.Intf.Datas.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.808,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\DataInfImp\uHJX.Excel.DataQuery.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.340,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\LinkProp.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.547,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\uhwSGEx.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.009,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\uhwSGEx.DataMapClasses.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.774,C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.dfm=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test008.DataLayoutEditor\ufrmEditor.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.842,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\NodeProp.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.940,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\DataInfImp\uHJX.Excel.Meters.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.491,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.HostTemplates.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.852,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\DataInfImp\uHJX.Excel.InitParams.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.140,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Interfaces\uHJX.Intf.Datas.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.922,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\UsageHelp.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.725,E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\UsageHelp.pas=</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.842,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\SGEditor\NodeProp.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.357,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.462,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Core\uHJX.Data.Types.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.819,C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Project2.dproj=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test008.DataLayoutEditor\DataLayoutEditor.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.774,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test008.DataLayoutEditor\ufrmEditor.dfm=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.852,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\DataInfImp\uHJX.Excel.InitParams.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="..\..\..\Souces"/>

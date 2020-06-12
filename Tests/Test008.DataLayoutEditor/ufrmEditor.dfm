@@ -351,6 +351,7 @@ object frmEditor: TfrmEditor
       Top = 205
       Width = 195
       Height = 564
+      VertScrollBar.Position = 108
       VertScrollBar.Tracking = True
       Align = alClient
       HeaderFont.Charset = DEFAULT_CHARSET
@@ -360,16 +361,16 @@ object frmEditor: TfrmEditor
       HeaderFont.Style = []
       TabOrder = 2
       object CategoryPanel4: TCategoryPanel
-        Top = 470
-        Height = 81
+        Top = 532
+        Height = 30
         Caption = #26410#20351#29992
+        Collapsed = True
         TabOrder = 0
+        ExpandedHeight = 81
       end
       object CategoryPanel3: TCategoryPanel
-        Top = 440
-        Height = 30
+        Top = 332
         Caption = #24179#38754#21464#24418#31661#22836#23646#24615
-        Collapsed = True
         TabOrder = 1
         object Label11: TLabel
           Left = 8
@@ -449,7 +450,7 @@ object frmEditor: TfrmEditor
         end
       end
       object CategoryPanel2: TCategoryPanel
-        Top = 329
+        Top = 221
         Height = 111
         Caption = #24213#22270#23646#24615
         TabOrder = 2
@@ -496,18 +497,19 @@ object frmEditor: TfrmEditor
         end
       end
       object CategoryPanel1: TCategoryPanel
-        Top = 0
+        Top = -108
         Height = 329
         Caption = #22806#35266#23646#24615
         TabOrder = 3
         object GroupBox2: TGroupBox
           Left = 0
           Top = 0
-          Width = 191
+          Width = 174
           Height = 300
           Align = alTop
           Caption = #22806#35266#23646#24615
           TabOrder = 0
+          ExplicitWidth = 191
           object Label1: TLabel
             Left = 7
             Top = 20
@@ -702,7 +704,7 @@ object frmEditor: TfrmEditor
     Left = 374
     Top = 478
     Bitmap = {
-      494C01013900A000780010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01013900A0007C0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000F0000000010020000000000000F0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
