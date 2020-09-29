@@ -166,7 +166,7 @@ object frmTestSummary: TfrmTestSummary
     Top = 0
     Width = 734
     Height = 688
-    ActivePage = tabBaseParams
+    ActivePage = tabTools
     Align = alClient
     TabOrder = 0
     object tabBaseParams: TTabSheet
@@ -189,10 +189,6 @@ object frmTestSummary: TfrmTestSummary
     object tabDataViewer: TTabSheet
       Caption = #35266#27979#25968#25454
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -276,10 +272,6 @@ object frmTestSummary: TfrmTestSummary
     object tabDataGraph: TTabSheet
       Caption = #36807#31243#32447
       ImageIndex = 8
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object scrTLList: TScrollBox
         Left = 0
         Top = 0
@@ -296,35 +288,19 @@ object frmTestSummary: TfrmTestSummary
     object tabDataLayout: TTabSheet
       Caption = #20998#24067#22270
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tabEigenValue: TTabSheet
       Caption = #29305#24449#20540
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tabDataReport: TTabSheet
       Caption = #35266#27979#25968#25454#25253#34920
       ImageIndex = 8
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tabSummary: TTabSheet
       Caption = #27719#24635#34920
       ImageIndex = 1
       TabVisible = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object tabTools: TTabSheet
       Caption = #23567#24037#20855
@@ -405,6 +381,16 @@ object frmTestSummary: TfrmTestSummary
         TabOrder = 6
         OnClick = btnToolFindNewSheetsClick
       end
+      object btnPeriodInc: TButton
+        Left = 12
+        Top = 200
+        Width = 175
+        Height = 41
+        Caption = #21608#26399#22686#37327#26597#35810
+        Style = bsCommandLink
+        TabOrder = 7
+        OnClick = btnPeriodIncClick
+      end
     end
     object tabParamsEditor: TTabSheet
       Caption = #27979#35797#65306#23646#24615#32534#36753#22120
@@ -456,16 +442,16 @@ object frmTestSummary: TfrmTestSummary
           inherited CategoryPanel5: TCategoryPanel
             ExplicitWidth = 425
             inherited cmbGraphDefine: TComboBox
-              Width = 193
-              ExplicitWidth = 193
+              Width = 159
+              ExplicitWidth = 159
             end
             inherited cmbGridFormat: TComboBox
-              Width = 193
-              ExplicitWidth = 193
+              Width = 159
+              ExplicitWidth = 159
             end
             inherited cmbXLSFormat: TComboBox
-              Width = 193
-              ExplicitWidth = 193
+              Width = 159
+              ExplicitWidth = 159
             end
           end
           inherited CategoryPanel4: TCategoryPanel
@@ -492,12 +478,16 @@ object frmTestSummary: TfrmTestSummary
           inherited CategoryPanel3: TCategoryPanel
             ExplicitWidth = 425
             inherited cmbPreDefineDataStruc: TComboBox
-              Width = 153
-              ExplicitWidth = 153
+              Width = 119
+              ExplicitWidth = 119
             end
             inherited memPreDDSContent: TMemo
-              Width = 153
-              ExplicitWidth = 153
+              Width = 119
+              Lines.Strings = (
+                #39044#23450#20041#25968#25454#32467#26500
+                #22914
+                #19979#65306)
+              ExplicitWidth = 119
             end
           end
           inherited CategoryPanel2: TCategoryPanel
@@ -565,10 +555,6 @@ object frmTestSummary: TfrmTestSummary
     object tabQuickView: TTabSheet
       Caption = #35266#27979#24773#20917#36895#35272
       ImageIndex = 9
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
   end
   object pnlLeftPanel: TPanel

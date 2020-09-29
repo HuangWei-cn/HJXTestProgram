@@ -76,7 +76,8 @@ uses
   ufrmFindNewSheets in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmFindNewSheets.pas' {frmFindNewSheets},
   ufrmEVGraph in '..\..\Client\ClientCommon\FuncFrames\Eigenvalue\ufrmEVGraph.pas' {frmEVGraph},
   SimpleGraph in '..\..\Client\ClientCommon\Tools\SimpleGraph.pas',
-  ufrmSetNewSheetParams in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmSetNewSheetParams.pas' {frmSetNewSheetParam};
+  ufrmSetNewSheetParams in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmSetNewSheetParams.pas' {frmSetNewSheetParam},
+  ufrmPeriodIncrement in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmPeriodIncrement.pas' {frmPeriodIncrement};
 
 {$R *.res}
 

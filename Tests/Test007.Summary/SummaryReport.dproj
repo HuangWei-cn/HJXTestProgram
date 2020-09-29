@@ -105,8 +105,8 @@
         <UWP_DelphiLogo150>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_256px_510906_easyicon.net.png</UWP_DelphiLogo150>
         <UWP_DelphiLogo44>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_64px_510906_easyicon.net.png</UWP_DelphiLogo44>
         <Icon_MainIcon>SummaryReport_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.362;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_Build>362</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.380;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>380</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -129,8 +129,8 @@
         <UWP_DelphiLogo44>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_64px_510906_easyicon.net.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_256px_510906_easyicon.net.png</UWP_DelphiLogo150>
         <Icon_MainIcon>SummaryReport_Icon1.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.156;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_Build>156</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.161;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>161</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -330,6 +330,10 @@
         <DCCReference Include="..\..\Client\ClientCommon\Tools\SimpleGraph.pas"/>
         <DCCReference Include="..\..\Client\ClientCommon\FuncFrames\Tools\ufrmSetNewSheetParams.pas">
             <Form>frmSetNewSheetParam</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\Client\ClientCommon\FuncFrames\Tools\ufrmPeriodIncrement.pas">
+            <Form>frmPeriodIncrement</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <None Include="说明.txt"/>
