@@ -88,6 +88,11 @@ type
     btnToolFindNewSheets: TButton;
     ApplicationEvents1: TApplicationEvents;
     btnPeriodInc: TButton;
+    btnPopupQueckView: TButton;
+    grpPopupFunction: TGroupBox;
+    btnPopupLayout: TButton;
+    btnPopupReport: TButton;
+    btnCheckOmission: TButton;
     procedure actLoadParamsExecute(Sender: TObject);
     procedure actLoadDataFileListExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -107,6 +112,10 @@ type
     procedure btnToolFindNewSheetsClick(Sender: TObject);
     procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
     procedure btnPeriodIncClick(Sender: TObject);
+    procedure btnPopupQueckViewClick(Sender: TObject);
+    procedure btnPopupReportClick(Sender: TObject);
+    procedure btnPopupLayoutClick(Sender: TObject);
+    procedure btnCheckOmissionClick(Sender: TObject);
   private
         { Private declarations }
     FParamLoaded,
@@ -136,9 +145,8 @@ implementation
 uses uHJX.Excel.InitParams, {uHJX.Excel.Meters} uHJX.Classes.Meters, uHJX.EnvironmentVariables,
   uHJX.Excel.DataQuery, uHJX.IntfImp.FuncCompManager, uHJX.Intf.FunctionDispatcher,
   ufrmDataCounts, ufraMeterSelector, ufrmQuerySetupDate, ufrmShowDeformMap,ufrmFindNewSheets,
-  ufrmPeriodIncrement;
+  ufrmPeriodIncrement, ufrmTaskForm, ufrmCheckOmission;
 {$R *.dfm}
-
 
 var
   IFD: IFunctionDispatcher;
@@ -245,6 +253,13 @@ begin
   IAppServices.OnIdle;
 end;
 
+procedure TfrmTestSummary.btnCheckOmissionClick(Sender: TObject);
+var frm: TfrmCheckOmission;
+begin
+  frm := TfrmCheckOmission.Create(Self);
+  frm.Show;
+end;
+
 procedure TfrmTestSummary.btnDataCountsClick(Sender: TObject);
 var
   frm: TfrmDataCount;
@@ -271,6 +286,45 @@ var
   frm:TfrmPeriodIncrement;
 begin
   frm := TfrmPeriodIncrement.Create(Self);
+  frm.Show;
+end;
+
+procedure TfrmTestSummary.btnPopupLayoutClick(Sender: TObject);
+var
+  frm:TTaskForm;
+  fra:TfraDataPresentation;
+begin
+  frm := TTaskForm.Create(Self);
+  frm.Caption := '观测布置图';
+  fra := TfraDataPresentation.Create(frm);
+  fra.Parent := frm;
+  fra.Align := alClient;
+  frm.Show;
+end;
+
+procedure TfrmTestSummary.btnPopupQueckViewClick(Sender: TObject);
+var
+  frm: TTaskForm;
+  fra: TfraQuickViewer;
+begin
+  frm := TTaskForm.Create(Self);
+  frm.Caption := '速览';
+  fra := TfraQuickViewer.Create(frm);
+  fra.Align := alClient;
+  fra.Parent := frm;
+  frm.Show;
+end;
+
+procedure TfrmTestSummary.btnPopupReportClick(Sender: TObject);
+var
+  frm: ttaskform;
+  fra: TfraRptDataHTMLGrid;
+begin
+  frm := TTaskForm.Create(Self);
+  frm.Caption := '观测数据报表';
+  fra := TfraRptDataHTMLGrid.Create(frm);
+  fra.Align := alclient;
+  fra.Parent := frm;
   frm.Show;
 end;
 

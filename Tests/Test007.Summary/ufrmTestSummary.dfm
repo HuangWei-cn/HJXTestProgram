@@ -316,8 +316,8 @@ object frmTestSummary: TfrmTestSummary
         OnClick = btnDataCountsClick
       end
       object Button1: TButton
-        Left = 12
-        Top = 267
+        Left = 0
+        Top = 471
         Width = 175
         Height = 41
         Caption = #27979#35797#65306#24377#20986#24335#36807#31243#32447
@@ -333,8 +333,8 @@ object frmTestSummary: TfrmTestSummary
         OnClick = Button1Click
       end
       object Button2: TButton
-        Left = 24
-        Top = 324
+        Left = 12
+        Top = 528
         Width = 139
         Height = 25
         Caption = #27979#35797#20202#22120#36873#25321#23545#35805#31383
@@ -343,7 +343,7 @@ object frmTestSummary: TfrmTestSummary
       end
       object btnListSetupDate: TButton
         Left = 12
-        Top = 56
+        Top = 62
         Width = 175
         Height = 41
         Caption = #26597#35810#23433#35013#26085#26399
@@ -353,7 +353,7 @@ object frmTestSummary: TfrmTestSummary
       end
       object Button3: TButton
         Left = 12
-        Top = 92
+        Top = 104
         Width = 175
         Height = 41
         Caption = #28204#35430#29305#24449#20540#34920#26684
@@ -363,7 +363,7 @@ object frmTestSummary: TfrmTestSummary
       end
       object Button4: TButton
         Left = 12
-        Top = 128
+        Top = 146
         Width = 175
         Height = 41
         Caption = #26174#31034#21464#24418#30417#27979#28857
@@ -373,7 +373,7 @@ object frmTestSummary: TfrmTestSummary
       end
       object btnToolFindNewSheets: TButton
         Left = 12
-        Top = 164
+        Top = 188
         Width = 175
         Height = 41
         Caption = #20202#22120#35745#31639#34920#26597#26032
@@ -383,13 +383,62 @@ object frmTestSummary: TfrmTestSummary
       end
       object btnPeriodInc: TButton
         Left = 12
-        Top = 200
+        Top = 231
         Width = 175
         Height = 41
         Caption = #21608#26399#22686#37327#26597#35810
         Style = bsCommandLink
         TabOrder = 7
         OnClick = btnPeriodIncClick
+      end
+      object grpPopupFunction: TGroupBox
+        Left = 224
+        Top = 20
+        Width = 273
+        Height = 169
+        Caption = #24377#20986#24335#21151#33021#30028#38754
+        TabOrder = 8
+        object btnPopupQueckView: TButton
+          Left = 12
+          Top = 16
+          Width = 145
+          Height = 41
+          Caption = #24377#20986#36895#35272#30028#38754
+          Style = bsCommandLink
+          TabOrder = 0
+          OnClick = btnPopupQueckViewClick
+        end
+        object btnPopupLayout: TButton
+          Left = 12
+          Top = 62
+          Width = 205
+          Height = 41
+          Caption = #24377#20986#20998#24067#22270#30028#38754
+          Style = bsCommandLink
+          TabOrder = 1
+          OnClick = btnPopupLayoutClick
+        end
+        object btnPopupReport: TButton
+          Left = 12
+          Top = 108
+          Width = 175
+          Height = 41
+          Caption = #24377#20986#25968#25454#25253#34920#30028#38754
+          Style = bsCommandLink
+          TabOrder = 2
+          OnClick = btnPopupReportClick
+        end
+      end
+      object btnCheckOmission: TButton
+        Left = 12
+        Top = 273
+        Width = 139
+        Height = 41
+        Hint = #26816#26597#21508#20202#22120#30340#26368#36817#35266#27979#26085#26399#65292#20961#36229#36807#25351#23450#26085#26399#38388#38548#30340#22343#23646#20110#28431#27979#20202#22120#65292#13#10#21015#20986#35813#20202#22120#24182#27880#26126#28431#27979#26102#38388#38271#30701#12290
+        Caption = #26816#26597#28431#27979#20202#22120
+        Style = bsCommandLink
+        TabOrder = 9
+        OnClick = btnCheckOmissionClick
       end
     end
     object tabParamsEditor: TTabSheet
@@ -442,16 +491,16 @@ object frmTestSummary: TfrmTestSummary
           inherited CategoryPanel5: TCategoryPanel
             ExplicitWidth = 425
             inherited cmbGraphDefine: TComboBox
-              Width = 159
-              ExplicitWidth = 159
+              Width = 91
+              ExplicitWidth = 91
             end
             inherited cmbGridFormat: TComboBox
-              Width = 159
-              ExplicitWidth = 159
+              Width = 91
+              ExplicitWidth = 91
             end
             inherited cmbXLSFormat: TComboBox
-              Width = 159
-              ExplicitWidth = 159
+              Width = 91
+              ExplicitWidth = 91
             end
           end
           inherited CategoryPanel4: TCategoryPanel
@@ -478,16 +527,23 @@ object frmTestSummary: TfrmTestSummary
           inherited CategoryPanel3: TCategoryPanel
             ExplicitWidth = 425
             inherited cmbPreDefineDataStruc: TComboBox
-              Width = 119
-              ExplicitWidth = 119
+              Width = 51
+              ExplicitWidth = 51
             end
             inherited memPreDDSContent: TMemo
-              Width = 119
+              Width = 51
               Lines.Strings = (
-                #39044#23450#20041#25968#25454#32467#26500
+                #39044
+                #23450
+                #20041
+                #25968
+                #25454
+                #32467
+                #26500
                 #22914
-                #19979#65306)
-              ExplicitWidth = 119
+                #19979
+                #65306)
+              ExplicitWidth = 51
             end
           end
           inherited CategoryPanel2: TCategoryPanel
@@ -685,12 +741,12 @@ object frmTestSummary: TfrmTestSummary
   end
   object dlgOpenDataLayout: TOpenDialog
     Filter = #20998#24067#22270#25991#20214'|*.sg;*.sgp'
-    Left = 488
+    Left = 264
     Top = 392
   end
   object popSetDefaultTrendLineSize: TPopupMenu
-    Left = 629
-    Top = 460
+    Left = 261
+    Top = 444
     object piSetDefaultTLSize: TMenuItem
       Caption = #35774#32622#20026#32570#30465#23485#24230#21644#39640#24230
       OnClick = piSetDefaultTLSizeClick
