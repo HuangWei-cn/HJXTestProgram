@@ -30,7 +30,7 @@ uses
     {ufraTrendLineShell,} ufraMeterList, ufraEigenvalueWeb, uHJX.ProjectGlobal, ufraRptDataHTMLGrid,
   ufraQuickViewer, ufraEigenvalueGrid,
     {--------}
-  AdvPanel, Vcl.Menus, Vcl.AppEvnts {, acPathDialog};
+  AdvPanel, Vcl.Menus, Vcl.AppEvnts, System.ImageList, Vcl.ImgList, sSkinProvider, sSkinManager {, acPathDialog};
 
 type
   TfrmTestSummary = class(TForm)
@@ -93,6 +93,22 @@ type
     btnPopupLayout: TButton;
     btnPopupReport: TButton;
     btnCheckOmission: TButton;
+    Panel3: TPanel;
+    btnCloseAllDataGraph: TButton;
+    istButton: TImageList;
+    ActionManager1: TActionManager;
+    actPopupQuickView: TAction;
+    actPopupLayout: TAction;
+    actPopupDataView: TAction;
+    actPopupPeriodIncrement: TAction;
+    actPopupEVGrid: TAction;
+    actCountObservations: TAction;
+    actQryInstallationDate: TAction;
+    actFindNewSheet: TAction;
+    actFindOmission: TAction;
+    actShowDeformationPoint: TAction;
+    sSkinManager1: TsSkinManager;
+    sSkinProvider1: TsSkinProvider;
     procedure actLoadParamsExecute(Sender: TObject);
     procedure actLoadDataFileListExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -116,6 +132,17 @@ type
     procedure btnPopupReportClick(Sender: TObject);
     procedure btnPopupLayoutClick(Sender: TObject);
     procedure btnCheckOmissionClick(Sender: TObject);
+    procedure btnCloseAllDataGraphClick(Sender: TObject);
+    procedure actPopupQuickViewExecute(Sender: TObject);
+    procedure actPopupLayoutExecute(Sender: TObject);
+    procedure actPopupDataViewExecute(Sender: TObject);
+    procedure actPopupPeriodIncrementExecute(Sender: TObject);
+    procedure actPopupEVGridExecute(Sender: TObject);
+    procedure actCountObservationsExecute(Sender: TObject);
+    procedure actQryInstallationDateExecute(Sender: TObject);
+    procedure actFindNewSheetExecute(Sender: TObject);
+    procedure actFindOmissionExecute(Sender: TObject);
+    procedure actShowDeformationPointExecute(Sender: TObject);
   private
         { Private declarations }
     FParamLoaded,
@@ -144,9 +171,12 @@ implementation
 
 uses uHJX.Excel.InitParams, {uHJX.Excel.Meters} uHJX.Classes.Meters, uHJX.EnvironmentVariables,
   uHJX.Excel.DataQuery, uHJX.IntfImp.FuncCompManager, uHJX.Intf.FunctionDispatcher,
-  ufrmDataCounts, ufraMeterSelector, ufrmQuerySetupDate, ufrmShowDeformMap,ufrmFindNewSheets,
+  ufrmDataCounts, ufraMeterSelector, ufrmQuerySetupDate, ufrmShowDeformMap, ufrmFindNewSheets,
   ufrmPeriodIncrement, ufrmTaskForm, ufrmCheckOmission;
 {$R *.dfm}
+
+const
+  OriDPI = 96;
 
 var
   IFD: IFunctionDispatcher;
@@ -171,6 +201,35 @@ begin
  *)
 end;
 
+procedure TfrmTestSummary.actCountObservationsExecute(Sender: TObject);
+var
+  frm: TfrmDataCount;
+begin
+  frm := TfrmDataCount.Create(Self);
+  try
+    frm.ShowModal;
+  finally
+    frm.Release;
+  end;
+end;
+
+procedure TfrmTestSummary.actFindOmissionExecute(Sender: TObject);
+var
+  frm: TfrmCheckOmission;
+begin
+  frm := TfrmCheckOmission.Create(Self);
+  frm.Show;
+end;
+
+procedure TfrmTestSummary.actFindNewSheetExecute(Sender: TObject);
+var
+  frm: TfrmFindNewSheets;
+begin
+  frm := TfrmFindNewSheets.Create(Self);
+  frm.ShowModal;
+  frm.Release;
+end;
+
 procedure TfrmTestSummary.actLoadDataFileListExecute(Sender: TObject);
 var
   wbk: IXLSWorkBook;
@@ -188,11 +247,11 @@ begin
       end;
     except
       on E: Exception do
-        ShowMessage(E.Message);
+          ShowMessage(E.Message);
     end;
   end;
   if FParamLoaded and FDataFileListLoaded then
-    FfraMeterList.ShowMeters;
+      FfraMeterList.ShowMeters;
 end;
 { 加载参数表 }
 
@@ -215,7 +274,7 @@ begin
       end;
     except
       on E: Exception do
-        ShowMessage(E.Message);
+          ShowMessage(E.Message);
     end;
   end;
   if FParamLoaded and FDataFileListLoaded then
@@ -242,10 +301,95 @@ begin
   end;
 end;
 
+procedure TfrmTestSummary.actPopupDataViewExecute(Sender: TObject);
+var
+  frm: ttaskform;
+  fra: TfraRptDataHTMLGrid;
+begin
+  frm := ttaskform.Create(Self);
+  frm.Caption := '观测数据报表';
+  fra := TfraRptDataHTMLGrid.Create(frm);
+  fra.Align := alclient;
+  fra.Parent := frm;
+  frm.Show;
+end;
+
+procedure TfrmTestSummary.actPopupEVGridExecute(Sender: TObject);
+var
+  frm: TForm;
+  fra: TfraEigenvalueGrid;
+begin
+  frm := TForm.Create(Self);
+  frm.Position := poScreenCenter;
+  frm.Width := Self.Width - 200;
+  frm.Height := Self.Height - 200;
+  fra := TfraEigenvalueGrid.Create(frm);
+  fra.Parent := frm;
+  fra.Align := alclient;
+  fra.Visible := True;
+  try
+    frm.ShowModal;
+  finally
+    frm.Release;
+  end;
+end;
+
+procedure TfrmTestSummary.actPopupLayoutExecute(Sender: TObject);
+var
+  frm: ttaskform;
+  fra: TfraDataPresentation;
+begin
+  frm := ttaskform.Create(Self);
+  frm.Caption := '观测布置图';
+  fra := TfraDataPresentation.Create(frm);
+  fra.Parent := frm;
+  fra.Align := alclient;
+  frm.Show;
+end;
+
+procedure TfrmTestSummary.actPopupPeriodIncrementExecute(Sender: TObject);
+var
+  frm: TfrmPeriodIncrement;
+begin
+  frm := TfrmPeriodIncrement.Create(Self);
+  frm.Show;
+end;
+
+procedure TfrmTestSummary.actPopupQuickViewExecute(Sender: TObject);
+var
+  frm: ttaskform;
+  fra: TfraQuickViewer;
+begin
+  frm := ttaskform.Create(Self);
+  frm.Caption := '速览';
+  fra := TfraQuickViewer.Create(frm);
+  fra.Align := alclient;
+  fra.Parent := frm;
+  frm.Show;
+end;
+
+procedure TfrmTestSummary.actQryInstallationDateExecute(Sender: TObject);
+var
+  frm: TfrmQuerySetupDate;
+begin
+  frm := TfrmQuerySetupDate.Create(Self);
+  frm.ShowModal;
+  frm.Release;
+end;
+
 procedure TfrmTestSummary.actShowDataLayoutExecute(Sender: TObject);
 begin
   if dlgOpenDataLayout.Execute then
         // fraDataLayout.LoadDataLayout(dlgOpenDataLayout.FileName);
+end;
+
+procedure TfrmTestSummary.actShowDeformationPointExecute(Sender: TObject);
+var
+  frm: TfrmShowDeformPoints;
+begin
+  frm := TfrmShowDeformPoints.Create(Self);
+  frm.OnClose := Self.FormClose;
+  frm.Show;
 end;
 
 procedure TfrmTestSummary.ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
@@ -254,10 +398,19 @@ begin
 end;
 
 procedure TfrmTestSummary.btnCheckOmissionClick(Sender: TObject);
-var frm: TfrmCheckOmission;
+var
+  frm: TfrmCheckOmission;
 begin
   frm := TfrmCheckOmission.Create(Self);
   frm.Show;
+end;
+
+procedure TfrmTestSummary.btnCloseAllDataGraphClick(Sender: TObject);
+var
+  i: integer;
+begin
+  for i := scrTLList.ComponentCount - 1 downto 0 do
+      scrTLList.Components[i].Free;
 end;
 
 procedure TfrmTestSummary.btnDataCountsClick(Sender: TObject);
@@ -283,7 +436,7 @@ end;
 
 procedure TfrmTestSummary.btnPeriodIncClick(Sender: TObject);
 var
-  frm:TfrmPeriodIncrement;
+  frm: TfrmPeriodIncrement;
 begin
   frm := TfrmPeriodIncrement.Create(Self);
   frm.Show;
@@ -291,26 +444,26 @@ end;
 
 procedure TfrmTestSummary.btnPopupLayoutClick(Sender: TObject);
 var
-  frm:TTaskForm;
-  fra:TfraDataPresentation;
+  frm: ttaskform;
+  fra: TfraDataPresentation;
 begin
-  frm := TTaskForm.Create(Self);
+  frm := ttaskform.Create(Self);
   frm.Caption := '观测布置图';
   fra := TfraDataPresentation.Create(frm);
   fra.Parent := frm;
-  fra.Align := alClient;
+  fra.Align := alclient;
   frm.Show;
 end;
 
 procedure TfrmTestSummary.btnPopupQueckViewClick(Sender: TObject);
 var
-  frm: TTaskForm;
+  frm: ttaskform;
   fra: TfraQuickViewer;
 begin
-  frm := TTaskForm.Create(Self);
+  frm := ttaskform.Create(Self);
   frm.Caption := '速览';
   fra := TfraQuickViewer.Create(frm);
-  fra.Align := alClient;
+  fra.Align := alclient;
   fra.Parent := frm;
   frm.Show;
 end;
@@ -320,7 +473,7 @@ var
   frm: ttaskform;
   fra: TfraRptDataHTMLGrid;
 begin
-  frm := TTaskForm.Create(Self);
+  frm := ttaskform.Create(Self);
   frm.Caption := '观测数据报表';
   fra := TfraRptDataHTMLGrid.Create(frm);
   fra.Align := alclient;
@@ -335,14 +488,14 @@ begin
   lstTestMeters.Clear;
   if ExcelMeters.Count > 0 then
     for i := 0 to ExcelMeters.Count - 1 do
-      lstTestMeters.AddItem(ExcelMeters.Items[i].DesignName, ExcelMeters.Items[i]);
+        lstTestMeters.AddItem(ExcelMeters.Items[i].DesignName, ExcelMeters.Items[i]);
   fraXLSParamEditor1.vleMeterParams.ItemProps['仪器类型'].PickList := PG_MeterTypes;
   fraXLSParamEditor1.vlePrjParams.ItemProps['工程部位'].PickList := pg_locations;
 end;
 
 procedure TfrmTestSummary.btnToolFindNewSheetsClick(Sender: TObject);
 var
-  frm:TfrmFindNewSheets;
+  frm: TfrmFindNewSheets;
 begin
   frm := TfrmFindNewSheets.Create(Self);
   frm.ShowModal;
@@ -381,7 +534,7 @@ begin
   frm.Height := Self.Height - 200;
   fra := TfraEigenvalueGrid.Create(frm);
   fra.Parent := frm;
-  fra.Align := alClient;
+  fra.Align := alclient;
   fra.Visible := True;
   try
     frm.ShowModal;
@@ -391,7 +544,8 @@ begin
 end;
 
 procedure TfrmTestSummary.Button4Click(Sender: TObject);
-var frm: TfrmShowDeformPoints;
+var
+  frm: TfrmShowDeformPoints;
 begin
   frm := TfrmShowDeformPoints.Create(Self);
   frm.OnClose := Self.FormClose;
@@ -416,7 +570,7 @@ begin
   FDataFileListLoaded := False;
   FfraMeterList := TfraMeterList.Create(Self);
   FfraMeterList.Parent := pnlLeftPanel;
-  FfraMeterList.Align := alClient;
+  FfraMeterList.Align := alclient;
   ENV_ExePath := ExtractFilePath(Application.ExeName);
 
     // 创建数据访问接口的实例
@@ -431,26 +585,26 @@ begin
     // 特征值Frame
   FEigenValue := TfraEigenvalueWeb.Create(Self);
   FEigenValue.Parent := tabEigenValue;
-  FEigenValue.Align := alClient;
+  FEigenValue.Align := alclient;
     // 分布图
   FDataLayout := TfraDataPresentation.Create(Self);
   with FDataLayout do
   begin
     Parent := tabDataLayout;
-    Align := alClient;
+    Align := alclient;
   end;
     // 汇总表
   FSummary := TfraXLSSummaryMeker.Create(Self);
   FSummary.Parent := tabSummary;
-  FSummary.Align := alClient;
+  FSummary.Align := alclient;
     // 数据报表
   FDataRpt := TfraRptDataHTMLGrid.Create(Self);
   FDataRpt.Parent := tabDataReport;
-  FDataRpt.Align := alClient;
+  FDataRpt.Align := alclient;
     // 数据速览
   FQuickViewer := TfraQuickViewer.Create(Self);
   FQuickViewer.Parent := tabQuickView;
-  FQuickViewer.Align := alClient;
+  FQuickViewer.Align := alclient;
 
     // 设置缺省的过程线宽和高
   FDefaultTLWidth := 800;
@@ -460,14 +614,18 @@ begin
   FuncCompManager.InitFuncComps;
     //
   IFD := IAppServices.FuncDispatcher as IFunctionDispatcher;
-  Self.Width := screen.Width - 350;
-  Self.Height := screen.Height - 200;
+  Self.Width := Screen.Width - 350;
+  Self.Height := Screen.Height - 200;
+
+  // 2021-11-10运行时隐藏掉暂时不用的汇总表页面和小工具页面
+  tabSummary.TabVisible := False;
+  tabTools.TabVisible := False;
 end;
 
 procedure TfrmTestSummary.lstTestMetersDblClick(Sender: TObject);
 begin
   if lstTestMeters.Count = 0 then
-    exit;
+      exit;
   fraXLSParamEditor1.EditMeter(lstTestMeters.Items.Objects[lstTestMeters.ItemIndex]
     as TMeterDefine);
 end;
@@ -504,12 +662,12 @@ begin
   end;
 
   try
-    screen.Cursor := crHourGlass;
+    Screen.Cursor := crHourGlass;
         // fraHJXDataGrid1.ShowMeterDatas(ADesignName);
     IFD.ShowData(ADesignName, tabDataViewer);
         // IFD.ShowData(ADesignName, nil);
   finally
-    screen.Cursor := crDefault;
+    Screen.Cursor := crDefault;
   end;
 end;
 
@@ -530,7 +688,7 @@ begin
 // frm.Width := 800;
 // frm.Height := 350;
 
-    pnl := TAdvPanel.Create(Self);
+    pnl := TAdvPanel.Create(scrTLList);
     pnl.Parent := scrTLList;
     pnl.Caption.CloseButton := True;
     pnl.Caption.Visible := True;
@@ -566,7 +724,7 @@ procedure TfrmTestSummary.DblClickMeter(ADesignName: string);
 begin
     { 当用户在仪器列表中双击仪器时，若当前Page是观测数据，则显示被击仪器数据，若是过程线则显示过程线 }
   if pgcMain.ActivePageIndex = 1 then
-    ShowMeterDatas(ADesignName)
+      ShowMeterDatas(ADesignName)
   else
   begin
     ShowMeterTrendLine(ADesignName);

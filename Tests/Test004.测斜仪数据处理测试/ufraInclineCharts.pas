@@ -7,6 +7,8 @@
   History:
         2017-09-02  增加了多日期同图绘制偏移曲线的功能，这个功能用于对比曲线的
         变化。
+        2021-11-24  增加了显示各点变形量曲线的功能，也能显示多个日期的点变形量
+        曲线。
   ----------------------------------------------------------------------------- }
 { 编程说明；
 	一、3D Chart坐标轴标题问题
@@ -52,63 +54,68 @@ uses
 
 type
   TfraInclineCharts = class(TFrame)
-    axscrltlChartTool1: TAxisScrollTool;
-    axscrltlChartTool2: TAxisScrollTool;
-    cht2DA: TChart;
-    cht3D: TChart;
-    chtHistoryLinesA: TChart;
-    LineA: THorizLineSeries;
-    hrzlnsrsSeries2: THorizLineSeries;
-    hrzlnsrsSeries3: THorizLineSeries;
-    hrzlnsrsSeries4: THorizLineSeries;
-    pgcInclineCharts: TPageControl;
-    Line3D: TPoint3DSeries;
-    rtlChartTool1: TRotateTool;
-    rtlChartTool2: TRotateTool;
-    tab2D: TTabSheet;
-    tab3D: TTabSheet;
-    tabHistory: TTabSheet;
-    TeeGDIPlus1: TTeeGDIPlus;
-    cht2DB: TChart;
-    LineB: THorizLineSeries;
-    AxisScrollTool1: TAxisScrollTool;
-    AxisScrollTool2: TAxisScrollTool;
-    pmChartOp: TPopupMenu;
-    piCopyChart: TMenuItem;
-    piCopyAsWMF: TMenuItem;
-    piCopyAsBitmap: TMenuItem;
+    dlgSave: TSaveDialog;
     N1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
+    piAutoRotate: TMenuItem;
+    piCopyAsBitmap: TMenuItem;
+    piCopyAsWMF: TMenuItem;
+    piCopyChart: TMenuItem;
+    piCopyTwoChart: TMenuItem;
+    piEditChart: TMenuItem;
+    piExportGIF: TMenuItem;
     piFeatureFunction: TMenuItem;
+    piSaveToFile: TMenuItem;
+    pmChartOp: TPopupMenu;
+    TeeGDIPlus1: TTeeGDIPlus;
+    TeeGDIPlus2: TTeeGDIPlus;
+    TeeGDIPlus3: TTeeGDIPlus;
+    TeeOpenGL1: TTeeOpenGL;
+    TeeOpenGL2: TTeeOpenGL;
+    pgcInclineCharts: TPageControl;
     tabEigenValue: TTabSheet;
     mmoEigenValue: TMemo;
     pnlHoleInfo: TPanel;
     lblHoleInfo: TLabel;
-    TeeGDIPlus2: TTeeGDIPlus;
-    piAutoRotate: TMenuItem;
-    Ani3DChart: TTeeAnimationTool;
-    piExportGIF: TMenuItem;
-    Panel1: TPanel;
-    btnHisD: TSpeedButton;
-    btnHisA: TSpeedButton;
-    btnHisB: TSpeedButton;
-    BalloonHint1: TBalloonHint;
-    TeeOpenGL1: TTeeOpenGL;
-    TeeOpenGL2: TTeeOpenGL;
-    ctl3d_A: TText3DTool;
-    ctl3d_B: TText3DTool;
-    ctl3d_D: TText3DTool;
-    TeeGDIPlus3: TTeeGDIPlus;
-    N2: TMenuItem;
-    piEditChart: TMenuItem;
-    N3: TMenuItem;
-    piCopyTwoChart: TMenuItem;
-    dlgSave: TSaveDialog;
-    piSaveToFile: TMenuItem;
+    tab2D: TTabSheet;
+    cht2DA: TChart;
+    LineA: THorizLineSeries;
+    axscrltlChartTool1: TAxisScrollTool;
+    axscrltlChartTool2: TAxisScrollTool;
+    cht2DB: TChart;
+    LineB: THorizLineSeries;
+    AxisScrollTool1: TAxisScrollTool;
+    AxisScrollTool2: TAxisScrollTool;
     Panel2: TPanel;
     Label1: TLabel;
     opt2DAxisAuto: TRadioButton;
     opt2DAxisManual: TRadioButton;
     edt2DAxisValue: TEdit;
+    tab3D: TTabSheet;
+    cht3D: TChart;
+    Line3D: TPoint3DSeries;
+    rtlChartTool1: TRotateTool;
+    ctl3d_A: TText3DTool;
+    ctl3d_B: TText3DTool;
+    ctl3d_D: TText3DTool;
+    Ani3DChart: TTeeAnimationTool;
+    tabHistory: TTabSheet;
+    chtHistoryLinesA: TChart;
+    hrzlnsrsSeries2: THorizLineSeries;
+    hrzlnsrsSeries3: THorizLineSeries;
+    hrzlnsrsSeries4: THorizLineSeries;
+    rtlChartTool2: TRotateTool;
+    Panel1: TPanel;
+    btnHisD: TSpeedButton;
+    btnHisA: TSpeedButton;
+    btnHisB: TSpeedButton;
+    tabDeformation: TTabSheet;
+    Panel4: TPanel;
+    chtDefA: TChart;
+    chtDefB: TChart;
+    srsDefA: THorizLineSeries;
+    srsDefB: THorizLineSeries;
     procedure tab2DResize(Sender: TObject);
     procedure piCopyAsWMFClick(Sender: TObject);
     procedure piCopyAsBitmapClick(Sender: TObject);
@@ -122,30 +129,37 @@ type
     procedure opt2DAxisAutoClick(Sender: TObject);
     procedure opt2DAxisManualClick(Sender: TObject);
     procedure edt2DAxisValueKeyPress(Sender: TObject; var Key: Char);
+    procedure cht2DBMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure cht2DAMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure tabDeformationResize(Sender: TObject);
   private
-        { Private declarations }
+    { Private declarations }
     FHoleInfo: TdtInclineHoleInfo;
     FHisDatas: PdtInHistoryDatas;
     procedure ShowActivity(bActive: Boolean; AInfo: string = '');
-        { 绘制历次观测过程线，参数Dir表明是绘制合成方向、A向、B向，值为0，1，2 }
+    { 绘制历次观测过程线，参数Dir表明是绘制合成方向、A向、B向，值为0，1，2 }
     procedure _DrawHistoryLine(HisDatas: PdtInHistoryDatas; Dir: Integer = 0);
     procedure _ReDrawText3D;
   public
-        { Public declarations }
+    { Public declarations }
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-        // 设置测斜孔基本信息
+    // 设置测斜孔基本信息
     procedure SetHoleInfo(AInfo: TdtInclineHoleInfo);
-        { 绘制2D偏移曲线 }
+    { 绘制2D偏移曲线 }
     procedure Draw2DLine(Datas: PdtInclinometerDatas);
-        { 绘制多个日期的2D偏移曲线 }
+    { 绘制多个日期的2D偏移曲线 }
     procedure DrawMultDate2DLines(MultDatas: PdtInHistoryDatas);
-        // 绘制3D偏移曲线
+    // 绘制3D偏移曲线
     procedure Draw3DLine(Datas: PdtInclinometerDatas);
-        // 绘制时间过程线，Dir为方向，值为0-合成、1-A、2-B
+    // 绘制时间过程线，Dir为方向，值为0-合成、1-A、2-B
     procedure Draw2DHistoryLines(HisDatas: PdtInHistoryDatas); overload;
     procedure Draw2DHistoryLines; overload; // 绘制合成方向D的历次曲线
-        // 显示特征值内容
+    // 绘制变形量曲线
+    procedure DrawDeformationLines(Datas: PdtInclinometerDatas);
+    // 绘制多条变形量曲线
+    procedure DrawMultiDefLines(HisDatas: PdtInHistoryDatas);
+    // 显示特征值内容
     procedure ShowEigenValue(Datas: PdtInclinometerDatas);
 
     property HistoryDatas: PdtInHistoryDatas read FHisDatas write FHisDatas;
@@ -191,6 +205,39 @@ begin
   _DrawHistoryLine(FHisDatas, i);
 end;
 
+procedure TfraInclineCharts.cht2DAMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+var
+  mp     : TPoint;
+  clkPart: TChartClickedPart;
+begin
+  mp := cht2DA.GetCursorPos;
+  cht2DA.CalcClickedPart(mp, clkPart);
+  if clkPart.Part = cpSeriesPointer then
+    with clkPart do
+    begin
+      cht2DA.Hint := Format('深度：%0.2f; 位移：%0.2f', [THorizLineSeries(ASeries).YValue[PointIndex],
+        THorizLineSeries(ASeries).XValue[PointIndex]]);
+        // BalloonHint1.Title:=cht2DA.Hint;
+    end
+  else
+      cht2DA.Hint := '';
+end;
+
+procedure TfraInclineCharts.cht2DBMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+var
+  mp     : TPoint;
+  clkPart: TChartClickedPart;
+begin
+  mp := cht2DB.GetCursorPos;
+  cht2DB.CalcClickedPart(mp, clkPart);
+  if clkPart.Part = cpSeriesPointer then
+    with clkPart do
+        cht2DB.Hint := Format('深度：%0.2f; 位移：%0.2f', [THorizLineSeries(ASeries).YValue[PointIndex],
+        THorizLineSeries(ASeries).XValue[PointIndex]])
+  else
+      cht2DB.Hint := '';
+end;
+
 constructor TfraInclineCharts.Create(AOwner: TComponent);
 begin
   inherited;
@@ -230,8 +277,10 @@ var
   d1, d2, dMax, dMin: Double;
 begin
     // Clear all values
-  cht2DA.Legend.Visible := false;
-  cht2DB.Legend.Visible := false;
+  // cht2DA.ShowHint := False;
+  // cht2DB.ShowHint := False;
+  cht2DA.Legend.Visible := False;
+  cht2DB.Legend.Visible := False;
     // 移除多余的线，这些线可能是在绘制多日曲线时留下的。
   if cht2DA.SeriesCount > 0 then
     for i := cht2DA.SeriesCount - 1 downto 1 do
@@ -243,9 +292,9 @@ begin
   cht2DA.Series[0].Clear;
   cht2DB.Series[0].Clear;
     // 设置标题
-  cht2DA.Title.Caption := '测斜孔' + FHoleInfo.DesignID + #13#10'A向位移变化量曲线(' +
+  cht2DA.Title.Caption := '测斜孔' + FHoleInfo.DesignID + #13#10'A向累积位移曲线(' +
     DateTimeToStr(Datas.DTScale) + ')';
-  cht2DB.Title.Caption := '测斜孔' + FHoleInfo.DesignID + #13#10'B向位移变化量曲线(' +
+  cht2DB.Title.Caption := '测斜孔' + FHoleInfo.DesignID + #13#10'B向累积位移曲线(' +
     DateTimeToStr(Datas.DTScale) + ')';
   cht2DA.BottomAxis.Automatic := True;
   cht2DB.BottomAxis.Automatic := True;
@@ -266,10 +315,10 @@ begin
     if dMax < 2 then
         dMax := 2;
     dMin := dMax * -1;
-    cht2DA.BottomAxis.Automatic := false;
+    cht2DA.BottomAxis.Automatic := False;
     cht2DA.BottomAxis.Maximum := dMax;
     cht2DA.BottomAxis.Minimum := dMin;
-    cht2DB.BottomAxis.Automatic := false;
+    cht2DB.BottomAxis.Automatic := False;
     cht2DB.BottomAxis.Maximum := dMax;
     cht2DB.BottomAxis.Minimum := dMin;
   end;
@@ -281,7 +330,7 @@ var
   d1, d2, dMax, dMin: Double;
 begin
   cht3D.Series[0].Clear;
-  cht3D.Title.Caption := '测斜孔' + FHoleInfo.DesignID + #13#10'三维位移变化量曲线(' +
+  cht3D.Title.Caption := '测斜孔' + FHoleInfo.DesignID + #13#10'三维累积位移曲线(' +
     DateTimeToStr(Datas.DTScale) + ')';
   cht3D.DepthAxis.Title.Angle := 0;
     // cht3D.DepthAxis.Title.
@@ -303,10 +352,10 @@ begin
       dMax := 2;
   dMin := dMax * -1;
 
-  cht3D.BottomAxis.Automatic := false;
+  cht3D.BottomAxis.Automatic := False;
   cht3D.BottomAxis.Maximum := dMax;
   cht3D.BottomAxis.Minimum := dMin;
-  cht3D.DepthAxis.Automatic := false;
+  cht3D.DepthAxis.Automatic := False;
   cht3D.DepthAxis.Maximum := dMax;
   cht3D.DepthAxis.Minimum := dMin;
 
@@ -347,9 +396,18 @@ begin
   bmp := TBitmap.Create;
   jpg := TJPEGImage.Create;
   try
-    bmp.SetSize(cht2DA.Width * 2 + 2, cht2DA.Height);
-    cht2DA.Draw(bmp.Canvas, cht2DA.BoundsRect);
-    cht2DB.Draw(bmp.Canvas, cht2DB.BoundsRect);
+    if (pmChartOp.PopupComponent = cht2DA) or (pmChartOp.PopupComponent = cht2DB) then
+    begin
+      bmp.SetSize(cht2DA.Width * 2 + 2, cht2DA.Height);
+      cht2DA.Draw(bmp.Canvas, cht2DA.BoundsRect);
+      cht2DB.Draw(bmp.Canvas, cht2DB.BoundsRect);
+    end
+    else if (pmChartOp.PopupComponent = chtDefA) or (pmChartOp.PopupComponent = chtDefB) then
+    begin
+      bmp.SetSize(chtDefA.Width * 2 + 2, chtDefA.Height);
+      chtDefA.Draw(bmp.Canvas, chtDefA.BoundsRect);
+      chtDefB.Draw(bmp.Canvas, chtDefB.BoundsRect);
+    end;
     jpg.Assign(bmp);
     jpg.SaveToClipboardFormat(AFormat, AData, APalette);
     Clipboard.SetAsHandle(AFormat, AData);
@@ -405,9 +463,19 @@ begin
     jpg := TJPEGImage.Create;
     bmp := TBitmap.Create;
     try
-      bmp.SetSize(cht2DA.Width * 2 + 2, cht2DA.Height);
-      cht2DA.Draw(bmp.Canvas, cht2DA.BoundsRect);
-      cht2DB.Draw(bmp.Canvas, cht2DB.BoundsRect);
+      if (pmChartOp.PopupComponent = cht2DA) or (pmChartOp.PopupComponent = cht2DB) then
+      begin
+        bmp.SetSize(cht2DA.Width * 2 + 2, cht2DA.Height);
+        cht2DA.Draw(bmp.Canvas, cht2DA.BoundsRect);
+        cht2DB.Draw(bmp.Canvas, cht2DB.BoundsRect);
+      end
+      else if (pmChartOp.PopupComponent = chtDefA) or (pmChartOp.PopupComponent = chtDefB) then
+      begin
+        bmp.SetSize(chtDefA.Width * 2 + 2, chtDefA.Height);
+        chtDefA.Draw(bmp.Canvas, chtDefA.BoundsRect);
+        chtDefB.Draw(bmp.Canvas, chtDefB.BoundsRect);
+      end;
+
       jpg.Assign(bmp);
       jpg.SaveToFile(dlgSave.FileName);
     finally
@@ -426,9 +494,9 @@ begin
   end
   else
   begin
-    piExportGIF.Visible := false;
-    piAutoRotate.Checked := false;
-    piAutoRotate.Visible := false;
+    piExportGIF.Visible := False;
+    piAutoRotate.Checked := False;
+    piAutoRotate.Visible := False;
         // Ani3DChart.AutoPlay := False;
         // Ani3DChart.Loop := False;
     Ani3DChart.Stop;
@@ -439,6 +507,11 @@ procedure TfraInclineCharts.tab2DResize(Sender: TObject);
 begin
   cht2DA.Width := tab2D.Width div 2;
   _ReDrawText3D;
+end;
+
+procedure TfraInclineCharts.tabDeformationResize(Sender: TObject);
+begin
+  chtDefA.Width := tabDeformation.Width div 2;
 end;
 
 procedure TfraInclineCharts._DrawHistoryLine(HisDatas: PdtInHistoryDatas; Dir: Integer = 0);
@@ -460,7 +533,7 @@ begin
     0:
       begin
         S := S + '历次位移曲线';
-        chtHistoryLinesA.BottomAxis.AutomaticMinimum := false;
+        chtHistoryLinesA.BottomAxis.AutomaticMinimum := False;
         chtHistoryLinesA.BottomAxis.Minimum := -2;
       end;
     1:
@@ -585,8 +658,8 @@ begin
         cht2DB.Series[i].Free;
   cht2DA.Series[0].Clear;
   cht2DB.Series[0].Clear;
-  cht2DA.Title.Caption := '测斜孔' + FHoleInfo.DesignID + #13#10'A向位移变化量曲线';
-  cht2DB.Title.Caption := '测斜孔' + FHoleInfo.DesignID + #13#10'B向位移变化量曲线';
+  cht2DA.Title.Caption := '测斜孔' + FHoleInfo.DesignID + #13#10'A向累积位移曲线';
+  cht2DB.Title.Caption := '测斜孔' + FHoleInfo.DesignID + #13#10'B向累积位移曲线';
   cht2DA.BottomAxis.Automatic := True;
   cht2DB.BottomAxis.Automatic := True;
   d1 := 0;
@@ -628,14 +701,16 @@ begin
     dMax := GetMax2(d1, d2, dMax);
   end;
   dMin := dMax * -1;
-  cht2DA.BottomAxis.Automatic := false;
-  cht2DB.BottomAxis.Automatic := false;
+  cht2DA.BottomAxis.Automatic := False;
+  cht2DB.BottomAxis.Automatic := False;
   cht2DA.BottomAxis.Maximum := dMax;
   cht2DA.BottomAxis.Minimum := dMin;
   cht2DB.BottomAxis.Maximum := dMax;
   cht2DB.BottomAxis.Minimum := dMin;
   cht2DA.Legend.Visible := True;
   cht2DB.Legend.Visible := True;
+  cht2DA.ShowHint := True;
+  cht2DB.ShowHint := True;
 end;
 
 procedure TfraInclineCharts.edt2DAxisValueKeyPress(Sender: TObject; var Key: Char);
@@ -648,8 +723,8 @@ begin
         if i <> 0 then
         begin
           i := Abs(i);
-          cht2DA.BottomAxis.Automatic := false;
-          cht2DB.BottomAxis.Automatic := false;
+          cht2DA.BottomAxis.Automatic := False;
+          cht2DB.BottomAxis.Automatic := False;
           cht2DA.BottomAxis.Maximum := i;
           cht2DA.BottomAxis.Minimum := i * -1;
           cht2DB.BottomAxis.Maximum := i;
@@ -671,8 +746,8 @@ begin
     if i <> 0 then
     begin
       i := Abs(i);
-      cht2DA.BottomAxis.Automatic := false;
-      cht2DB.BottomAxis.Automatic := false;
+      cht2DA.BottomAxis.Automatic := False;
+      cht2DB.BottomAxis.Automatic := False;
       cht2DA.BottomAxis.Maximum := i;
       cht2DA.BottomAxis.Minimum := i * -1;
       cht2DB.BottomAxis.Maximum := i;
@@ -761,13 +836,13 @@ begin
       变化才行，所以先在尾部加一个空格，再删掉那个空格，这样就正常了。 }
   ctl3d_A.Position.X := cht3D.Width / 2 - 50;
   ctl3d_A.Position.Y := cht3D.Height - 10;
-  ctl3d_A.Text := 'A向位移(mm) ';
+  ctl3d_A.Text := 'A向累积位移(mm) ';
   ctl3d_A.Text := Trim(ctl3d_A.Text);
     // cht3d.Canvas.
     { --------------------------------------- }
   ctl3d_B.Position.X := cht3D.Width / 2 - 50;
   ctl3d_B.Position.Y := cht3D.Height - 10;
-  ctl3d_B.Text := 'B向位移(mm) ';
+  ctl3d_B.Text := 'B向累积位移(mm) ';
   ctl3d_B.Text := Trim(ctl3d_B.Text);
     { --------------------------------------- }
   ctl3d_D.Position.Z := cht3D.DepthAxis.IAxisSize / 2;
@@ -776,6 +851,140 @@ begin
   ctl3d_D.Text := Trim(ctl3d_D.Text);
     // ctl3d_A.Visible := false; ctl3d_A.Visible :=True;
     // ctl3d_A.Active := false; ctl3d_A.Active := true;
+end;
+
+{ -----------------------------------------------------------------------------
+  Procedure  : DrawDeformationLines
+  Description: 显示单次曲线变形量曲线
+----------------------------------------------------------------------------- }
+procedure TfraInclineCharts.DrawDeformationLines(Datas: PdtInclinometerDatas);
+var
+  i   : Integer;
+  dMax: Single;
+begin
+  chtDefA.Legend.Visible := False;
+  chtDefB.Legend.Visible := False;
+  chtDefA.Title.Text.Text := '测斜孔' + FHoleInfo.DesignID + #13#10'A向各点变形(' +
+    DateToStr(Datas.DTScale) + ')';
+  chtDefB.Title.Text.Text := '测斜孔' + FHoleInfo.DesignID + #13#10'B向各点变形(' +
+    DateToStr(Datas.DTScale) + ')';
+  // 先清理所有没用的曲线
+  if chtDefA.SeriesCount > 1 then
+    for i := chtDefA.SeriesCount - 1 downto 1 do chtDefA.Series[i].Free;
+  if chtDefB.SeriesCount > 1 then
+    for i := chtDefB.SeriesCount - 1 downto 1 do chtDefB.Series[i].Free;
+
+  // 在srsDefA和srsDefB上绘制当前观测曲线的变形量
+  chtDefA.Series[0].Clear;
+  chtDefB.Series[0].Clear;
+  if Length(Datas.Datas) > 0 then
+  begin
+    for i := Low(Datas.Datas) to High(Datas.Datas) do
+    begin
+      srsDefA.AddXY(Datas.Datas[i].DA, Datas.Datas[i].Level);
+      srsDefB.AddXY(Datas.Datas[i].DB, Datas.Datas[i].Level);
+    end;
+    // 设置X轴
+    dMax := GetMax(Abs(srsDefA.MaxXValue), Abs(srsDefA.MinXValue));
+    dMax := GetMax2(dMax, Abs(srsDefB.MaxXValue), Abs(srsDefB.MinXValue));
+    if dMax < 2 then dMax := 2;
+
+    chtDefA.BottomAxis.Automatic := False;
+    chtDefA.BottomAxis.Maximum := dMax;
+    chtDefA.BottomAxis.Minimum := -dMax;
+    chtDefB.BottomAxis.Automatic := False;
+    chtDefB.BottomAxis.Maximum := dMax;
+    chtDefB.BottomAxis.Minimum := -dMax;
+  end;
+end;
+
+{ -----------------------------------------------------------------------------
+  Procedure  : DrawMultiDefLines
+  Description: 显示历史变形量曲线
+----------------------------------------------------------------------------- }
+procedure TfraInclineCharts.DrawMultiDefLines(HisDatas: PdtInHistoryDatas);
+var
+  iSrs, i           : Integer;
+  d1, d2, dMax, dMin: Double;
+  ADatas            : PdtInclinometerDatas;
+  ALineA, ALineB    : THorizLineSeries;
+    // 设置偏移曲线的样式，主要是设置Pointer.style，颜色由chart自动设置。
+  procedure _SetLine(L: THorizLineSeries);
+  begin
+    L.Pointer.Visible := True;
+    L.Pointer.Size := 3;
+    if L.ParentChart.SeriesCount <= 9 then
+        L.Pointer.Style := pts[L.ParentChart.SeriesCount]
+    else
+    begin
+      L.Pointer.Style := pts[L.ParentChart.SeriesCount mod 9];
+    end;
+  end;
+
+begin
+  chtDefA.Legend.Visible := False;
+  chtDefB.Legend.Visible := False;
+  chtDefA.Title.Text.Text := '测斜孔' + FHoleInfo.DesignID + #13#10'A向各点变形';
+  chtDefB.Title.Text.Text := '测斜孔' + FHoleInfo.DesignID + #13#10'B向各点变形';
+  // 先清理所有没用的曲线
+  if chtDefA.SeriesCount > 1 then
+    for i := chtDefA.SeriesCount - 1 downto 1 do chtDefA.Series[i].Free;
+  if chtDefB.SeriesCount > 1 then
+    for i := chtDefB.SeriesCount - 1 downto 1 do chtDefB.Series[i].Free;
+
+  // 在srsDefA和srsDefB上绘制当前观测曲线的变形量
+  chtDefA.Series[0].Clear;
+  chtDefB.Series[0].Clear;
+  d1 := 0;
+  d2 := 0;
+  dMax := 0;
+  dMin := 0;
+  for iSrs := Low(HisDatas.HisDatas) to High(HisDatas.HisDatas) do
+  begin
+    if iSrs = low(HisDatas.HisDatas) then
+    begin
+      ALineA := chtDefA.Series[0] as THorizLineSeries;
+      ALineB := chtDefB.Series[0] as THorizLineSeries;
+    end
+    else
+    begin
+      ALineA := THorizLineSeries.Create(chtDefA);
+      ALineB := THorizLineSeries.Create(chtDefB);
+      chtDefA.AddSeries(ALineA);
+      chtDefB.AddSeries(ALineB);
+      _SetLine(ALineA);
+      _SetLine(ALineB);
+    end;
+
+    ADatas := HisDatas.HisDatas[iSrs];
+    ALineA.Title := DateToStr(ADatas.DTScale);
+    ALineB.Title := DateToStr(ADatas.DTScale);
+    ALineA.LegendTitle := ALineA.Title;
+    ALineB.LegendTitle := ALineB.Title;
+
+    if Length(ADatas.Datas) > 0 then
+      for i := Low(ADatas.Datas) to High(ADatas.Datas) do
+      begin
+        ALineA.AddXY(ADatas.Datas[i].DA, ADatas.Datas[i].Level);
+        ALineB.AddXY(ADatas.Datas[i].DB, ADatas.Datas[i].Level);
+      end;
+    d1 := GetMax(Abs(ALineA.MaxXValue), Abs(ALineA.MinXValue));
+    d2 := GetMax(Abs(ALineB.MaxXValue), Abs(ALineB.MinXValue));
+    dMax := GetMax(d1, d2);
+  end;
+
+  if dMax < 2 then dMax := 2;
+
+  chtDefA.BottomAxis.Automatic := False;
+  chtDefB.BottomAxis.Automatic := False;
+  chtDefA.BottomAxis.Maximum := dMax;
+  chtDefA.BottomAxis.Minimum := -dMax;
+  chtDefB.BottomAxis.Maximum := dMax;
+  chtDefB.BottomAxis.Minimum := -dMax;
+  chtDefA.Legend.Visible := True;
+  chtDefB.Legend.Visible := True;
+  chtDefA.ShowHint := True;
+  chtDefB.ShowHint := True;
 end;
 
 end.

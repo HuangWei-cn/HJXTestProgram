@@ -10,7 +10,15 @@ uses
   ufrmInputDatas in 'ufrmInputDatas.pas' {frmMain},
   Vcl.Themes,
   Vcl.Styles,
-  ufraInputDatas in 'ufraInputDatas.pas' {TfraInputDatas: TFrame};
+  ufraInputDatas in 'ufraInputDatas.pas' {TfraInputDatas: TFrame},
+  uHJX.Template.ChartTemplate in '..\..\Client\ClientCommon\Templates\uHJX.Template.ChartTemplate.pas',
+  uHJX.Template.WebGrid in '..\..\Client\ClientCommon\Templates\uHJX.Template.WebGrid.pas',
+  uHJX.Template.XLGrid in '..\..\Client\ClientCommon\Templates\uHJX.Template.XLGrid.pas',
+  uHJX.Template.ChartTemplateProc in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.ChartTemplateProc.pas',
+  uHJX.Template.WebGridProc in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.WebGridProc.pas',
+  uHJX.Template.XLGridHelper in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridHelper.pas',
+  uHJX.Template.XLGridProc in '..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridProc.pas',
+  uHJX.Template.ProcSpecifiers in '..\..\Client\ClientCommon\Templates\uHJX.Template.ProcSpecifiers.pas';
 
 {$R *.res}
 

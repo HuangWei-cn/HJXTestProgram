@@ -15,7 +15,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, SimpleGraph, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.ToolWin,
   System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, Vcl.StdCtrls, Vcl.ButtonGroup,
   Vcl.ActnMan, Vcl.ActnCtrls, Vcl.PlatformDefaultStyleActnCtrls, Vcl.Clipbrd,
-  Vcl.Imaging.jpeg, uhwSGEx, uhwSGEx.DataMapClasses, Vcl.Buttons, Vcl.Menus, Vcl.AppEvnts;
+  Vcl.Imaging.jpeg, uhwSGEx, uhwSGEx.DataMapClasses, Vcl.Buttons, Vcl.Menus, Vcl.AppEvnts,
+  LayoutUtils;
 
 type
   TfrmEditor = class(TForm)
@@ -114,6 +115,13 @@ type
     N1: TMenuItem;
     piDisableSelectMap: TMenuItem;
     actDisableSelectMap: TAction;
+    btnSaveAsStyle: TSpeedButton;
+    btnOpenStyleEditor: TSpeedButton;
+    btnSaveStyles: TSpeedButton;
+    cbxStyles: TComboBox;
+    CategoryPanel5: TCategoryPanel;
+    chkAutoMatchStyles: TCheckBox;
+    Label15: TLabel;
     procedure actLoadLayoutExecute(Sender: TObject);
     procedure actSaveLayoutExecute(Sender: TObject);
     procedure actInsBackgroudExecute(Sender: TObject);
@@ -209,6 +217,11 @@ type
     procedure actInsRectangularUpdate(Sender: TObject);
     procedure chkDataAlighRightClick(Sender: TObject);
     procedure actDisableSelectMapExecute(Sender: TObject);
+    procedure btnSaveAsStyleClick(Sender: TObject);
+    procedure btnOpenStyleEditorClick(Sender: TObject);
+    procedure btnSaveStylesClick(Sender: TObject);
+    procedure cbxStylesChange(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
         { Private declarations }
     FLayoutfile       : string;
@@ -227,6 +240,9 @@ type
     FdefLineWidth : Integer;
     FdefAlignRight: Boolean;
 
+    { 当前样式 }
+    FCurStyle: PElementDefine;
+
     // 下面两条是用于按住空格键平移图形的。
     FPreCmd      : TGraphCommandMode;
     FHoldSpaceKey: Boolean;
@@ -243,8 +259,27 @@ type
 
     procedure ShowMeters;
     procedure Modified;
+    procedure StyleChanged; // 当FCurStyle发生变化时，用本方法更新界面组件的显示
+    procedure SetStyle(AStyle: PElementDefine);
+    /// <summary>
+    /// 根据图元类型选择当前图元可匹配的样式。基本原则如下：
+    /// 1、若勾选根据图元类型自动匹配，则从样式表中查找对应的图元类型、仪器类型返回样式；
+    /// 2、否则，若当前样式FCurStyle<>nil，则返回FCurStyle的格式；
+    /// 3、否则，若当前格式FdefFontName <> ''，则使用当前格式；
+    /// 4、否则，随便了
+    /// </summary>
+    function RetCurrentStyle: TElementDefine;
+    function GetMatchStyle(AGNode: TGraphObject; AMeterType: string): TElementDefine; overload;
+    function GetMatchStyle(AGNType: TdefType; AMeterType: String): TElementDefine; overload;
   public
-        { Public declarations }
+    { Public declarations }
+    /// <summary>
+    /// 将给定样式应用到当前图纸中所有同类型的图元上
+    /// </summary>
+    procedure ApplyStyleToGraphObject(AStyle: TElementDefine);
+    // 加载样式到ComboBox列表中
+    procedure LoadStylesInCombo;
+    property CurentStyle: PElementDefine read FCurStyle write SetStyle;
   end;
 
 var
@@ -254,9 +289,10 @@ implementation
 
 uses
   NodeProp, LinkProp, ObjectProp, DesignProp, AlignDlg,
-  uHJX.Intf.Datas, uHJX.Classes.Meters,
+  uHJX.Intf.Datas, uHJX.Classes.Meters, uHJX.EnvironmentVariables,
   uHJX.Excel.Meters,
-  uHJX.Excel.InitParams;
+  uHJX.Excel.InitParams,
+  ufrmStyles;
 {$R *.dfm}
 
 
@@ -417,7 +453,7 @@ begin
       if GraphObject is TGraphLink then
           TGraphLink(GraphObject).Scale(0.75);
     FEO_SetFontColor:
-      GraphObject.Font.Color := clbxFontColor.Color;
+      GraphObject.Font.Color := clbxFontColor.Selected;
     FEO_SetBorder:
       if chkBorder.Checked then
           GraphObject.Pen.Style := psSolid
@@ -463,10 +499,36 @@ begin
   end;
 end;
 
+procedure TfrmEditor.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  if sgLayout.Modified then
+  begin
+    case MessageBox(0, '正在编辑的图形已经改变，是否先保存？', '注意！', MB_ICONWARNING or MB_YESNOCANCEL) of
+      mrYes:
+        actSaveLayout.Execute;
+      mrCancel:
+        // do nothing, close form directly
+        ;
+    end;
+  end;
+end;
+
 procedure TfrmEditor.FormCreate(Sender: TObject);
 begin
   cmbFonts.Items := Screen.Fonts;
   sgLayout.OnObjectEndDrag := Self.GraphEndDragging;
+  LoadPredefines;
+  LoadStylesInCombo;
+end;
+
+procedure TfrmEditor.LoadStylesInCombo;
+var
+  i: Integer;
+begin
+  cbxStyles.Items.Clear;
+  if PreDefines.Count = 0 then Exit;
+  for i := 0 to PreDefines.Count - 1 do
+      cbxStyles.Items.Add(PreDefines.Items[i].DefName);
 end;
 
 procedure TfrmEditor.actActualSizeExecute(Sender: TObject);
@@ -685,8 +747,8 @@ begin
     end;
   end;
 
-  if FLastMapPath <> '' then
-      dlgOpenLayout.InitialDir := FLastMapPath;
+  if ENV_SchemePath <> '' then
+      dlgOpenLayout.InitialDir := ENV_SchemePath;
 
   if dlgOpenLayout.Execute then
   begin
@@ -724,7 +786,7 @@ begin
   sgLayout.Zoom := 100;
   sgLayout.CommandMode := cmEdit;
   dlgSaveLayout.FileName := SUntitled;
-  Caption := dlgSaveLayout.FileName + ' - ' + Application.Title;
+  Caption := '新布置图 - ' + Application.Title;
 end;
 
 procedure TfrmEditor.actPanModeExecute(Sender: TObject);
@@ -785,10 +847,14 @@ end;
 
 procedure TfrmEditor.actSaveLayoutExecute(Sender: TObject);
 begin
+  if ENV_SchemePath <> '' then
+      dlgSaveLayout.InitialDir := ENV_SchemePath;
+
   if dlgSaveLayout.Execute then
   begin
     FLayoutfile := dlgSaveLayout.FileName;
     sgLayout.SaveToFile(dlgSaveLayout.FileName);
+    Self.Caption := dlgSaveLayout.FileName + ' - ' + Application.Title;
   end;
 end;
 
@@ -851,17 +917,65 @@ begin
   end;
 end;
 
+procedure TfrmEditor.btnOpenStyleEditorClick(Sender: TObject);
+var
+  frm: TfrmStyles;
+begin
+  frm := TfrmStyles.Create(Self);
+  frm.ShowModal;
+  frm.Release;
+end;
+
+procedure TfrmEditor.btnSaveAsStyleClick(Sender: TObject);
+var
+  NewEd: PElementDefine;
+  frm  : TfrmStyles;
+begin
+  NewEd := PreDefines.AddNew;
+  NewEd.DefName := '新样式';
+  NewEd.bkColor := clbxBackColor.Selected;
+  NewEd.lnColor := clbxLineColor.Selected;
+  NewEd.fontColor := clbxFontColor.Selected;
+  NewEd.LineWidth := strtoint(cmbLineWidth.Text);
+  NewEd.fontName := cmbFonts.Text;
+  NewEd.fontSize := strtoint(cmbFontSize.Text);
+  NewEd.AutoFit := chkTextAutoSize.Checked;
+  NewEd.UseGDIPlus := chkUseGDIP.Checked;
+  NewEd.Border := chkBorder.Checked;
+  NewEd.AlignRight := chkDataAlighRight.Checked;
+  NewEd.Transparency := Self.trcTransparency.Position;
+  frm := TfrmStyles.Create(Self);
+  frm.EditStyle(NewEd);
+  frm.ShowModal;
+  frm.Release;
+  CurentStyle := NewEd;
+  LoadStylesInCombo;
+end;
+
+procedure TfrmEditor.btnSaveStylesClick(Sender: TObject);
+begin
+  SavePreDefines;
+  LoadStylesInCombo;
+end;
+
 procedure TfrmEditor.btnSetAsDefaultClick(Sender: TObject);
 begin
   FdefFontName := cmbFonts.Text;
-  FdefFontSize := StrToInt(cmbFontSize.Text);
+  FdefFontSize := strtoint(cmbFontSize.Text);
   FdefFontColor := clbxFontColor.Selected;
   FdefBackColor := clbxBackColor.Selected;
   FdefLineColor := clbxLineColor.Selected;
-  FdefTrans := round(trcTransparency.Position * 2.55);
+  FdefTrans := trcTransparency.Position; // round(trcTransparency.Position * 2.55);
   FdefBorder := chkBorder.Checked;
   FdefLineWidth := cmbLineWidth.ItemIndex;
   FdefAlignRight := chkDataAlighRight.Checked;
+  FCurStyle := nil;
+end;
+
+procedure TfrmEditor.cbxStylesChange(Sender: TObject);
+begin
+  if cbxStyles.ItemIndex <> -1 then
+      CurentStyle := PreDefines.Items[cbxStyles.ItemIndex];
 end;
 
 procedure TfrmEditor.chkBorderClick(Sender: TObject);
@@ -1088,13 +1202,13 @@ begin
   then
   begin
     if FSelectedGObj is TdmcMap then
-        TdmcMap(FSelectedGObj).OneMMLength := StrToInt(edtFactor.Text);
+        TdmcMap(FSelectedGObj).OneMMLength := strtoint(edtFactor.Text);
   end
   else
     for i := 0 to sgLayout.Objects.Count - 1 do
       if sgLayout.Objects.Items[i] is TdmcMap then
       begin
-        TdmcMap(sgLayout.Objects.Items[i]).OneMMLength := StrToInt(edtFactor.Text);
+        TdmcMap(sgLayout.Objects.Items[i]).OneMMLength := strtoint(edtFactor.Text);
         Break;
       end;
   Modified;
@@ -1153,7 +1267,11 @@ begin
   then
       FSelectedGObj.Text := edtText.Text;
 end;
-
+{-----------------------------------------------------------------------------
+  Procedure  : sgLayoutDragDrop
+  Description: 本方法主要处理从仪器树拖拽仪器名或仪器数据项到图纸上，创建对应
+  的图元、应用样式、自动对齐等工作。
+-----------------------------------------------------------------------------}
 procedure TfrmEditor.sgLayoutDragDrop(Sender, Source: TObject; X, Y: Integer);
 var
   go         : TGraphNode;
@@ -1161,19 +1279,57 @@ var
   bNeedAlign : Boolean; // 需要设置对齐
   bSetDefault: Boolean; // 需要设置缺省值
   oo         : TGraphObject;
+  tpooTL,
+    tpooBR: TPoint; // 对象oo的左上角和右下角坐标;
+  Style   : TElementDefine;
+  dW, dH  : Integer; // 被覆盖图元宽、高的三分之一
+  drpSide : Integer; // 10-Topleft; 11-Left; 12-BottemLeft; 20- TopRight; 21-Right; 22-BottomRight
 begin
   tp := sgLayout.ClientToGraph(X, Y);
   oo := sgLayout.FindObjectAt(tp.X, tp.Y);
-  if FdefFontName <> '' then // 当缺省字体名不为空，说明已经设置过缺省值了
-      bSetDefault := True
-  else
-      bSetDefault := False;
 
-// 如果X，Y处有东西，且为TGPTEXTNODE对象，则需要对齐
+  if ADragItem.NodeType = ntMeter then
+      Style := GetMatchStyle(dtLabel, ADragItem.Meter.Params.MeterType)
+  else if ADragItem.NodeType = ntDataItem then
+      Style := GetMatchStyle(dtDataItem, ADragItem.Meter.Params.MeterType)
+  else
+      Style := RetCurrentStyle;
+
+  // 如果X，Y处有东西，且为TGPTEXTNODE对象，则需要对齐
+  // 这里的MeterLabel和DataItem只和TextNode类型对齐，这种方法带来的问题是无法覆盖，可能减少了一些
+  // 表现方法。
+  { todo: 增加打开/关闭自动对齐的开关 }
   if (oo <> nil) and (oo is TGPTextNode) then
   begin
+    { 自动判断对齐的方法：
+           +-------------+
+           |1     a     4|
+           |2           5|
+           |3     b     6|
+           +-------------+
+      判断tp的位置，1：TopLeft; 2:Right; 3:BottomLeft; a: 顶端+对齐设置; b:底端+对齐设置;
+      4: TopRight; 5: Left; 6: BottomRight;
+ }
+    tpooTL := (oo as TGPTextNode).BoundsRect.TopLeft;
+    tpooBR := (oo as TGPTextNode).BoundsRect.BottomRight;
+    dW := (tpooBR.X - tpooTL.X) div 3; // 宽度的三分之一
+    dH := (tpooBR.Y - tpooTL.Y) div 3; // 高度的三分之一
+    // 判断tp的位置
+    if (tp.X >= tpooTL.X) and (tp.X <= tpooTL.X + { 20 } dW) then
+        drpSide := 10
+    else if (tp.X >= tpooBR.X - { 20 } dW) and (tp.X <= tpooBR.X) then
+        drpSide := 20;
+
+    if (tp.Y >= tpooTL.Y) and (tp.Y <= tpooTL.Y + { 5 } dH) then
+        drpSide := drpSide + 0
+    else if (tp.Y >= tpooBR.Y - { 5 } dH) and (tp.Y <= tpooBR.Y) then
+        drpSide := drpSide + 2
+    else
+        drpSide := drpSide + 1;
+
     bNeedAlign := True;
-    if not FdefAlignRight then
+    (*
+    if not Style.AlignRight then
     begin
       tp.X := (oo as TGPTextNode).Left;
       tp.Y := (oo as TGPTextNode).BoundsRect.Bottom + 2;
@@ -1183,6 +1339,7 @@ begin
       tp.X := (oo as TGPTextNode).BoundsRect.Right - 10;
       tp.Y := (oo as TGPTextNode).BoundsRect.Bottom + 2;
     end;
+    *)
   end
   else
       bNeedAlign := False;
@@ -1194,12 +1351,22 @@ begin
     // else
     // go := TGPTextNode.CreateNew(sgLayout, Rect(tp.X, tp.Y, 10, 10))
     go := TdmcMeterLabel.CreateNew(sgLayout, Rect(tp.X, tp.Y, tp.X + 10, tp.Y + 10));
-    (go as TGPTextNode).DataAlignRight := FdefAlignRight;
+    (*
+    if FCurStyle <> nil then
+      (go as TGPTextNode).DataAlignRight := FCurStyle.AlignRight
+    else
+      (go as TGPTextNode).DataAlignRight := FdefAlignRight;
+ *)
   end
   else if ADragItem.NodeType = ntDataItem then
   begin
     go := TdmcDataItem.CreateNew(sgLayout, Rect(tp.X, tp.Y, tp.X + 10, tp.Y + 10));
-    (go as TGPTextNode).DataAlignRight := FdefAlignRight;
+    (*
+    if FCurStyle <> nil then
+      (go as TGPTextNode).DataAlignRight := FCurStyle.AlignRight
+    else
+      (go as TGPTextNode).DataAlignRight := FdefAlignRight;
+ *)
   end
   else
       Exit;
@@ -1211,6 +1378,7 @@ begin
       DesignName := ADragItem.Meter.DesignName;
       DataName := ADragItem.DataName;
       Text := DesignName + ':' + DataName;
+      MeterType := ADragItem.Meter.Params.MeterType;
     end
   else if go is TdmcMeterLabel then
     with go as TdmcMeterLabel do
@@ -1219,6 +1387,74 @@ begin
       MeterType := ADragItem.Meter.Params.MeterType;
     end;
 
+  // 取回适当的图元样式
+  // Style := GetMatchStyle(go, ADragItem.Meter.Params.MeterType);
+  // 根据样式设置图元
+  go.Font.Name := Style.fontName;
+  go.Font.Size := Style.fontSize;
+  go.Font.Color := Style.fontColor;
+  go.Brush.Color := Style.bkColor;
+  TGPTextNode(go).Transparency := Trunc(Style.Transparency * 2.55);
+  if Style.Border then
+      TGPTextNode(go).Pen.Style := psSolid
+  else
+      TGPTextNode(go).Pen.Style := psClear;
+
+  TGPTextNode(go).DataAlignRight := Style.AlignRight;
+  go.Pen.Width := Style.LineWidth;
+  // 这里根据对齐方式调整新增图元的Left位置
+  (*
+  if bNeedAlign and Style.AlignRight then
+      TGPTextNode(go).Left := (oo as TGPTextNode).BoundsRect.Right - TGPTextNode(go).Width;
+ *)
+  // 新自动调整方法
+  if bNeedAlign then
+    case drpSide of
+      10: // TopLeft
+        begin
+          TGPTextNode(go).Left := (oo as TGPTextNode).BoundsRect.Left;
+          TGPTextNode(go).Top := (oo as TGPTextNode).BoundsRect.Top - TGPTextNode(go).Height - 2;
+          TGPTextNode(go).DataAlignRight := False;
+        end;
+      11: // Left
+        begin
+          TGPTextNode(go).Left := (oo as TGPTextNode).BoundsRect.Left - TGPTextNode(go).Width - 2;
+          TGPTextNode(go).Top := (oo as TGPTextNode).BoundsRect.Top;
+          TGPTextNode(go).DataAlignRight := True;
+        end;
+      12: // BottomLeft
+        begin
+          TGPTextNode(go).Left := (oo as TGPTextNode).BoundsRect.Left;
+          TGPTextNode(go).Top := (oo as TGPTextNode).BoundsRect.Top + TGPTextNode(go).Height + 2;
+          TGPTextNode(go).DataAlignRight := False;
+        end;
+      20: // TopRight
+        begin
+          TGPTextNode(go).Left := (oo as TGPTextNode).BoundsRect.Right - TGPTextNode(go).Width;
+          TGPTextNode(go).Top := (oo as TGPTextNode).BoundsRect.Top - TGPTextNode(go).Height - 2;
+          TGPTextNode(go).DataAlignRight := True;
+        end;
+      21: // Right
+        begin
+          TGPTextNode(go).Left := (oo as TGPTextNode).BoundsRect.Right + 2;
+          TGPTextNode(go).Top := (oo as TGPTextNode).BoundsRect.Top;
+          TGPTextNode(go).DataAlignRight := False;
+        end;
+      22: // BottomRight
+        begin
+          TGPTextNode(go).Left := (oo as TGPTextNode).BoundsRect.Right - TGPTextNode(go).Width;
+          TGPTextNode(go).Top := (oo as TGPTextNode).BoundsRect.Top + TGPTextNode(go).Height + 2;
+          TGPTextNode(go).DataAlignRight := True;
+        end;
+    else
+      if Style.AlignRight then
+      begin
+        TGPTextNode(go).Left := (oo as TGPTextNode).BoundsRect.Right - TGPTextNode(go).Width;
+        TGPTextNode(go).DataAlignRight := Style.AlignRight;
+      end;
+    end;
+
+(*
     { 如果FdefFontName<>''，说明已经设置过了缺省属性 }
   if bSetDefault then
   begin
@@ -1237,7 +1473,26 @@ begin
         TGPTextNode(go).Left := (oo as TGPTextNode).BoundsRect.Right - TGPTextNode(go).Width;
 
     go.Pen.Width := FdefLineWidth;
+  end
+  else if FCurStyle <> nil then
+  begin
+    go.Font.Name := FCurStyle.fontName;
+    go.Font.Size := FCurStyle.fontSize;
+    go.Font.Color := FCurStyle.fontColor;
+    go.Brush.Color := FCurStyle.bkColor;
+    TGPTextNode(go).Transparency := FCurStyle.Transparency;
+    if FCurStyle.Border then
+        TGPTextNode(go).Pen.Style := psSolid
+    else
+        TGPTextNode(go).Pen.Style := psClear;
+    TGPTextNode(go).DataAlignRight := FCurStyle.AlignRight;
+
+    if FCurStyle.AlignRight then
+        TGPTextNode(go).Left := (oo as TGPTextNode).BoundsRect.Right - TGPTextNode(go).Width;
+
+    go.Pen.Width := FCurStyle.LineWidth;
   end;
+ *)
 end;
 
 procedure TfrmEditor.sgLayoutDragOver(Sender, Source: TObject; X, Y: Integer; State: TDragState;
@@ -1313,7 +1568,8 @@ end;
 
 procedure TfrmEditor.sgLayoutObjectChange(Graph: TSimpleGraph; GraphObject: TGraphObject);
 begin
-  if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = GraphObject) then
+  if (sgLayout.SelectedObjects.Count = 1) and (sgLayout.SelectedObjects.Items[0] = GraphObject)
+  then
   begin
     FLoadingProperties := True;
     FSelectedGObj := GraphObject;
@@ -1393,11 +1649,15 @@ begin
 end;
 
 procedure TfrmEditor.sgLayoutObjectInsert(Graph: TSimpleGraph; GraphObject: TGraphObject);
+var
+  Style: TElementDefine;
 begin
   if FLoading then // 加载图形时，也会引起Insert事件，此时不做处理
       Exit;
 
-    // 这时候应该是用户插入的新图形了
+  Style := GetMatchStyle(GraphObject, '');
+
+  // 这时候应该是用户插入的新图形了
   if GraphObject is TdmcDataItem then
     with GraphObject as TdmcDataItem do
     begin
@@ -1416,45 +1676,39 @@ begin
   end
   else if GraphObject is TdmcDeformationDirection then { 2019-08-08 }
   begin
-    if FdefFontName <> '' then
-    begin
-      GraphObject.Pen.Color := FdefLineColor;
-      GraphObject.Pen.Width := FdefLineWidth;
-      GraphObject.Font.Name := FdefFontName;
-      GraphObject.Font.Size := FdefFontSize;
-      GraphObject.Options := GraphObject.Options - [goLinkable]; // 不允许连接
-    end;
+    GraphObject.Pen.Color := Style.lnColor;
+    GraphObject.Pen.Width := Style.LineWidth;
+    GraphObject.Font.Name := Style.fontName;
+    GraphObject.Font.Size := Style.fontSize;
+    GraphObject.Font.Color := Style.fontColor;
+    GraphObject.Options := GraphObject.Options - [goLinkable]; // 不允许连接
   end
   else if GraphObject is TGraphLink then
   begin
-        // 考虑自动将Caption设置为仪器编号？
-    if FdefFontName <> '' then
-    begin
-      GraphObject.Pen.Color := FdefLineColor;
-      GraphObject.Pen.Width := FdefLineWidth;
-      GraphObject.Font.Name := FdefFontName;
-      GraphObject.Font.Size := FdefFontSize;
-      GraphObject.Options := GraphObject.Options - [goLinkable]; // 不允许连接
-      if TGraphLink(GraphObject).Source is TdmcDataItem then
-          TGraphLink(GraphObject).Text := TdmcDataItem(TGraphLink(GraphObject).Source).DesignName;
-    end;
+    // 考虑自动将Caption设置为仪器编号？
+    GraphObject.Pen.Color := Style.lnColor;
+    GraphObject.Pen.Width := Style.LineWidth;
+    GraphObject.Font.Name := Style.fontName;
+    GraphObject.Font.Size := Style.fontSize;
+    GraphObject.Font.Color := Style.fontColor;
+    GraphObject.Options := GraphObject.Options - [goLinkable]; // 不允许连接
+    if TGraphLink(GraphObject).Source is TdmcDataItem then
+        TGraphLink(GraphObject).Text := TdmcDataItem(TGraphLink(GraphObject).Source).DesignName;
   end
   else
   begin
-    if FdefFontName <> '' then
-    begin
-      GraphObject.Pen.Color := FdefLineColor;
-      GraphObject.Pen.Width := FdefLineWidth;
-      GraphObject.Font.Name := FdefFontName;
-      GraphObject.Font.Size := FdefFontSize;
-      GraphObject.Brush.Color := FdefBackColor;
-      TGPPolygonalNode(GraphObject).Transparency := FdefTrans;
-      if FdefBorder then
-          TGPPolygonalNode(GraphObject).Pen.Style := psSolid
-      else
-          TGPPolygonalNode(GraphObject).Pen.Style := psClear;
-      GraphObject.Pen.Width := FdefLineWidth;
-    end;
+    GraphObject.Pen.Color := Style.lnColor;
+    GraphObject.Pen.Width := Style.LineWidth;
+    GraphObject.Font.Name := Style.fontName;
+    GraphObject.Font.Size := Style.fontSize;
+    GraphObject.Font.Color := Style.fontColor;
+    GraphObject.Brush.Color := Style.bkColor;
+    TGPPolygonalNode(GraphObject).Transparency := Style.Transparency;
+    if Style.Border then
+        TGPPolygonalNode(GraphObject).Pen.Style := psSolid
+    else
+        TGPPolygonalNode(GraphObject).Pen.Style := psClear;
+    GraphObject.Pen.Width := Style.LineWidth;
   end;
 end;
 
@@ -1582,10 +1836,18 @@ begin
   sgLayout.Modified := True;
 end;
 
+/// <summary>
+/// 2022-05-09 给本方法增加图元自动对齐的功能
+/// </summary>
 procedure TfrmEditor.GraphEndDragging(Graph: TSimpleGraph; GraphObject: TGraphObject; HT: Cardinal;
   Cancelled: Boolean);
 var
-  Obj: TGraphObject;
+  Obj    : TGraphObject;
+  drpSide: Integer; // 值含义：10-顶左对齐；11-左侧右对齐；12-底左对齐；20-顶右对齐；21-右侧左对齐；
+                    // 22-底右对齐
+  coLT, coBR: TPoint; // Covered object top-left point & bottom-right point
+  goLT      : TPoint; // graphobject top-left point
+  dW, dH    : Integer;
 begin
   // 只有TdmcDataItem和TdmcMeterLabel才享受本过程的处理
   if not((GraphObject is TdmcDataItem) or (GraphObject is TdmcMeterLabel)) then
@@ -1597,14 +1859,84 @@ begin
   // 只有当GraphObject盖在其他东西上面的时候才进行处理
   with GraphObject as TGraphNode do
   begin
-    Obj := Graph.FindObjectAt(Left - 4, Top - 4);
+    // 判断是否被拖动的图元覆盖了某个东西，
+    Obj := Graph.FindObjectAt(GraphObject.BoundsRect.Left - 4, GraphObject.BoundsRect.Top - 4);
     if Obj is TGPTextNode then
     begin
 {$IFDEF DEBUG}
       OutputDebugString(PChar('覆盖了这个东西：' + (Obj as TGPTextNode).Text + #13#10));
 {$ENDIF}
-      // 下面将Snap到Obj的下方，并且对齐
-      // align right side
+      // 取坐标
+      // coLT := Point((Obj as TGPTextNode).Left, (Obj as TGPTextNode).Top);
+      coLT := Obj.BoundsRect.TopLeft;
+      coBR := Obj.BoundsRect.BottomRight;
+      goLT := GraphObject.BoundsRect.TopLeft;
+      dW := (coBR.X - coLT.X) div 3; // 取判断的范围，基本上是三分之一吧
+      dH := (coBR.Y - coLT.Y) div 3;
+      drpSide := 0;
+      // 下面将Snap到Obj的下方，并且根据拖放的位置自动设置对齐
+      // 判断是放置到左侧还是右侧
+      if (goLT.X >= coLT.X) and (goLT.X <= coLT.X + dW) then
+          drpSide := 10
+      else if (goLT.X >= coBR.X - dW) and (goLT.X <= coBR.X) then
+          drpSide := 20;
+
+      // 判断放置到顶还是底，抑或两侧
+      if (goLT.Y >= coLT.Y) and (goLT.Y <= coLT.Y + dH) then
+          drpSide := drpSide + 0
+      else if (goLT.Y >= coBR.Y - dH) and (goLT.Y <= coBR.Y) then
+          drpSide := drpSide + 2
+      else
+          drpSide := drpSide + 1;
+
+      // auto align graph object
+      case drpSide of
+        10: // top and left align
+          with (GraphObject as TGPTextNode) do
+          begin
+            DataAlignRight := False;
+            Left := Obj.BoundsRect.Left;
+            Top := Obj.BoundsRect.Top - Height - 2;
+          end;
+        11: // left side and right align
+          with (GraphObject as TGPTextNode) do
+          begin
+            DataAlignRight := True;
+            Left := Obj.BoundsRect.Left - Width - 2;
+            Top := Obj.BoundsRect.Top;
+          end;
+        12: // bottom side and left align
+          with (GraphObject as TGPTextNode) do
+          begin
+            DataAlignRight := False;
+            Left := Obj.BoundsRect.Left;
+            Top := Obj.BoundsRect.Bottom + 2;
+          end;
+        20: // top side and right align
+          with (GraphObject as TGPTextNode) do
+          begin
+            DataAlignRight := True;
+            Left := coBR.X - Width;
+            Top := Obj.BoundsRect.Top - Height - 2;
+          end;
+        21: // right side and left align
+          with (GraphObject as TGPTextNode) do
+          begin
+            DataAlignRight := False;
+            Left := coBR.X + 2;
+            Top := Obj.BoundsRect.Top;
+          end;
+        22: // bottom side and right align
+          with (GraphObject as TGPTextNode) do
+          begin
+            DataAlignRight := True;
+            Left := coBR.X - Width;
+            Top := Obj.BoundsRect.Bottom + 2;
+          end;
+      else
+          // do nothing;
+      end;
+      (*
       if (GraphObject as TGPTextNode).DataAlignRight then
         with GraphObject as TGraphNode do
         begin
@@ -1617,7 +1949,239 @@ begin
           Left := (Obj as TGraphNode).Left;
           Top := (Obj as TGraphNode).BoundsRect.Bottom + 2;
         end;
+ *)
     end;
+  end;
+end;
+
+procedure TfrmEditor.StyleChanged;
+begin
+  if FCurStyle = nil then Exit;
+  // 下面改变界面组件的显示
+  clbxFontColor.Selected := FCurStyle.fontColor;
+  cmbFonts.Text := FCurStyle.fontName;
+  cmbFontSize.Text := IntToStr(FCurStyle.fontSize);
+  clbxBackColor.Selected := FCurStyle.bkColor;
+  clbxLineColor.Selected := FCurStyle.lnColor;
+  cmbLineWidth.Text := IntToStr(FCurStyle.LineWidth);
+  chkTextAutoSize.Checked := FCurStyle.AutoFit;
+  chkBorder.Checked := FCurStyle.Border;
+  chkUseGDIP.Checked := FCurStyle.UseGDIPlus;
+  chkDataAlighRight.Checked := FCurStyle.AlignRight;
+  trcTransparency.Position := FCurStyle.Transparency;
+end;
+
+procedure TfrmEditor.SetStyle(AStyle: PElementDefine);
+begin
+  FCurStyle := AStyle;
+  StyleChanged;
+end;
+
+function TfrmEditor.RetCurrentStyle: TElementDefine;
+begin
+  if FCurStyle <> nil then
+      Result := FCurStyle^
+  else if FdefFontName <> '' then
+  begin
+    Result.bkColor := FdefBackColor;
+    Result.lnColor := FdefLineColor;
+    Result.LineWidth := FdefLineWidth;
+    Result.AutoFit := True;
+    Result.UseGDIPlus := False;
+    Result.Border := FdefBorder;
+    Result.fontName := FdefFontName;
+    Result.fontSize := FdefFontSize;
+    Result.fontColor := FdefFontColor;
+    Result.Transparency := FdefTrans;
+    Result.AlignRight := FdefAlignRight;
+  end
+  else
+  begin
+    Result.bkColor := clbxBackColor.Selected;
+    Result.lnColor := clbxLineColor.Selected;
+    Result.LineWidth := strtoint(cmbLineWidth.Text);
+    Result.AutoFit := chkTextAutoSize.Checked;
+    Result.UseGDIPlus := chkUseGDIP.Checked;
+    Result.Border := chkBorder.Checked;
+    Result.fontName := cmbFonts.Text;
+    Result.fontSize := strtoint(cmbFontSize.Text);
+    Result.fontColor := clbxFontColor.Selected;
+    Result.Transparency := trcTransparency.Position;
+    Result.AlignRight := chkDataAlighRight.Checked;
+  end;
+end;
+
+function TfrmEditor.GetMatchStyle(AGNode: TGraphObject; AMeterType: String): TElementDefine;
+var
+  GType : TdefType; // 图元类型
+  MType : String;   // 仪器类型
+  i     : Integer;
+  iStyle: Integer;
+
+begin
+  //
+  if AGNode = nil then
+      Result := RetCurrentStyle
+  else
+  begin
+    if chkAutoMatchStyles.Checked = False then
+        Result := RetCurrentStyle
+    else if (AGNode is TdmcMap) then
+        Result := RetCurrentStyle
+    else
+    begin
+      // 检查图元类型
+      if AGNode is TdmcDataItem then GType := dtDataItem
+      else if AGNode is TdmcMeterLabel then GType := dtLabel
+      else if AGNode is TdmcDataArrow then GType := dtArrow
+      else if AGNode is TdmcDeformationDirection then GType := dtArrow
+      else if AGNode is TGPGraphicLink then GType := dtLinkLine
+      else
+      begin
+        Result := RetCurrentStyle;
+        Exit;
+      end;
+
+      Result := GetMatchStyle(GType, AMeterType);
+    end;
+  end;
+
+end;
+
+{ -----------------------------------------------------------------------------
+  Procedure  : GetMatchStyle
+  Description: 寻找指定类型的样式，本方法仅仅查找第一个……
+----------------------------------------------------------------------------- }
+function TfrmEditor.GetMatchStyle(AGNType: TdefType; AMeterType: string): TElementDefine;
+var
+  GType : TdefType; // 图元类型
+  MType : String;   // 仪器类型
+  i     : Integer;
+  iStyle: Integer;
+  bFound: Boolean;
+
+begin
+  // 如果没有自动匹配样式，则返回当前样式
+  if chkAutoMatchStyles.Checked = False then Result := RetCurrentStyle
+  else
+  begin
+    bFound := False;
+      // 检查图元类型
+      // 根据类型和仪器类型返回相应的样式
+      // 对于没有仪器类型的，返回找到的一个匹配的图元类型定义
+    case AGNType of
+        /// <summary>
+        /// 对于标签和数据，将检查是否有对应仪器类型的样式，若没有则使用当前样式
+        /// </summary>
+      dtLabel, dtDataItem:
+        begin
+          if AMeterType = '' then
+              Result := RetCurrentStyle
+          else
+            for i := 0 to PreDefines.Count - 1 do
+              if (PreDefines.Items[i].MeterType = AMeterType) and
+                (PreDefines.Items[i].DefType = AGNType) then
+              begin
+                bFound := True;
+                Result := PreDefines.Items[i]^;
+                Break;
+              end;
+          if not bFound then Result := RetCurrentStyle;
+        end;
+
+      dtArrow, dtLinkLine, dtIcon:
+        /// <summary>
+        /// 对于箭头、连接线、图标等，找到一种就算是了。至于多种样式定义，下一步再说
+        /// </summary>
+        begin
+          for i := 0 to PreDefines.Count - 1 do
+            if PreDefines.Items[i].DefType = GType then
+            begin
+              bFound := True;
+              Result := PreDefines.Items[i]^;
+              Break;
+            end;
+
+          if not bFound then Result := RetCurrentStyle;
+        end;
+    end;
+  end;
+end;
+
+{ -----------------------------------------------------------------------------
+  Procedure  : ApplyStyleToGraphObject
+  Description: 将给定样式应用到当前图纸的所有图元中
+----------------------------------------------------------------------------- }
+procedure TfrmEditor.ApplyStyleToGraphObject(AStyle: TElementDefine);
+var
+  i, n: Integer;
+  c   : TGraphObjectClass;
+  O   : TGraphObject;
+  procedure SetNormalStyle;
+  begin
+    O.Brush.Color := AStyle.bkColor;
+    O.Pen.Color := AStyle.lnColor;
+    O.Pen.Width := AStyle.LineWidth;
+    O.Font.Name := AStyle.fontName;
+    O.Font.Size := AStyle.fontSize;
+    O.Font.Color := AStyle.fontColor;
+    if AStyle.Border then O.Pen.Style := psSolid
+    else O.Pen.Style := psClear;
+  end;
+
+begin
+  case AStyle.DefType of
+    dtLabel:
+      begin
+        for i := 0 to sgLayout.ObjectsCount(TdmcMeterLabel) - 1 do
+        begin
+          O := sgLayout.Objects[i];
+          with O as TdmcMeterLabel do
+          begin
+            if MeterType <> AStyle.MeterType then Continue;
+            SetNormalStyle;
+            Transparency := AStyle.Transparency;
+            AutoSize := AStyle.AutoFit;
+            UseGdipDrawText := AStyle.UseGDIPlus;
+          end;
+        end;
+      end;
+    dtDataItem:
+      for i := 0 to sgLayout.ObjectsCount(TdmcDataItem) - 1 do
+      begin
+        O := sgLayout.Objects[i];
+        with O as TdmcDataItem do
+        begin
+          if MeterType <> AStyle.MeterType then Continue;
+          SetNormalStyle;
+          Transparency := AStyle.Transparency;
+          AutoSize := AStyle.AutoFit;
+          UseGdipDrawText := AStyle.UseGDIPlus;
+        end;
+      end;
+    dtArrow:
+      for i := 0 to sgLayout.ObjectsCount(TdmcDataArrow) - 1 do
+      begin
+        O := sgLayout.Objects[i];
+        SetNormalStyle;
+        // (O as TGPGraphicLink).Pen.Width := astyle.LineWidth;
+      end;
+    dtLinkLine:
+      for i := 0 to sgLayout.ObjectsCount(TGPGraphicLink) - 1 do
+      begin
+        O := sgLayout.Objects[i];
+        SetNormalStyle;
+        // (O as TGPGraphicLink).Pen.Width := astyle.LineWidth;
+      end;
+    dtdirection:
+      for i := 0 to sgLayout.ObjectsCount(TdmcDeformationDirection) - 1 do
+      begin
+        O := sgLayout.Objects[i];
+        SetNormalStyle;
+        // (O as TGPGraphicLink).Pen.Width := astyle.LineWidth;
+      end;
+  else
+    c := nil;
   end;
 end;
 

@@ -1,24 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899-12-30 00:00:00.000.387,=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\Unit1.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.408,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\Unit1.pas=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\ufraInputDatas.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.122,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.915,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.697,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.GraphDispatcherUnits.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.774,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\FuncFrames\DataGraph\uFuncDataGraph.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.581,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.ExcelDataAccess.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.547,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.CoreUnits.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.315,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Templates\uHJX.Template.WebGrid.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.029,C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\ufrmInputDatas.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.741,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Functions\Template\uHJX.Template.ChartTemplateProc.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.387,=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\Unit1.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.339,=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\New1.txt</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.581,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.ExcelDataAccess.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.408,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\ufraInputDatas.pas=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.804,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridHelper.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.381,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\New1.txt=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\说明.txt</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.774,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\FuncFrames\DataGraph\uFuncDataGraph.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.751,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Functions\Template\uHJX.Template.WebGridProc.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.057,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.029,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\ufrmInputDatas.pas=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.618,E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.Func.ChartTemplateClasses.pas=</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.381,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\说明.txt=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\New1.txt</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.360,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\TestInputDatas.dproj=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
     <Transaction>1899-12-30 00:00:00.000.638,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.Func.ChartTemplateClasses.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.407,=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\ModelSupport_TestInputDatas\default.txvpck</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.408,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\Unit1.dfm=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\ufraInputDatas.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.368,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Templates\uHJX.Template.XLGrid.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.915,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Templates\uHJX.Template.ChartTemplate.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.029,C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.dfm=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\ufrmInputDatas.dfm</Transaction>
     <Transaction>1899-12-30 00:00:00.000.812,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\FuncFrames\DataViewer\uFuncDataViewer.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.029,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\ufrmInputDatas.dfm=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.408,E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\ufraInputDatas.dfm=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\Unit1.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.858,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridProc.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.915,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.122,=C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.407,=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\ModelSupport_TestInputDatas\default.txvpck</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.446,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Templates\uHJX.Template.ProcSpecifiers.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.360,C:\Users\黄伟\Documents\Embarcadero\Studio\Projects\Project2.dproj=E:\Develope\Workspace\工科院\黄金峡\Souces\Tests\Test020.InputDatas\TestInputDatas.dproj</Transaction>
   </Transactions>
 </BorlandProject>

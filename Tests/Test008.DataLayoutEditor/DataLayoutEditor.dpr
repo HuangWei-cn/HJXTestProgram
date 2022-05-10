@@ -21,7 +21,11 @@ uses
   uhwSGEx in '..\..\Client\ClientCommon\Tools\uhwSGEx.pas',
   SimpleGraph in '..\..\Client\ClientCommon\Tools\SimpleGraph.pas',
   uHJX.HostTemplates in '..\..\Client\ClientCommon\uHJX.HostTemplates.pas',
-  AlignDlg in '..\..\Client\ClientCommon\Tools\SGEditor\AlignDlg.pas' {AlignDialog};
+  AlignDlg in '..\..\Client\ClientCommon\Tools\SGEditor\AlignDlg.pas' {AlignDialog},
+  LayoutUtils in 'LayoutUtils.pas',
+  janXMLTree in '..\..\Client\ClientCommon\Tools\janXMLTree.pas',
+  ufrmStyles in 'ufrmStyles.pas' {frmStyles},
+  uHJX.ProjectGlobal in '..\..\Client\ClientCommon\Core\uHJX.ProjectGlobal.pas';
 
 {$R *.res}
 

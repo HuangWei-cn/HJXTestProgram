@@ -81,7 +81,10 @@ uses
   ufraBaseIncrementGraph in '..\..\Client\ClientCommon\FuncFrames\DataGraph\ufraBaseIncrementGraph.pas' {fraIncGraph: TFrame},
   ufrmIncBarGraph in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmIncBarGraph.pas' {frmIncbar},
   ufrmTaskForm in '..\..\Client\ClientCommon\FuncFrames\TaskForm\ufrmTaskForm.pas' {TaskForm},
-  ufrmCheckOmission in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmCheckOmission.pas' {frmCheckOmission};
+  ufrmCheckOmission in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmCheckOmission.pas' {frmCheckOmission},
+  uMyTeeAxisScrollTool in '..\..\Client\ClientCommon\Tools\uMyTeeAxisScrollTool.pas',
+  ufrmInputLayoutData in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufrmInputLayoutData.pas' {frmInputLayoutData},
+  ufrmDataItemsList in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufrmDataItemsList.pas' {frmDataItemsList};
 
 {$R *.res}
 
@@ -93,6 +96,8 @@ begin
   Application.CreateForm(TfrmTestSummary, frmTestSummary);
   Application.CreateForm(TTaskForm, TaskForm);
   Application.CreateForm(TfrmCheckOmission, frmCheckOmission);
+  Application.CreateForm(TfrmInputLayoutData, frmInputLayoutData);
+  Application.CreateForm(TfrmDataItemsList, frmDataItemsList);
   // Application.CreateForm(TfrmMeterSelector, frmMeterSelector);
   Application.Run;
 

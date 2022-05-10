@@ -2,8 +2,8 @@ object frmEditor: TfrmEditor
   Left = 0
   Top = 0
   Caption = #20998#24067#22270#32534#36753#22120
-  ClientHeight = 816
-  ClientWidth = 943
+  ClientHeight = 713
+  ClientWidth = 979
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -146,22 +146,23 @@ object frmEditor: TfrmEditor
     001FF800001FF800001FF800001FE000000FE000000FE000000FE000000FE000
     000FE000000FE000000FF80777FFF80FFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
   OldCreateOrder = False
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
-    Left = 173
+    Left = 217
     Top = 26
-    Height = 771
+    Height = 668
     Beveled = True
     ExplicitLeft = 476
     ExplicitTop = 324
     ExplicitHeight = 100
   end
   object Splitter2: TSplitter
-    Left = 741
+    Left = 777
     Top = 26
-    Height = 771
+    Height = 668
     Align = alRight
     Beveled = True
     ExplicitLeft = 464
@@ -171,18 +172,21 @@ object frmEditor: TfrmEditor
   object Panel1: TPanel
     Left = 0
     Top = 26
-    Width = 173
-    Height = 771
+    Width = 217
+    Height = 668
     Align = alLeft
+    Padding.Left = 3
+    Padding.Top = 5
+    Padding.Right = 3
+    Padding.Bottom = 5
     TabOrder = 0
     object btngrpFuncs: TButtonGroup
-      Left = 1
-      Top = 1
-      Width = 171
+      Left = 4
+      Top = 6
+      Width = 209
       Height = 80
       Align = alTop
       BevelInner = bvNone
-      BevelKind = bkSoft
       BorderStyle = bsNone
       ButtonOptions = [gboFullSize, gboShowCaptions]
       Items = <
@@ -194,10 +198,10 @@ object frmEditor: TfrmEditor
       TabOrder = 0
     end
     object tvwMeters: TTreeView
-      Left = 1
-      Top = 81
-      Width = 171
-      Height = 668
+      Left = 4
+      Top = 86
+      Width = 209
+      Height = 555
       Align = alClient
       HideSelection = False
       Indent = 19
@@ -208,9 +212,9 @@ object frmEditor: TfrmEditor
       OnMouseMove = tvwMetersMouseMove
     end
     object edtSeek: TEdit
-      Left = 1
-      Top = 749
-      Width = 171
+      Left = 4
+      Top = 641
+      Width = 209
       Height = 21
       Align = alBottom
       TabOrder = 2
@@ -218,10 +222,10 @@ object frmEditor: TfrmEditor
     end
   end
   object sgLayout: TSimpleGraph
-    Left = 176
+    Left = 220
     Top = 26
-    Width = 565
-    Height = 771
+    Width = 557
+    Height = 668
     Align = alClient
     HorzScrollBar.Tracking = True
     PopupMenu = popSG
@@ -243,7 +247,7 @@ object frmEditor: TfrmEditor
   object ActionToolBar1: TActionToolBar
     Left = 0
     Top = 0
-    Width = 943
+    Width = 979
     Height = 26
     ActionManager = ActionManager1
     Caption = 'ActionToolBar1'
@@ -264,16 +268,16 @@ object frmEditor: TfrmEditor
   end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 797
-    Width = 943
+    Top = 694
+    Width = 979
     Height = 19
     Panels = <>
   end
   object Panel2: TPanel
-    Left = 744
+    Left = 780
     Top = 26
     Width = 199
-    Height = 771
+    Height = 668
     Align = alRight
     BevelOuter = bvNone
     Padding.Left = 2
@@ -350,8 +354,7 @@ object frmEditor: TfrmEditor
       Left = 2
       Top = 205
       Width = 195
-      Height = 564
-      VertScrollBar.Position = 108
+      Height = 461
       VertScrollBar.Tracking = True
       Align = alClient
       HeaderFont.Charset = DEFAULT_CHARSET
@@ -361,7 +364,7 @@ object frmEditor: TfrmEditor
       HeaderFont.Style = []
       TabOrder = 2
       object CategoryPanel4: TCategoryPanel
-        Top = 532
+        Top = 774
         Height = 30
         Caption = #26410#20351#29992
         Collapsed = True
@@ -369,7 +372,7 @@ object frmEditor: TfrmEditor
         ExpandedHeight = 81
       end
       object CategoryPanel3: TCategoryPanel
-        Top = 332
+        Top = 574
         Caption = #24179#38754#21464#24418#31661#22836#23646#24615
         TabOrder = 1
         object Label11: TLabel
@@ -450,7 +453,7 @@ object frmEditor: TfrmEditor
         end
       end
       object CategoryPanel2: TCategoryPanel
-        Top = 221
+        Top = 463
         Height = 111
         Caption = #24213#22270#23646#24615
         TabOrder = 2
@@ -496,20 +499,58 @@ object frmEditor: TfrmEditor
           OnChange = edtAngleChange
         end
       end
-      object CategoryPanel1: TCategoryPanel
-        Top = -108
-        Height = 329
-        Caption = #22806#35266#23646#24615
+      object CategoryPanel5: TCategoryPanel
+        Top = 353
+        Height = 110
+        Caption = #26679#24335#34920
         TabOrder = 3
+        object btnSaveStyles: TSpeedButton
+          Left = 87
+          Top = 52
+          Width = 81
+          Height = 22
+          Hint = #20445#23384#26679#24335#34920
+          Caption = #20445#23384#26679#24335#34920
+          OnClick = btnSaveStylesClick
+        end
+        object btnOpenStyleEditor: TSpeedButton
+          Left = 6
+          Top = 52
+          Width = 75
+          Height = 22
+          Caption = #25171#24320#26679#24335#34920
+          OnClick = btnOpenStyleEditorClick
+        end
+        object Label15: TLabel
+          Left = 8
+          Top = 6
+          Width = 144
+          Height = 13
+          Caption = #36873#25321#19968#20010#26679#24335#20316#20026#24403#21069#26679#24335
+        end
+        object cbxStyles: TComboBox
+          Left = 7
+          Top = 25
+          Width = 162
+          Height = 21
+          Style = csDropDownList
+          TabOrder = 0
+          OnChange = cbxStylesChange
+        end
+      end
+      object CategoryPanel1: TCategoryPanel
+        Top = 0
+        Height = 353
+        Caption = #22806#35266#23646#24615
+        TabOrder = 4
         object GroupBox2: TGroupBox
           Left = 0
           Top = 0
           Width = 174
-          Height = 300
+          Height = 325
           Align = alTop
           Caption = #22806#35266#23646#24615
           TabOrder = 0
-          ExplicitWidth = 191
           object Label1: TLabel
             Left = 7
             Top = 20
@@ -546,11 +587,14 @@ object frmEditor: TfrmEditor
             Caption = #36879#26126#24230
           end
           object btnSetAsDefault: TSpeedButton
-            Left = 80
-            Top = 266
+            Left = 3
+            Top = 271
             Width = 81
             Height = 22
-            Caption = #35774#20026#40664#35748#26679#24335
+            Hint = #35774#20026#40664#35748#26679#24335#30340#26102#20505#65292#23558#19981#26681#25454#26679#24335#23450#20041#35774#32622#22270#24418#33394#24425#65292#21516#26102#23558#13#10#24403#21069#26679#24335#35774#32622#20026'nil'#12290
+            Caption = #35774#20026#40664#35748#26684#24335
+            ParentShowHint = False
+            ShowHint = True
             OnClick = btnSetAsDefaultClick
           end
           object Label6: TLabel
@@ -566,6 +610,15 @@ object frmEditor: TfrmEditor
             Width = 24
             Height = 13
             Caption = #32447#23485
+          end
+          object btnSaveAsStyle: TSpeedButton
+            Left = 90
+            Top = 271
+            Width = 75
+            Height = 22
+            Hint = #23558#24403#21069#26684#24335#20445#23384#20026#26032#26679#24335
+            Caption = #20445#23384#20026#26679#24335
+            OnClick = btnSaveAsStyleClick
           end
           object cmbFonts: TComboBox
             Left = 4
@@ -695,6 +748,19 @@ object frmEditor: TfrmEditor
             TabOrder = 10
             OnClick = chkDataAlighRightClick
           end
+          object chkAutoMatchStyles: TCheckBox
+            Left = 8
+            Top = 299
+            Width = 137
+            Height = 17
+            Hint = 
+              #21246#36873#26412#39033#21518#65292#22270#20803#26679#24335#23558#20248#20808#21305#37197#24050#23450#20041#26679#24335#34920#20013#23545#24212#30340#26679#24335#12290#13#10#21305#37197#35268#21017#26159#20202#22120#31867#22411#12289#22270#20803#31867#22411#12290#13#10#33509#26080#27861#25214#21040#21487#21305#37197#30340#26679#24335#65292#21017#21305#37197#24403#21069 +
+              #26679#24335#65307#33509#26080#24403#21069#26679#24335#21017#13#10#21305#37197#24403#21069#26684#24335#65307#33509#26080#24403#21069#26684#24335#65292#23601#31639#20102#12290
+            Caption = #20351#29992#26679#24335#34920#33258#21160#35774#32622
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 11
+          end
         end
       end
     end
@@ -704,7 +770,7 @@ object frmEditor: TfrmEditor
     Left = 374
     Top = 478
     Bitmap = {
-      494C01013900A0007C0010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01013900A000A00010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000F0000000010020000000000000F0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3199,8 +3265,8 @@ object frmEditor: TfrmEditor
     Filter = #20998#24067#22270#25991#20214'|*.sg'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofEnableSizing]
     Title = #20445#23384#20998#24067#22270
-    Left = 244
-    Top = 392
+    Left = 296
+    Top = 376
   end
   object dlgOpenPrjConfig: TOpenDialog
     Filter = 'Excel'#24037#20316#31807#25991#20214'|*.xls;*.xlsx'

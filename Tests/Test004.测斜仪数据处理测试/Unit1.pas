@@ -90,6 +90,7 @@ begin
             FMultDateStr := frm.GetSelectedDates;
             GetInclineMultDatasFromXLS(FDataFile, frm.GetSelectedDates, Datas);
             FfraInCharts.DrawMultDate2DLines(Datas);
+            FfraInCharts.DrawMultiDefLines(Datas);
         end
         else
             ShowMessage('User cancel');
@@ -182,11 +183,15 @@ end;
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
+    //sSkinManager1.Options.ScaleMode:= ;
     FfraInCharts := TfraInclineCharts.Create(Self);
     FfraInCharts.Parent := pnl2;
     FfraInCharts.Align := alclient;
     System.SysUtils.FormatSettings.DateSeparator := '-';
     System.SysUtils.FormatSettings.ShortDateFormat := 'yyyy-MM-dd';
+    Application.ShowHint := True;
+    Application.HintPause := 0;
+    Application.HintHidePause := 10000;
 end;
 
 procedure TfrmMain.GetDataByDate(AFile: string; ADate: TDate);
@@ -236,6 +241,7 @@ begin
             FfraInCharts.Draw2DLine(pdt);
             FfraInCharts.Draw3DLine(pdt);
             FfraInCharts.ShowEigenValue(pdt);
+            FfraInCharts.DrawDeformationLines(pdt);
         end;
 
     finally

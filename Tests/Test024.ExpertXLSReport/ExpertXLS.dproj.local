@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899-12-30 00:00:00.000.403,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.546,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.000,=D:\Develope\HJXProject\HJXProject\uHJX.ExcelDataAccess.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.580,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.546,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.512,D:\Develope\DefaultDelphiProject\Unit1.pas=D:\Develope\HJXProject\HJXTestProgram\Tests\Test024.ExpertXLSReport\ufrmMain.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.512,D:\Develope\DefaultDelphiProject\Unit1.dfm=D:\Develope\HJXProject\HJXTestProgram\Tests\Test024.ExpertXLSReport\ufrmMain.dfm</Transaction>
     <Transaction>1899-12-30 00:00:00.000.269,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.ExcelDataAccess.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.537,=D:\Develope\HJXProject\HJXProject\FuncFrames\MeterList\ufraMeterList.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.836,=D:\Develope\HJXProject\HJXProject\FuncFrames\MeterSelector\ufraMeterSelector.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.966,=D:\Develope\HJXProject\HJXProject\uHJX.CoreUnits.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.339,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\uHJX.HostTemplates.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.030,=D:\Develope\HJXProject\HJXProject\uHJX.HostTemplates.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.250,=D:\Develope\HJXProject\HJXProject\FuncFrames\MeterSelector\ufrmMeterSelector.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.711,=D:\Develope\DefaultDelphiProject\GridPaneView1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.250,=D:\Develope\HJXProject\HJXProject\FuncFrames\MeterSelector\ufrmMeterSelector.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.742,E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\uMyTeeAxisScrollTool.pas=</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.570,D:\Develope\DefaultDelphiProject\Project1.dproj=D:\Develope\HJXProject\HJXTestProgram\Tests\Test024.ExpertXLSReport\ExpertXLS.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.403,=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.012,=E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Tools\uMyTeeAxisScrollTool.pas</Transaction>
     <Transaction>1899-12-30 00:00:00.000.173,=D:\Develope\DefaultDelphiProject\SplitPaneView1.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.512,D:\Develope\HJXProject\HJXTestProgram\Tests\Test024.ExpertXLSReport\ufrmMain.pas=D:\Develope\DefaultDelphiProject\Unit1.pas</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.512,D:\Develope\HJXProject\HJXTestProgram\Tests\Test024.ExpertXLSReport\ufrmMain.dfm=D:\Develope\DefaultDelphiProject\Unit1.dfm</Transaction>
-    <Transaction>1899-12-30 00:00:00.000.570,D:\Develope\HJXProject\HJXTestProgram\Tests\Test024.ExpertXLSReport\ExpertXLS.dproj=D:\Develope\DefaultDelphiProject\Project1.dproj</Transaction>
   </Transactions>
 </BorlandProject>

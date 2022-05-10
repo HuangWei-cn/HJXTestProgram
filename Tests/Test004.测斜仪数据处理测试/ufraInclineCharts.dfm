@@ -9,7 +9,7 @@ object fraInclineCharts: TfraInclineCharts
     Top = 0
     Width = 443
     Height = 644
-    ActivePage = tab2D
+    ActivePage = tabDeformation
     Align = alClient
     TabOrder = 0
     object tabEigenValue: TTabSheet
@@ -93,7 +93,8 @@ object fraInclineCharts: TfraInclineCharts
           #27979#26012#23380
           'A'#21521#20301#31227#21464#21270#37327#26354#32447)
         BottomAxis.Axis.Color = 4210752
-        BottomAxis.Grid.Color = 11119017
+        BottomAxis.Grid.Color = 13816530
+        BottomAxis.Grid.Style = psDash
         BottomAxis.LabelsFormat.Font.Name = 'Verdana'
         BottomAxis.TicksInner.Color = 11119017
         BottomAxis.Title.Caption = #20301#31227'(mm)'
@@ -109,7 +110,8 @@ object fraInclineCharts: TfraInclineCharts
         DepthTopAxis.TicksInner.Color = 11119017
         DepthTopAxis.Title.Font.Name = 'Verdana'
         LeftAxis.Axis.Color = 4210752
-        LeftAxis.Grid.Color = 11119017
+        LeftAxis.Grid.Color = 13816530
+        LeftAxis.Grid.Style = psDash
         LeftAxis.Inverted = True
         LeftAxis.LabelsFormat.Font.Name = 'Verdana'
         LeftAxis.TicksInner.Color = 11119017
@@ -131,17 +133,17 @@ object fraInclineCharts: TfraInclineCharts
         BevelInner = bvLowered
         BevelOuter = bvNone
         Color = clWhite
+        ParentShowHint = False
         PopupMenu = pmChartOp
+        ShowHint = True
         TabOrder = 0
-        ExplicitTop = 41
-        ExplicitHeight = 575
+        OnMouseMove = cht2DAMouseMove
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 13
         object LineA: THorizLineSeries
           Legend.Text = 'A'#21521#20559#31227#21464#21270#37327
           LegendTitle = 'A'#21521#20559#31227#21464#21270#37327
           ColorEachLine = False
-          SeriesColor = 8388863
           Title = 'A'#21521#20559#31227#26354#32447
           Brush.BackColor = clDefault
           Pointer.HorizSize = 3
@@ -194,7 +196,8 @@ object fraInclineCharts: TfraInclineCharts
           #27979#26012#23380
           'B'#21521#20301#31227#21464#21270#37327#26354#32447)
         BottomAxis.Axis.Color = 4210752
-        BottomAxis.Grid.Color = 11119017
+        BottomAxis.Grid.Color = 13816530
+        BottomAxis.Grid.Style = psDash
         BottomAxis.LabelsFormat.Font.Name = 'Verdana'
         BottomAxis.TicksInner.Color = 11119017
         BottomAxis.Title.Caption = #20301#31227'(mm)'
@@ -210,7 +213,8 @@ object fraInclineCharts: TfraInclineCharts
         DepthTopAxis.TicksInner.Color = 11119017
         DepthTopAxis.Title.Font.Name = 'Verdana'
         LeftAxis.Axis.Color = 4210752
-        LeftAxis.Grid.Color = 11119017
+        LeftAxis.Grid.Color = 13816530
+        LeftAxis.Grid.Style = psDash
         LeftAxis.Inverted = True
         LeftAxis.LabelsFormat.Font.Name = 'Verdana'
         LeftAxis.TicksInner.Color = 11119017
@@ -232,17 +236,18 @@ object fraInclineCharts: TfraInclineCharts
         BevelInner = bvLowered
         BevelOuter = bvNone
         Color = clWhite
+        ParentShowHint = False
         PopupMenu = pmChartOp
+        ShowHint = True
         TabOrder = 1
-        ExplicitTop = 41
-        ExplicitHeight = 575
+        OnMouseMove = cht2DBMouseMove
+        ExplicitTop = -1
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 13
         object LineB: THorizLineSeries
           Legend.Text = 'A'#21521#20559#31227#21464#21270#37327
           LegendTitle = 'A'#21521#20559#31227#21464#21270#37327
           ColorEachLine = False
-          SeriesColor = 6870287
           Title = 'B'#21521#20559#31227#26354#32447
           Brush.BackColor = clDefault
           Pointer.HorizSize = 3
@@ -324,6 +329,7 @@ object fraInclineCharts: TfraInclineCharts
         BackWall.Brush.Gradient.StartColor = 15395562
         BackWall.Brush.Gradient.Visible = True
         BackWall.Color = 4227327
+        BackWall.Transparent = False
         Border.Visible = True
         BottomWall.Color = clBtnFace
         BottomWall.Transparent = True
@@ -335,6 +341,7 @@ object fraInclineCharts: TfraInclineCharts
         Gradient.EndColor = clWhite
         Gradient.MidColor = 15395562
         Gradient.StartColor = 15395562
+        Gradient.Visible = True
         LeftWall.Color = 4227072
         LeftWall.Transparency = 33
         LeftWall.Transparent = True
@@ -486,6 +493,7 @@ object fraInclineCharts: TfraInclineCharts
           Inertia = 90
           Pen.Color = clWhite
           Pen.Mode = pmXor
+          Pen.Visible = True
         end
         object ctl3d_A: TText3DTool
           Brush.BackColor = clBlack
@@ -537,9 +545,212 @@ object fraInclineCharts: TfraInclineCharts
         end
       end
     end
+    object tabDeformation: TTabSheet
+      Caption = #21464#24418#37327
+      ImageIndex = 4
+      OnResize = tabDeformationResize
+      object Panel4: TPanel
+        Left = 0
+        Top = 0
+        Width = 435
+        Height = 616
+        Align = alClient
+        Caption = 'Panel4'
+        TabOrder = 0
+        ExplicitTop = 57
+        ExplicitHeight = 559
+        object chtDefA: TChart
+          Left = 1
+          Top = 1
+          Width = 208
+          Height = 614
+          BackWall.Brush.Gradient.Direction = gdBottomTop
+          BackWall.Brush.Gradient.EndColor = clWhite
+          BackWall.Brush.Gradient.StartColor = 15395562
+          BackWall.Color = clWhite
+          BackWall.Transparent = False
+          Foot.Font.Color = clBlue
+          Foot.Font.Name = 'Verdana'
+          Gradient.Direction = gdBottomTop
+          Gradient.EndColor = clWhite
+          Gradient.MidColor = 15395562
+          Gradient.StartColor = 15395562
+          LeftWall.Color = 14745599
+          Legend.Alignment = laBottom
+          Legend.Font.Name = 'Verdana'
+          Legend.LegendStyle = lsSeries
+          Legend.Shadow.Transparency = 0
+          Legend.Shadow.Visible = False
+          MarginBottom = 2
+          MarginLeft = 4
+          MarginRight = 4
+          MarginTop = 2
+          RightWall.Color = 14745599
+          Title.Font.Charset = GB2312_CHARSET
+          Title.Font.Height = -13
+          Title.Font.Name = #23435#20307
+          Title.Text.Strings = (
+            'A'#21521#21508#28857#21464#24418#37327)
+          BottomAxis.Axis.Color = 4210752
+          BottomAxis.AxisValuesFormat = '0.0'
+          BottomAxis.Grid.Color = 13816530
+          BottomAxis.Grid.Style = psDot
+          BottomAxis.Grid.Width = 0
+          BottomAxis.LabelsFormat.Font.Name = 'Verdana'
+          BottomAxis.TicksInner.Color = 11119017
+          BottomAxis.Title.Caption = #21464#24418'(mm)'
+          BottomAxis.Title.Font.Name = 'Verdana'
+          DepthAxis.Axis.Color = 4210752
+          DepthAxis.Grid.Color = 11119017
+          DepthAxis.LabelsFormat.Font.Name = 'Verdana'
+          DepthAxis.TicksInner.Color = 11119017
+          DepthAxis.Title.Font.Name = 'Verdana'
+          DepthTopAxis.Axis.Color = 4210752
+          DepthTopAxis.Grid.Color = 11119017
+          DepthTopAxis.LabelsFormat.Font.Name = 'Verdana'
+          DepthTopAxis.TicksInner.Color = 11119017
+          DepthTopAxis.Title.Font.Name = 'Verdana'
+          LeftAxis.Axis.Color = 4210752
+          LeftAxis.AxisValuesFormat = '0.0'
+          LeftAxis.Grid.Color = 13816530
+          LeftAxis.Grid.Style = psDot
+          LeftAxis.Grid.Width = 0
+          LeftAxis.Inverted = True
+          LeftAxis.LabelsFormat.Font.Name = 'Verdana'
+          LeftAxis.TicksInner.Color = 11119017
+          LeftAxis.Title.Caption = #28145#24230'(m)'
+          LeftAxis.Title.Font.Name = 'Verdana'
+          RightAxis.Axis.Color = 4210752
+          RightAxis.Grid.Color = 11119017
+          RightAxis.LabelsFormat.Font.Name = 'Verdana'
+          RightAxis.TicksInner.Color = 11119017
+          RightAxis.Title.Font.Name = 'Verdana'
+          TopAxis.Axis.Color = 4210752
+          TopAxis.Grid.Color = 11119017
+          TopAxis.LabelsFormat.Font.Name = 'Verdana'
+          TopAxis.TicksInner.Color = 11119017
+          TopAxis.Title.Font.Name = 'Verdana'
+          View3D = False
+          Align = alLeft
+          Color = clWhite
+          PopupMenu = pmChartOp
+          TabOrder = 0
+          ExplicitHeight = 557
+          DefaultCanvas = 'TGDIPlusCanvas'
+          ColorPaletteIndex = 13
+          object srsDefA: THorizLineSeries
+            SeriesColor = 46336
+            Title = 'A'#21521#21508#28857#21464#24418#37327
+            Brush.BackColor = clDefault
+            Pointer.HorizSize = 3
+            Pointer.InflateMargins = True
+            Pointer.Style = psRightTriangle
+            Pointer.VertSize = 3
+            Pointer.Visible = True
+            XValues.Name = 'X'
+            XValues.Order = loNone
+            YValues.Name = 'Y'
+            YValues.Order = loAscending
+          end
+        end
+        object chtDefB: TChart
+          Left = 209
+          Top = 1
+          Width = 225
+          Height = 614
+          BackWall.Brush.Gradient.Direction = gdBottomTop
+          BackWall.Brush.Gradient.EndColor = clWhite
+          BackWall.Brush.Gradient.StartColor = 15395562
+          BackWall.Color = clWhite
+          BackWall.Transparent = False
+          Foot.Font.Color = clBlue
+          Foot.Font.Name = 'Verdana'
+          Gradient.Direction = gdBottomTop
+          Gradient.EndColor = clWhite
+          Gradient.MidColor = 15395562
+          Gradient.StartColor = 15395562
+          LeftWall.Color = 14745599
+          Legend.Alignment = laBottom
+          Legend.Font.Name = 'Verdana'
+          Legend.LegendStyle = lsSeries
+          Legend.Shadow.Transparency = 0
+          MarginBottom = 2
+          MarginLeft = 4
+          MarginRight = 4
+          MarginTop = 2
+          RightWall.Color = 14745599
+          Title.Font.Charset = GB2312_CHARSET
+          Title.Font.Height = -13
+          Title.Font.Name = #23435#20307
+          Title.Text.Strings = (
+            'B'#21521#21508#28857#21464#24418#37327)
+          BottomAxis.Axis.Color = 4210752
+          BottomAxis.AxisValuesFormat = '0.0'
+          BottomAxis.Grid.Color = 13816530
+          BottomAxis.Grid.Style = psDot
+          BottomAxis.Grid.Width = 0
+          BottomAxis.LabelsFormat.Font.Name = 'Verdana'
+          BottomAxis.TicksInner.Color = 11119017
+          BottomAxis.Title.Caption = #21464#24418'(mm)'
+          BottomAxis.Title.Font.Name = 'Verdana'
+          DepthAxis.Axis.Color = 4210752
+          DepthAxis.Grid.Color = 11119017
+          DepthAxis.LabelsFormat.Font.Name = 'Verdana'
+          DepthAxis.TicksInner.Color = 11119017
+          DepthAxis.Title.Font.Name = 'Verdana'
+          DepthTopAxis.Axis.Color = 4210752
+          DepthTopAxis.Grid.Color = 11119017
+          DepthTopAxis.LabelsFormat.Font.Name = 'Verdana'
+          DepthTopAxis.TicksInner.Color = 11119017
+          DepthTopAxis.Title.Font.Name = 'Verdana'
+          LeftAxis.Axis.Color = 4210752
+          LeftAxis.AxisValuesFormat = '0.0'
+          LeftAxis.Grid.Color = 13816530
+          LeftAxis.Grid.Style = psDot
+          LeftAxis.Grid.Width = 0
+          LeftAxis.Inverted = True
+          LeftAxis.LabelsFormat.Font.Name = 'Verdana'
+          LeftAxis.TicksInner.Color = 11119017
+          LeftAxis.Title.Caption = #28145#24230'(m)'
+          LeftAxis.Title.Font.Name = 'Verdana'
+          RightAxis.Axis.Color = 4210752
+          RightAxis.Grid.Color = 11119017
+          RightAxis.LabelsFormat.Font.Name = 'Verdana'
+          RightAxis.TicksInner.Color = 11119017
+          RightAxis.Title.Font.Name = 'Verdana'
+          TopAxis.Axis.Color = 4210752
+          TopAxis.Grid.Color = 11119017
+          TopAxis.LabelsFormat.Font.Name = 'Verdana'
+          TopAxis.TicksInner.Color = 11119017
+          TopAxis.Title.Font.Name = 'Verdana'
+          View3D = False
+          Align = alClient
+          Color = clWhite
+          PopupMenu = pmChartOp
+          TabOrder = 1
+          ExplicitHeight = 557
+          DefaultCanvas = 'TGDIPlusCanvas'
+          ColorPaletteIndex = 13
+          object srsDefB: THorizLineSeries
+            Title = 'B'#21521#21508#28857#21464#24418#37327
+            Brush.BackColor = clDefault
+            Pointer.HorizSize = 3
+            Pointer.InflateMargins = True
+            Pointer.Style = psRightTriangle
+            Pointer.VertSize = 3
+            Pointer.Visible = True
+            XValues.Name = 'X'
+            XValues.Order = loNone
+            YValues.Name = 'Y'
+            YValues.Order = loAscending
+          end
+        end
+      end
+    end
     object tabHistory: TTabSheet
       Caption = #20301#31227#36807#31243#32447
       ImageIndex = 2
+      TabVisible = False
       object chtHistoryLinesA: TChart
         Left = 0
         Top = 18
@@ -553,6 +764,7 @@ object fraInclineCharts: TfraInclineCharts
         BackWall.Brush.Gradient.Visible = True
         BackWall.Color = 14090184
         BackWall.Transparency = 25
+        BackWall.Transparent = False
         Border.Visible = True
         BottomWall.Transparent = True
         Foot.Font.Color = clBlue
@@ -561,6 +773,7 @@ object fraInclineCharts: TfraInclineCharts
         Gradient.EndColor = clWhite
         Gradient.MidColor = 15395562
         Gradient.StartColor = 15395562
+        Gradient.Visible = True
         LeftWall.Color = 14745599
         LeftWall.Transparency = 25
         LeftWall.Transparent = True
@@ -695,6 +908,7 @@ object fraInclineCharts: TfraInclineCharts
           Inertia = 95
           Pen.Color = 872415232
           Pen.Mode = pmXor
+          Pen.Visible = True
         end
       end
       object Panel1: TPanel
@@ -712,7 +926,6 @@ object fraInclineCharts: TfraInclineCharts
           Width = 18
           Height = 18
           Hint = #26174#31034#31354#38388#20301#31227#37327'|'#31354#38388#20301#31227#26159#30001'A'#12289'B'#20004#20010#26041#21521#21512#25104#30340#20301#31227#65292#26159#27979#28857#30340#23454#38469#13#10#20301#31227#12290#26412#26354#32447#34920#26126#27979#28857#20301#31227#30340#22823#23567#65292#19981#34920#31034#26041#21521#12290
-          CustomHint = BalloonHint1
           GroupIndex = 1
           Down = True
           Caption = 'D'
@@ -726,7 +939,6 @@ object fraInclineCharts: TfraInclineCharts
           Width = 18
           Height = 18
           Hint = 'A'#21521#20301#31227#26354#32447'|'#26174#31034'A'#26041#21521#20301#31227#26354#32447#65292#25968#20540#30340#27491#36127#34920#26126#20301#31227#30340#26041#21521#12290
-          CustomHint = BalloonHint1
           GroupIndex = 1
           Caption = 'A'
           ParentShowHint = False
@@ -739,7 +951,6 @@ object fraInclineCharts: TfraInclineCharts
           Width = 18
           Height = 18
           Hint = 'B'#21521#20301#31227#26354#32447'|'#26174#31034#27979#28857'B'#26041#21521#20301#31227#65292#25968#20540#27491#36127#34920#26126#20301#31227#26041#21521#12290
-          CustomHint = BalloonHint1
           GroupIndex = 1
           Caption = 'B'
           ParentShowHint = False
@@ -751,7 +962,6 @@ object fraInclineCharts: TfraInclineCharts
   end
   object TeeGDIPlus1: TTeeGDIPlus
     AntiAliasText = gpfBest
-    TeePanel = cht3D
     Left = 36
     Top = 260
   end
@@ -809,17 +1019,10 @@ object fraInclineCharts: TfraInclineCharts
   end
   object TeeGDIPlus2: TTeeGDIPlus
     AntiAliasText = gpfBest
-    TeePanel = chtHistoryLinesA
     Left = 36
     Top = 200
   end
-  object BalloonHint1: TBalloonHint
-    HideAfter = 1000
-    Left = 208
-    Top = 312
-  end
   object TeeOpenGL1: TTeeOpenGL
-    Active = True
     AmbientLight = 0
     FontStyle = fsBitmap
     Light.Visible = False
@@ -833,12 +1036,10 @@ object fraInclineCharts: TfraInclineCharts
     Light2.Direction.Z = -1.000000000000000000
     Light2.SpotDegrees = 180.000000000000000000
     Shininess = 0.500000000000000000
-    TeePanel = chtHistoryLinesA
-    Left = 104
-    Top = 204
+    Left = 112
+    Top = 200
   end
   object TeeOpenGL2: TTeeOpenGL
-    Active = True
     AmbientLight = 0
     FontStyle = fsBitmap
     Light.Visible = False
@@ -851,16 +1052,13 @@ object fraInclineCharts: TfraInclineCharts
     Light2.Direction.Z = -1.000000000000000000
     Light2.SpotDegrees = 180.000000000000000000
     Shininess = 0.500000000000000000
-    TeePanel = cht3D
-    Left = 168
-    Top = 208
+    Left = 192
+    Top = 200
   end
   object TeeGDIPlus3: TTeeGDIPlus
-    Active = True
     AntiAliasText = gpfNormal
-    TeePanel = cht3D
-    Left = 104
-    Top = 524
+    Left = 108
+    Top = 260
   end
   object dlgSave: TSaveDialog
     DefaultExt = 'jpg'

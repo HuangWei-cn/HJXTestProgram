@@ -97,7 +97,7 @@ var
     i: Integer;
     S: string;
 begin
-    for i := ASheet.UsedRange.LastRow to 1 do
+    for i := ASheet.UsedRange.LastRow downto 1 do
     begin
         S := Trim(VarToStr(ASheet.Cells[i, 1].Value));
         if S <> '' then

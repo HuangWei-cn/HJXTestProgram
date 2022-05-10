@@ -75,6 +75,9 @@ uses
 {$R *.dfm}
 
 
+const
+  OriDPI = 96;
+
 procedure TfrmMain.bsSkinButton1Click(Sender: TObject);
 var
   slMeters: TStrings;
@@ -343,6 +346,7 @@ begin
   FMeterList.Parent := Self.bsSkinPanel1;
   FMeterList.align := alclient;
   FMeterList.Visible := False;
+  Self.ScaleForCurrentDpi;
 end;
 
 procedure TfrmMain.OnProjectLoaded(Sender: TObject);

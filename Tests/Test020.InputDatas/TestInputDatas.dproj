@@ -46,6 +46,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <BRCC_IncludePath>E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Templates;E:\Develope\Workspace\工科院\黄金峡\Souces\Client\ClientCommon\Functions\Template;$(BRCC_IncludePath)</BRCC_IncludePath>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <SanitizedProjectName>TestInputDatas</SanitizedProjectName>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -119,6 +120,14 @@
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\..\Client\ClientCommon\Templates\uHJX.Template.ChartTemplate.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Templates\uHJX.Template.WebGrid.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Templates\uHJX.Template.XLGrid.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Functions\Template\uHJX.Template.ChartTemplateProc.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Functions\Template\uHJX.Template.WebGridProc.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridHelper.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Functions\Template\uHJX.Template.XLGridProc.pas"/>
+        <DCCReference Include="..\..\Client\ClientCommon\Templates\uHJX.Template.ProcSpecifiers.pas"/>
         <None Include="ModelSupport_TestInputDatas\default.txvpck"/>
         <None Include="说明.txt"/>
         <BuildConfiguration Include="Release">
@@ -142,20 +151,20 @@
                     <Source Name="MainSource">TestInputDatas.dpr</Source>
                 </Source>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k240.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp240.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k240.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="New1.txt" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Win32\Debug\TestInputDatas.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>TestInputDatas.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="说明.txt" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
