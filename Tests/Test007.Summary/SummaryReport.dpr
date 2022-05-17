@@ -84,7 +84,8 @@ uses
   ufrmCheckOmission in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmCheckOmission.pas' {frmCheckOmission},
   uMyTeeAxisScrollTool in '..\..\Client\ClientCommon\Tools\uMyTeeAxisScrollTool.pas',
   ufrmInputLayoutData in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufrmInputLayoutData.pas' {frmInputLayoutData},
-  ufrmDataItemsList in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufrmDataItemsList.pas' {frmDataItemsList};
+  ufrmDataItemsList in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufrmDataItemsList.pas' {frmDataItemsList},
+  ufrmSetSelectedSheets in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmSetSelectedSheets.pas' {frmSetSelectedSheets};
 
 {$R *.res}
 
@@ -94,10 +95,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := '黄金峡观测数据处理辅助工具（功能测试程序）';
   Application.CreateForm(TfrmTestSummary, frmTestSummary);
-  Application.CreateForm(TTaskForm, TaskForm);
-  Application.CreateForm(TfrmCheckOmission, frmCheckOmission);
-  Application.CreateForm(TfrmInputLayoutData, frmInputLayoutData);
-  Application.CreateForm(TfrmDataItemsList, frmDataItemsList);
   // Application.CreateForm(TfrmMeterSelector, frmMeterSelector);
   Application.Run;
 

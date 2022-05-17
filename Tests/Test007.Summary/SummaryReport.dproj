@@ -106,8 +106,8 @@
         <UWP_DelphiLogo150>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_256px_510906_easyicon.net.png</UWP_DelphiLogo150>
         <UWP_DelphiLogo44>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_64px_510906_easyicon.net.png</UWP_DelphiLogo44>
         <Icon_MainIcon>SummaryReport_Icon.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.431;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <VerInfo_Build>431</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.436;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>436</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -133,8 +133,8 @@
         <UWP_DelphiLogo44>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_64px_510906_easyicon.net.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>E:\Develope\Workspace\工科院\黄金峡\Resource\图标\report_256px_510906_easyicon.net.png</UWP_DelphiLogo150>
         <Icon_MainIcon>SummaryReport_Icon1.ico</Icon_MainIcon>
-        <VerInfo_Keys>CompanyName=中国电建集团西北勘测设计研究院有限公司;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.235;InternalName=黄金峡安全监测数据处理试验程序;LegalCopyright=Hangwei;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=本程序是试验程序，非正是发行版本，仅限内部使用</VerInfo_Keys>
-        <VerInfo_Build>235</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=中国电建集团西北勘测设计研究院有限公司;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.240;InternalName=黄金峡安全监测数据处理试验程序;LegalCopyright=Hangwei;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=本程序是试验程序，非正是发行版本，仅限内部使用</VerInfo_Keys>
+        <VerInfo_Build>240</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
@@ -331,6 +331,10 @@
             <Form>frmDataItemsList</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="..\..\Client\ClientCommon\FuncFrames\Tools\ufrmSetSelectedSheets.pas">
+            <Form>frmSetSelectedSheets</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <None Include="说明.txt"/>
         <None Include="..\..\Client\ClientCommon\各模块注册方法.txt"/>
         <None Include="..\..\Client\ClientCommon\常用事件.txt"/>
@@ -436,27 +440,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployClass Name="DependencyModule">
-                    <Platform Name="Win32">
-                        <Operation>0</Operation>
-                        <Extensions>.dll;.bpl</Extensions>
-                    </Platform>
+                <DeployClass Name="ProjectiOSDeviceResourceRules">
                     <Platform Name="iOSDevice64">
                         <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
-                    <Platform Name="OSX32">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="iOSDevice32">
                         <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
-                    <Platform Name="iOSSimulator">
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectOSXResource">
@@ -835,12 +824,27 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <DeployClass Name="ProjectiOSDeviceResourceRules">
+                <DeployClass Name="DependencyModule">
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                        <Extensions>.dll;.bpl</Extensions>
+                    </Platform>
                     <Platform Name="iOSDevice64">
                         <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="iOSDevice32">
                         <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
                     </Platform>
                 </DeployClass>
                 <ProjectRoot Platform="iOSDevice64" Name="$(PROJECTNAME).app"/>

@@ -30,7 +30,8 @@ uses
     {ufraTrendLineShell,} ufraMeterList, ufraEigenvalueWeb, uHJX.ProjectGlobal, ufraRptDataHTMLGrid,
   ufraQuickViewer, ufraEigenvalueGrid,
     {--------}
-  AdvPanel, Vcl.Menus, Vcl.AppEvnts, System.ImageList, Vcl.ImgList, sSkinProvider, sSkinManager {, acPathDialog};
+  AdvPanel, Vcl.Menus, Vcl.AppEvnts, System.ImageList, Vcl.ImgList, sSkinProvider, sSkinManager,
+  Vcl.Buttons {, acPathDialog};
 
 type
   TfrmTestSummary = class(TForm)
@@ -109,6 +110,7 @@ type
     actShowDeformationPoint: TAction;
     sSkinManager1: TsSkinManager;
     sSkinProvider1: TsSkinProvider;
+    BitBtn1: TBitBtn;
     procedure actLoadParamsExecute(Sender: TObject);
     procedure actLoadDataFileListExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -620,6 +622,13 @@ begin
   // 2021-11-10运行时隐藏掉暂时不用的汇总表页面和小工具页面
   tabSummary.TabVisible := False;
   tabTools.TabVisible := False;
+
+  // 2022-05-17
+  lblDesignName.Caption := '';
+  lblMeterType.Caption := '';
+  lblStake.Caption := '';
+  lblElevation.Caption := '';
+  lblPosition.Caption := '';
 end;
 
 procedure TfrmTestSummary.lstTestMetersDblClick(Sender: TObject);
