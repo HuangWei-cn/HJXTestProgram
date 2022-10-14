@@ -168,7 +168,7 @@ object frmTestSummary: TfrmTestSummary
     Top = 0
     Width = 734
     Height = 688
-    ActivePage = tabDataViewer
+    ActivePage = tabTools
     Align = alClient
     TabOrder = 0
     object tabBaseParams: TTabSheet
@@ -285,8 +285,6 @@ object frmTestSummary: TfrmTestSummary
         Ctl3D = True
         ParentCtl3D = False
         TabOrder = 0
-        ExplicitTop = 37
-        ExplicitHeight = 623
       end
       object Panel3: TPanel
         Left = 0
@@ -609,6 +607,15 @@ object frmTestSummary: TfrmTestSummary
         Style = bsCommandLink
         TabOrder = 9
         OnClick = btnCheckOmissionClick
+      end
+      object Button5: TButton
+        Left = 224
+        Top = 242
+        Width = 75
+        Height = 25
+        Caption = #32479#35745#28857#27425'2'
+        TabOrder = 10
+        OnClick = Button5Click
       end
     end
     object tabParamsEditor: TTabSheet
@@ -978,7 +985,7 @@ object frmTestSummary: TfrmTestSummary
     Left = 604
     Top = 396
     Bitmap = {
-      494C010104000C00400000011E00FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010104000C004C0000011E00FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000000400003C000000010020000000000000C0
       0300000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

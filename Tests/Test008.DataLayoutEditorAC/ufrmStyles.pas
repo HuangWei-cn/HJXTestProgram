@@ -5,7 +5,9 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, LayoutUtils, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.StdCtrls,
-  Vcl.Menus, System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
+  Vcl.Menus, System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, sBevel,
+  sFontCtrls, sSpinEdit, sComboBoxes, Vcl.Mask, sMaskEdit, sCustomComboEdit, sComboBox, sEdit,
+  acPopupCtrls, sPanel, sCheckBox;
 
 type
   TfrmStyles = class(TForm)
@@ -53,6 +55,25 @@ type
     cbxFonts: TComboBox;
     btnSaveStyles: TButton;
     btnApplyNow: TButton;
+    sEdit1: TsEdit;
+    sComboBox1: TsComboBox;
+    sComboBox2: TsComboBox;
+    sColorBox1: TsColorBox;
+    sColorBox2: TsColorBox;
+    sFontComboBox1: TsFontComboBox;
+    sColorBox3: TsColorBox;
+    sPanel1: TsPanel;
+    sPanel2: TsPanel;
+    sTrackEdit1: TsTrackEdit;
+    sTrackEdit2: TsTrackEdit;
+    sTrackEdit3: TsTrackEdit;
+    sCheckBox1: TsCheckBox;
+    sCheckBox2: TsCheckBox;
+    sPanel3: TsPanel;
+    sCheckBox3: TsCheckBox;
+    sCheckBox4: TsCheckBox;
+    sCheckBox5: TsCheckBox;
+    sCheckBox6: TsCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure lstStylesClick(Sender: TObject);
     procedure actChangedExecute(Sender: TObject);

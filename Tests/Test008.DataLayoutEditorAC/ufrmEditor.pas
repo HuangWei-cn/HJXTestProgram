@@ -16,13 +16,15 @@ uses
   System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, Vcl.StdCtrls, Vcl.ButtonGroup,
   Vcl.ActnMan, Vcl.ActnCtrls, Vcl.PlatformDefaultStyleActnCtrls, Vcl.Clipbrd,
   Vcl.Imaging.jpeg, uhwSGEx, uhwSGEx.DataMapClasses, Vcl.Buttons, Vcl.Menus, Vcl.AppEvnts,
-  LayoutUtils, acAlphaImageList, sSkinProvider, sSkinManager, acTitleBar, sToolBar, sStatusBar;
+  LayoutUtils, acAlphaImageList, sSkinProvider, sSkinManager, acTitleBar, sToolBar, sStatusBar,
+  sPanel, sSplitter, sScrollBox, sFrameBar, sGroupBox, sPageControl, sSpeedButton, Vcl.Mask,
+  sMaskEdit, sCustomComboEdit, sComboBox, sComboBoxes, Vcl.ActnPopup, aceScrollPanel, sTrackBar,
+  sEdit, acPopupCtrls, sFontCtrls, sCheckBox, acArcControls;
 
 type
   TfrmEditor = class(TForm)
     Panel1: TPanel;
     sgLayout: TSimpleGraph;
-    btngrpFuncs: TButtonGroup;
     tvwMeters: TTreeView;
     edtSeek: TEdit;
     ImageList: TImageList;
@@ -52,7 +54,6 @@ type
     actLinkDatabase: TAction;
     dlgOpenPrjConfig: TOpenDialog;
     Splitter1: TSplitter;
-    StatusBar: TStatusBar;
     Panel2: TPanel;
     StaticText1: TStaticText;
     GroupBox1: TGroupBox;
@@ -124,7 +125,6 @@ type
     sSkinManager1: TsSkinManager;
     sSkinProvider1: TsSkinProvider;
     sAlphaImageList1: TsAlphaImageList;
-    sTitleBar1: TsTitleBar;
     sToolBar1: TsToolBar;
     ToolButton1: TToolButton;
     ToolButton2: TToolButton;
@@ -136,17 +136,14 @@ type
     ToolButton8: TToolButton;
     ToolButton9: TToolButton;
     ToolButton10: TToolButton;
-    ToolButton11: TToolButton;
     ToolButton12: TToolButton;
     ToolButton13: TToolButton;
     ToolButton14: TToolButton;
     ToolButton15: TToolButton;
-    ToolButton16: TToolButton;
     ToolButton17: TToolButton;
     ToolButton18: TToolButton;
     ToolButton19: TToolButton;
     ToolButton20: TToolButton;
-    ToolButton21: TToolButton;
     ToolButton22: TToolButton;
     ToolButton23: TToolButton;
     ToolButton24: TToolButton;
@@ -159,7 +156,73 @@ type
     ToolButton31: TToolButton;
     ToolButton32: TToolButton;
     ToolButton33: TToolButton;
+    sGroupBox1: TsGroupBox;
+    sSpeedButton1: TsSpeedButton;
+    sSpeedButton2: TsSpeedButton;
+    sSpeedButton3: TsSpeedButton;
+    sGroupBox2: TsGroupBox;
+    sSpeedButton4: TsSpeedButton;
+    sSpeedButton5: TsSpeedButton;
+    sSpeedButton6: TsSpeedButton;
+    sSpeedButton7: TsSpeedButton;
+    sSpeedButton8: TsSpeedButton;
+    sSpeedButton9: TsSpeedButton;
+    aImgLstICONS48: TsAlphaImageList;
+    sPageControl2: TsPageControl;
+    sTabSheet3: TsTabSheet;
+    sTabSheet6: TsTabSheet;
+    sTabSheet7: TsTabSheet;
+    sTabSheet8: TsTabSheet;
+    sGradientPanel1: TsGradientPanel;
     sStatusBar1: TsStatusBar;
+    popMain: TPopupMenu;
+    d1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
+    sTabSheet1: TsTabSheet;
+    sToolBar2: TsToolBar;
+    ToolButton34: TToolButton;
+    ToolButton35: TToolButton;
+    ToolButton36: TToolButton;
+    ToolButton37: TToolButton;
+    ToolButton11: TToolButton;
+    ToolButton16: TToolButton;
+    sSkinSelector1: TsSkinSelector;
+    PopupActionBar1: TPopupActionBar;
+    acScrollPanel1: TacScrollPanel;
+    acScrollPanelBand1: TacScrollPanelBand;
+    acScrollPanelBand2: TacScrollPanelBand;
+    acScrollPanelBand3: TacScrollPanelBand;
+    sGroupBox3: TsGroupBox;
+    sGroupBox5: TsGroupBox;
+    sGroupBox6: TsGroupBox;
+    sColorBox1: TsColorBox;
+    sColorBox2: TsColorBox;
+    sTrackEdit1: TsTrackEdit;
+    sTrackEdit2: TsTrackEdit;
+    sCheckBox1: TsCheckBox;
+    sCheckBox2: TsCheckBox;
+    sColorBox3: TsColorBox;
+    sTrackEdit3: TsTrackEdit;
+    sCheckBox3: TsCheckBox;
+    sCheckBox4: TsCheckBox;
+    sCheckBox5: TsCheckBox;
+    sCheckBox6: TsCheckBox;
+    sSpeedButton10: TsSpeedButton;
+    sSpeedButton11: TsSpeedButton;
+    sCheckBox7: TsCheckBox;
+    sComboBox1: TsComboBox;
+    sComboBox2: TsComboBox;
+    N4: TMenuItem;
+    sArcHandle1: TsArcHandle;
+    sTrackEdit4: TsTrackEdit;
+    sTrackEdit5: TsTrackEdit;
+    sComboBox3: TsComboBox;
+    sComboBox4: TsComboBox;
+    sComboBox5: TsComboBox;
+    sTrackEdit6: TsTrackEdit;
+    sCheckBox8: TsCheckBox;
+    sAlphaImageList2: TsAlphaImageList;
     procedure actLoadLayoutExecute(Sender: TObject);
     procedure actSaveLayoutExecute(Sender: TObject);
     procedure actInsBackgroudExecute(Sender: TObject);

@@ -111,6 +111,7 @@ type
     sSkinManager1: TsSkinManager;
     sSkinProvider1: TsSkinProvider;
     BitBtn1: TBitBtn;
+    Button5: TButton;
     procedure actLoadParamsExecute(Sender: TObject);
     procedure actLoadDataFileListExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -145,6 +146,7 @@ type
     procedure actFindNewSheetExecute(Sender: TObject);
     procedure actFindOmissionExecute(Sender: TObject);
     procedure actShowDeformationPointExecute(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
         { Private declarations }
     FParamLoaded,
@@ -174,7 +176,7 @@ implementation
 uses uHJX.Excel.InitParams, {uHJX.Excel.Meters} uHJX.Classes.Meters, uHJX.EnvironmentVariables,
   uHJX.Excel.DataQuery, uHJX.IntfImp.FuncCompManager, uHJX.Intf.FunctionDispatcher,
   ufrmDataCounts, ufraMeterSelector, ufrmQuerySetupDate, ufrmShowDeformMap, ufrmFindNewSheets,
-  ufrmPeriodIncrement, ufrmTaskForm, ufrmCheckOmission;
+  ufrmPeriodIncrement, ufrmTaskForm, ufrmCheckOmission, ufrmDataCount2;
 {$R *.dfm}
 
 const
@@ -205,9 +207,11 @@ end;
 
 procedure TfrmTestSummary.actCountObservationsExecute(Sender: TObject);
 var
-  frm: TfrmDataCount;
+  //frm: TfrmDataCount;
+  frm:TfrmDataCount2;
 begin
-  frm := TfrmDataCount.Create(Self);
+  //frm := TfrmDataCount.Create(Self);
+  frm := TfrmDataCount2.Create(Self);
   try
     frm.ShowModal;
   finally
@@ -552,6 +556,14 @@ begin
   frm := TfrmShowDeformPoints.Create(Self);
   frm.OnClose := Self.FormClose;
   frm.Show;
+end;
+
+procedure TfrmTestSummary.Button5Click(Sender: TObject);
+var frm: TfrmDataCount2;
+begin
+  frm := TfrmDataCount2.Create(Self);
+  frm.ShowModal;
+  frm.Release;
 end;
 
 procedure TfrmTestSummary.FormClose(Sender: TObject; var Action: TCloseAction);

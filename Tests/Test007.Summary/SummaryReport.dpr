@@ -85,7 +85,8 @@ uses
   uMyTeeAxisScrollTool in '..\..\Client\ClientCommon\Tools\uMyTeeAxisScrollTool.pas',
   ufrmInputLayoutData in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufrmInputLayoutData.pas' {frmInputLayoutData},
   ufrmDataItemsList in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufrmDataItemsList.pas' {frmDataItemsList},
-  ufrmSetSelectedSheets in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmSetSelectedSheets.pas' {frmSetSelectedSheets};
+  ufrmSetSelectedSheets in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmSetSelectedSheets.pas' {frmSetSelectedSheets},
+  ufrmDataCount2 in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmDataCount2.pas' {frmDataCount2};
 
 {$R *.res}
 
@@ -95,6 +96,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := '黄金峡观测数据处理辅助工具（功能测试程序）';
   Application.CreateForm(TfrmTestSummary, frmTestSummary);
+  Application.CreateForm(TfrmDataCount2, frmDataCount2);
   // Application.CreateForm(TfrmMeterSelector, frmMeterSelector);
   Application.Run;
 
