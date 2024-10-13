@@ -11,6 +11,8 @@ type
         clstDates: TCheckListBox;
         Button1: TButton;
         Button2: TButton;
+    btnClear: TButton;
+    procedure btnClearClick(Sender: TObject);
     private
         { Private declarations }
     public
@@ -24,6 +26,14 @@ type
 implementation
 
 {$R *.dfm}
+
+procedure TfrmMultDates.btnClearClick(Sender: TObject);
+var
+  i:Integer;
+begin
+  for i := 0 to clstDates.Items.Count -1 do
+    clstDates.Checked[i] := False;
+end;
 
 function TfrmMultDates.GetSelectedDates:string;
 var i: integer;

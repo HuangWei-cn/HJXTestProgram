@@ -31,6 +31,7 @@ type
         sSpeedButton3: TsSpeedButton;
         sSpeedButton4: TsSpeedButton;
         sSplitter1: TsSplitter;
+    piDrawTrendLine: TMenuItem;
         procedure btn1Click(Sender: TObject);
         procedure btnOpenExcelFileClick(Sender: TObject);
         procedure btnGetDataClick(Sender: TObject);
@@ -41,6 +42,7 @@ type
         procedure sSpeedButton1Click(Sender: TObject);
         procedure sSpeedButton3Click(Sender: TObject);
         procedure sSpeedButton4Click(Sender: TObject);
+    procedure piDrawTrendLineClick(Sender: TObject);
     private
         { Private declarations }
         FfraInCharts: ufraInclineCharts.TfraInclineCharts;
@@ -62,7 +64,7 @@ var
 implementation
 
 uses
-    uhwDataOp.Excel.Inclinometer, ufrmOriDataWind, ufrmMultDates;
+    uhwDataOp.Excel.Inclinometer, ufrmOriDataWind, ufrmMultDates, ufrmDeepTrendLine;
 {$R *.dfm}
 
 
@@ -364,6 +366,41 @@ begin
             // dtList.Free;
         end;
     end;
+end;
+
+procedure TfrmMain.piDrawTrendLineClick(Sender: TObject);
+var
+  iIndex: Integer;
+  dDeep:Double;
+  frm: TfrmDeepTrendLine;
+begin
+  //判断是否有Grid有数据，有数据判断选中的测点高度
+  if (grdDatas.Row <> -1) then
+  begin
+    //查看是否有标明高度
+    if grdDatas.Cells[0, grdDatas.Row] <> '' then
+    begin
+      iindex := grddatas.Row -1;
+      ddeep := strtoFloat(grddatas.Cells[0,grddatas.Row]);
+      //这里如果没有多选日期，则显示所有观测数据。否则只显示挑选的日期构成的过程线
+      try
+        frm := tfrmdeeptrendline.Create(Self);
+
+        if FMultDateStr = '' then
+          GetInclineAllDatasFromXLS(FDataFile, frm.MultDatas)
+        else
+          GetInclineMultDatasFromXLS(FDataFile, fmultDateStr, frm.MultDatas);
+        frm.DataIsGiven;
+        frm.DrawLine(iindex);
+        frm.Show;
+      finally
+      end;
+    end
+    else
+      ShowMessage('表里得先显示一下数据才行。');
+  end
+  else
+    ShowMessage('请选中要显示的测点');
 end;
 
 procedure TfrmMain.ShowSelectedData;

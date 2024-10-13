@@ -145,14 +145,12 @@ object frmTestSummary: TfrmTestSummary
     0007E0000007E0000007E0000007E0000007E0000007E0000007E0000007E000
     0007E0000007E0000007E0000007E0000007E0000007E0000007E0000007E000
     0007E0000007E0000007E0000007E0000007E0000007E0000007E0000007}
-  OldCreateOrder = False
   Position = poScreenCenter
   Scaled = False
   ScreenSnap = True
   ShowHint = True
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object Splitter2: TSplitter
     Left = 233
@@ -168,7 +166,7 @@ object frmTestSummary: TfrmTestSummary
     Top = 0
     Width = 734
     Height = 688
-    ActivePage = tabTools
+    ActivePage = tabDataGraph
     Align = alClient
     TabOrder = 0
     object tabBaseParams: TTabSheet
@@ -285,6 +283,8 @@ object frmTestSummary: TfrmTestSummary
         Ctl3D = True
         ParentCtl3D = False
         TabOrder = 0
+        ExplicitWidth = 722
+        ExplicitHeight = 616
       end
       object Panel3: TPanel
         Left = 0
@@ -294,6 +294,7 @@ object frmTestSummary: TfrmTestSummary
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
+        ExplicitWidth = 722
         object btnCloseAllDataGraph: TButton
           Left = 6
           Top = 4
@@ -666,25 +667,25 @@ object frmTestSummary: TfrmTestSummary
           ExplicitWidth = 444
           ExplicitHeight = 559
           inherited CategoryPanel5: TCategoryPanel
-            ExplicitWidth = 425
+            ExplicitWidth = 94
             inherited cmbGraphDefine: TComboBox
               Width = 0
               ExplicitWidth = 0
             end
             inherited cmbGridFormat: TComboBox
-              Width = 0
+              Width = -17
               ExplicitWidth = 0
             end
             inherited cmbXLSFormat: TComboBox
-              Width = 0
+              Width = -17
               ExplicitWidth = 0
             end
           end
           inherited CategoryPanel4: TCategoryPanel
-            ExplicitWidth = 425
+            ExplicitWidth = 440
             inherited vleDataStru: TValueListEditor
-              Width = 423
-              ExplicitWidth = 423
+              Width = 421
+              ExplicitWidth = 421
               ColWidths = (
                 133
                 267)
@@ -702,13 +703,13 @@ object frmTestSummary: TfrmTestSummary
             end
           end
           inherited CategoryPanel3: TCategoryPanel
-            ExplicitWidth = 425
+            ExplicitWidth = 423
             inherited cmbPreDefineDataStruc: TComboBox
               Width = 0
               ExplicitWidth = 0
             end
             inherited memPreDDSContent: TMemo
-              Width = 0
+              Width = -17
               Lines.Strings = (
                 #39044
                 #23450
@@ -724,10 +725,10 @@ object frmTestSummary: TfrmTestSummary
             end
           end
           inherited CategoryPanel2: TCategoryPanel
-            ExplicitWidth = 425
+            ExplicitWidth = 440
             inherited vlePrjParams: TValueListEditor
-              Width = 423
-              ExplicitWidth = 423
+              Width = 421
+              ExplicitWidth = 421
               ColWidths = (
                 150
                 267)
@@ -743,10 +744,10 @@ object frmTestSummary: TfrmTestSummary
             end
           end
           inherited CategoryPanel1: TCategoryPanel
-            ExplicitWidth = 425
+            ExplicitWidth = 440
             inherited vleMeterParams: TValueListEditor
-              Width = 423
-              ExplicitWidth = 423
+              Width = 421
+              ExplicitWidth = 421
               ColWidths = (
                 98
                 319)
@@ -799,20 +800,22 @@ object frmTestSummary: TfrmTestSummary
     BevelOuter = bvNone
     Caption = 'LeftPanel'
     TabOrder = 1
+    ExplicitHeight = 687
     object Splitter1: TSplitter
       Left = 0
-      Top = 229
+      Top = 256
       Width = 233
       Height = 3
       Cursor = crVSplit
       Align = alTop
+      ExplicitTop = 229
       ExplicitWidth = 459
     end
     object cbsFunctions: TCategoryButtons
       Left = 0
       Top = 0
       Width = 233
-      Height = 229
+      Height = 256
       Align = alTop
       ButtonFlow = cbfVertical
       ButtonHeight = 30
@@ -829,6 +832,9 @@ object frmTestSummary: TfrmTestSummary
             end
             item
               Action = actLoadDataFileList
+            end
+            item
+              Action = actSetup
             end>
         end
         item
@@ -985,7 +991,7 @@ object frmTestSummary: TfrmTestSummary
     Left = 604
     Top = 396
     Bitmap = {
-      494C010104000C004C0000011E00FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010104000C00040000011E00FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000000400003C000000010020000000000000C0
       0300000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -8969,6 +8975,11 @@ object frmTestSummary: TfrmTestSummary
       Caption = #26174#31034#21464#24418#30417#27979#28857
       OnExecute = actShowDeformationPointExecute
     end
+    object actSetup: TAction
+      Category = 'Setup'
+      Caption = #35774#32622
+      OnExecute = actSetupExecute
+    end
   end
   object sSkinManager1: TsSkinManager
     AnimEffects.BlendOnMoving.Active = True
@@ -14832,11 +14843,17 @@ object frmTestSummary: TfrmTestSummary
           FDBE6357695CC0FCAF000300FC889E674009023E0000000049454E44AE426082}
         OriginName = 'Fluent White.asz'
       end>
+    MenuSupport.Font.Charset = DEFAULT_CHARSET
+    MenuSupport.Font.Color = clWindowText
+    MenuSupport.Font.Height = -11
+    MenuSupport.Font.Name = 'Segoe UI'
+    MenuSupport.Font.Style = []
     Options.CheckEmptyAlpha = True
     Options.StdImgTransparency = True
-    Options.ScaleMode = smAuto
     Options.GroupBoxStyle = gsCard
-    SkinDirectory = 'E:\Embarcadero\Studio\18.0\3dr\acnt_dx10berlin\Skins'
+    SkinDirectory = 
+      'C:\Program Files (x86)\Embarcadero\Studio\22.0\3dr\AlphaControls' +
+      ' 17.01\Skins'
     SkinName = 'Blue Shadows (internal)'
     SkinInfo = '15'
     ThirdParty.ThirdEdits = 
@@ -14915,5 +14932,12 @@ object frmTestSummary: TfrmTestSummary
     ThirdParty.ThirdStaticText = 'TStaticText'#13#10
     Left = 480
     Top = 404
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 300
+    OnTimer = Timer1Timer
+    Left = 148
+    Top = 384
   end
 end

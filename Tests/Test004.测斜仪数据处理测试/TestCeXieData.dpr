@@ -9,7 +9,8 @@ uses
   ufraInclineCharts in 'ufraInclineCharts.pas' {fraInclineCharts: TFrame},
   uhwDataOp.Excel.InclinoMeter in 'uhwDataOp.Excel.InclinoMeter.pas',
   ufrmOriDataWind in 'ufrmOriDataWind.pas' {frmOriDataWindow},
-  ufrmMultDates in 'ufrmMultDates.pas' {frmMultDates};
+  ufrmMultDates in 'ufrmMultDates.pas' {frmMultDates},
+  ufrmDeepTrendLine in 'ufrmDeepTrendLine.pas' {frmDeepTrendLine};
 
 {$R *.res}
 

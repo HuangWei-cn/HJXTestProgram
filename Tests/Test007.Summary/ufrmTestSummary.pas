@@ -1,19 +1,19 @@
 { -----------------------------------------------------------------------------
  Unit Name: ufrmTestSummary
- Author:    »ÆÎ°
- Date:      07-ÁùÔÂ-2018
- Purpose:   °²È«¼à²âÊı¾İ´¦ÀíÖ÷½çÃæ
+ Author:    é»„ä¼Ÿ
+ Date:      07-å…­æœˆ-2018
+ Purpose:   å®‰å…¨ç›‘æµ‹æ•°æ®å¤„ç†ä¸»ç•Œé¢
  History:
-    2018-06-07 Ïò½Ó¿Ú»¯¸ü½øÒ»²½£»²¿·ÖFrame¸ÄÎªÔËĞĞÊ±´´½¨£»
+    2018-06-07 å‘æ¥å£åŒ–æ›´è¿›ä¸€æ­¥ï¼›éƒ¨åˆ†Frameæ”¹ä¸ºè¿è¡Œæ—¶åˆ›å»ºï¼›
 ----------------------------------------------------------------------------- }
 unit ufrmTestSummary;
 
-{ todo:ÍêÉÆ¡°ÌØĞÔ¡±¹¦ÄÜ£¬¼ÓÔØÍê²ÎÊı±íÖ®ºó£¬ÏÔÊ¾µ±Ç°²ÎÊıÉèÖÃµÄ»ù±¾Çé¿ö }
-{ DONE:ÕûºÏ²ÎÊı±íºÍÒÇÆ÷ÁĞ±í£¬ÓÃÒ»¸ö¹¤³ÌÉèÖÃ¹¤×÷²¾È¡´úÖğ¸ö´ò¿ª¸÷ÖÖÉèÖÃÎÄ¼ş }
-{ todo:Íê³ÉÏÔÊ¾ÒÇÆ÷¹Û²âÊı¾İµÄ¹¦ÄÜ }
-{ DONE:Ôö¼ÓË«»÷ÒÇÆ÷ÏÔÊ¾¹ı³ÌÏßµÄ¹¦ÄÜ }
-{ DONE:Ôö¼ÓÌØÕ÷ÖµÌáÈ¡¹¦ÄÜ }
-{ todo:Ôö¼ÓÒ»¸öÃüÁîÖÕ¶Ë´°¿Ú£¬ÇÃÃüÁî¿ÉÒÔÏÔÊ¾ÏàÓ¦µÄ¹¦ÄÜ£¬like hack..mmm }
+{ todo:å®Œå–„â€œç‰¹æ€§â€åŠŸèƒ½ï¼ŒåŠ è½½å®Œå‚æ•°è¡¨ä¹‹åï¼Œæ˜¾ç¤ºå½“å‰å‚æ•°è®¾ç½®çš„åŸºæœ¬æƒ…å†µ }
+{ DONE:æ•´åˆå‚æ•°è¡¨å’Œä»ªå™¨åˆ—è¡¨ï¼Œç”¨ä¸€ä¸ªå·¥ç¨‹è®¾ç½®å·¥ä½œç°¿å–ä»£é€ä¸ªæ‰“å¼€å„ç§è®¾ç½®æ–‡ä»¶ }
+{ todo:å®Œæˆæ˜¾ç¤ºä»ªå™¨è§‚æµ‹æ•°æ®çš„åŠŸèƒ½ }
+{ DONE:å¢åŠ åŒå‡»ä»ªå™¨æ˜¾ç¤ºè¿‡ç¨‹çº¿çš„åŠŸèƒ½ }
+{ DONE:å¢åŠ ç‰¹å¾å€¼æå–åŠŸèƒ½ }
+{ todo:å¢åŠ ä¸€ä¸ªå‘½ä»¤ç»ˆç«¯çª—å£ï¼Œæ•²å‘½ä»¤å¯ä»¥æ˜¾ç¤ºç›¸åº”çš„åŠŸèƒ½ï¼Œlike hack..mmm }
 
 interface
 
@@ -112,6 +112,8 @@ type
     sSkinProvider1: TsSkinProvider;
     BitBtn1: TBitBtn;
     Button5: TButton;
+    Timer1: TTimer;
+    actSetup: TAction;
     procedure actLoadParamsExecute(Sender: TObject);
     procedure actLoadDataFileListExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -147,12 +149,14 @@ type
     procedure actFindOmissionExecute(Sender: TObject);
     procedure actShowDeformationPointExecute(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure actSetupExecute(Sender: TObject);
   private
         { Private declarations }
     FParamLoaded,
       FDataFileListLoaded: Boolean;
     FDefaultTLWidth,
-      FDefaultTLHeight: integer; // È±Ê¡¹ı³ÌÏß´°¿Ú¿íºÍ¸ß
+      FDefaultTLHeight: integer; // ç¼ºçœè¿‡ç¨‹çº¿çª—å£å®½å’Œé«˜
     FfraMeterList     : TfraMeterList;
     FEigenValue       : TfraEigenvalueWeb;
     FDataLayout       : TfraDataPresentation;
@@ -164,8 +168,9 @@ type
     procedure ShowMeterDatas(ADesignName: string);
     procedure ShowMeterTrendLine(ADesignName: string);
     procedure DblClickMeter(ADesignName: string);
-        // µ¯³öÒ»¸ö¹ı³ÌÏß´°¿Ú
+        // å¼¹å‡ºä¸€ä¸ªè¿‡ç¨‹çº¿çª—å£
     procedure PopupTrendLineWindow(ADesignName: string);
+    procedure PopupDatas(ADesignName:String);
   end;
 
 var
@@ -176,7 +181,7 @@ implementation
 uses uHJX.Excel.InitParams, {uHJX.Excel.Meters} uHJX.Classes.Meters, uHJX.EnvironmentVariables,
   uHJX.Excel.DataQuery, uHJX.IntfImp.FuncCompManager, uHJX.Intf.FunctionDispatcher,
   ufrmDataCounts, ufraMeterSelector, ufrmQuerySetupDate, ufrmShowDeformMap, ufrmFindNewSheets,
-  ufrmPeriodIncrement, ufrmTaskForm, ufrmCheckOmission, ufrmDataCount2;
+  ufrmPeriodIncrement, ufrmTaskForm, ufrmCheckOmission, ufrmDataCount2, ufrmSetting;
 {$R *.dfm}
 
 const
@@ -185,16 +190,19 @@ const
 var
   IFD: IFunctionDispatcher;
 
-// ¼ÓÔØÊı¾İÎÄ¼şÁĞ±í
+// åŠ è½½æ•°æ®æ–‡ä»¶åˆ—è¡¨
 procedure TfrmTestSummary.actConnectDatabaseExecute(Sender: TObject);
 begin
-    // ÏÂÃæÊÇÁÙÊ±´úÂë£¬½«À´Ê¹ÓÃÊı¾İ·ÃÎÊ¶ÔÏóÌæ´úÁ¬½ÓÊı¾İ¿â¡£
-  IAppServices.OpenDatabaseManager;
+    // ä¸‹é¢æ˜¯ä¸´æ—¶ä»£ç ï¼Œå°†æ¥ä½¿ç”¨æ•°æ®è®¿é—®å¯¹è±¡æ›¿ä»£è¿æ¥æ•°æ®åº“ã€‚
+  //IAppServices.OpenDatabaseManager; //ç”±äºä¿®æ”¹äº†OpenProjectçš„å‚æ•°ï¼Œå¯¼è‡´æš‚æ—¶ä»æ¥å£æ— æ³•è°ƒç”¨ 2022-11-3
+
+  //å› ä¿®æ”¹äº†OpenProjectçš„å‚æ•°ï¼Œç°åœ¨æš‚æ—¶åªèƒ½ç›´æ¥è°ƒç”¨ã€‚å‚æ•°TrueæŒ‡æ‰“å¼€ä¸€ä¸ªæ–°çš„é…ç½®æ–‡ä»¶
+  uhjx.Excel.InitParams.OpenProject(True); //2022-11-3
     (*
     if dlgOpen.Execute then
     begin
         FfraMeterList.tvwMeters.Items.Clear;
-        { todo:¼ÓÈë²ÎÊı¼ÓÔØ½á¹ûµÄÅĞ¶Ï¡£¿ÉÍ¨¹ıÊÂ¼ş½øĞĞÇı¶¯²ÎÊı¼ÓÔØÍê±ÏºóÓ¦¸Ã½øĞĞµÄ¶¯×÷ }
+        { todo:åŠ å…¥å‚æ•°åŠ è½½ç»“æœçš„åˆ¤æ–­ã€‚å¯é€šè¿‡äº‹ä»¶è¿›è¡Œé©±åŠ¨å‚æ•°åŠ è½½å®Œæ¯•ååº”è¯¥è¿›è¡Œçš„åŠ¨ä½œ }
         LoadProjectConfig(dlgOpen.FileName);
         if ExcelMeters.Count > 0 then
         begin
@@ -240,7 +248,7 @@ procedure TfrmTestSummary.actLoadDataFileListExecute(Sender: TObject);
 var
   wbk: IXLSWorkBook;
 begin
-  dlgOpen.Title := '´ò¿ª¼à²âÒÇÆ÷Êı¾İÎÄ¼şÁĞ±í¶¨Òå¹¤×÷²¾';
+  dlgOpen.Title := 'æ‰“å¼€ç›‘æµ‹ä»ªå™¨æ•°æ®æ–‡ä»¶åˆ—è¡¨å®šä¹‰å·¥ä½œç°¿';
   if dlgOpen.Execute then
   begin
     try
@@ -249,7 +257,7 @@ begin
       if LoadDataFileList(wbk) then
       begin
         FDataFileListLoaded := True;
-        ShowMessage('Êı¾İÎÄ¼şÁĞ±í¼ÓÔØÍê±Ï');
+        ShowMessage('æ•°æ®æ–‡ä»¶åˆ—è¡¨åŠ è½½å®Œæ¯•');
       end;
     except
       on E: Exception do
@@ -259,14 +267,14 @@ begin
   if FParamLoaded and FDataFileListLoaded then
       FfraMeterList.ShowMeters;
 end;
-{ ¼ÓÔØ²ÎÊı±í }
-
+{ åŠ è½½å‚æ•°è¡¨ }
+//å·²ç»åºŸå¼ƒä¸ç”¨çš„æ–¹æ³•
 procedure TfrmTestSummary.actLoadParamsExecute(Sender: TObject);
 var
   wbk: IXLSWorkBook;
 begin
-    // Ñ¡ÔñÒª´ò¿ªµÄÎÄ¼ş
-  dlgOpen.Title := '´ò¿ª¼à²âÒÇÆ÷ÊôĞÔ¹¤×÷²¾';
+    // é€‰æ‹©è¦æ‰“å¼€çš„æ–‡ä»¶
+  dlgOpen.Title := 'æ‰“å¼€ç›‘æµ‹ä»ªå™¨å±æ€§å·¥ä½œç°¿';
   if dlgOpen.Execute then
   begin
     try
@@ -276,7 +284,7 @@ begin
       if LoadParams(wbk) = True then
       begin
         FParamLoaded := True;
-        ShowMessage('²ÎÊı±í¼ÓÔØÍê±Ï£¡');
+        ShowMessage('å‚æ•°è¡¨åŠ è½½å®Œæ¯•ï¼');
       end;
     except
       on E: Exception do
@@ -292,14 +300,14 @@ end;
 
 { -----------------------------------------------------------------------------
   Procedure  : actLoadSummaryDefineExecute
-  Description: ´ò¿ªÒ»¸ö»ã×Ü±í¶¨Òå£¬´´½¨»ã×Ü±íÉú³ÉÆ÷
+  Description: æ‰“å¼€ä¸€ä¸ªæ±‡æ€»è¡¨å®šä¹‰ï¼Œåˆ›å»ºæ±‡æ€»è¡¨ç”Ÿæˆå™¨
   ----------------------------------------------------------------------------- }
 procedure TfrmTestSummary.actLoadSummaryDefineExecute(Sender: TObject);
 var
   sFile: string;
 begin
     //
-  dlgOpen.Title := '´ò¿ª»ã×Ü±íÔ¤¶¨Òå¹¤×÷²¾';
+  dlgOpen.Title := 'æ‰“å¼€æ±‡æ€»è¡¨é¢„å®šä¹‰å·¥ä½œç°¿';
   if dlgOpen.Execute then
   begin
     sFile := dlgOpen.FileName;
@@ -313,7 +321,7 @@ var
   fra: TfraRptDataHTMLGrid;
 begin
   frm := ttaskform.Create(Self);
-  frm.Caption := '¹Û²âÊı¾İ±¨±í';
+  frm.Caption := 'è§‚æµ‹æ•°æ®æŠ¥è¡¨';
   fra := TfraRptDataHTMLGrid.Create(frm);
   fra.Align := alclient;
   fra.Parent := frm;
@@ -322,10 +330,12 @@ end;
 
 procedure TfrmTestSummary.actPopupEVGridExecute(Sender: TObject);
 var
-  frm: TForm;
+  frm: TTaskForm; // TForm;
   fra: TfraEigenvalueGrid;
 begin
-  frm := TForm.Create(Self);
+  frm := {TForm}TTaskForm.Create(Self);
+  //frm.ParentWindow := Application.Handle;
+  frm.OnClose := Self.OnClose;
   frm.Position := poScreenCenter;
   frm.Width := Self.Width - 200;
   frm.Height := Self.Height - 200;
@@ -334,9 +344,9 @@ begin
   fra.Align := alclient;
   fra.Visible := True;
   try
-    frm.ShowModal;
+    frm.Show; // Modal;
   finally
-    frm.Release;
+    //frm.Release;
   end;
 end;
 
@@ -346,7 +356,7 @@ var
   fra: TfraDataPresentation;
 begin
   frm := ttaskform.Create(Self);
-  frm.Caption := '¹Û²â²¼ÖÃÍ¼';
+  frm.Caption := 'è§‚æµ‹å¸ƒç½®å›¾';
   fra := TfraDataPresentation.Create(frm);
   fra.Parent := frm;
   fra.Align := alclient;
@@ -367,7 +377,7 @@ var
   fra: TfraQuickViewer;
 begin
   frm := ttaskform.Create(Self);
-  frm.Caption := 'ËÙÀÀ';
+  frm.Caption := 'é€Ÿè§ˆ';
   fra := TfraQuickViewer.Create(frm);
   fra.Align := alclient;
   fra.Parent := frm;
@@ -379,6 +389,15 @@ var
   frm: TfrmQuerySetupDate;
 begin
   frm := TfrmQuerySetupDate.Create(Self);
+  frm.ShowModal;
+  frm.Release;
+end;
+
+procedure TfrmTestSummary.actSetupExecute(Sender: TObject);
+var
+  frm: TfrmSetting;
+begin
+  frm := tfrmSetting.Create(Self);
   frm.ShowModal;
   frm.Release;
 end;
@@ -454,7 +473,7 @@ var
   fra: TfraDataPresentation;
 begin
   frm := ttaskform.Create(Self);
-  frm.Caption := '¹Û²â²¼ÖÃÍ¼';
+  frm.Caption := 'è§‚æµ‹å¸ƒç½®å›¾';
   fra := TfraDataPresentation.Create(frm);
   fra.Parent := frm;
   fra.Align := alclient;
@@ -467,7 +486,7 @@ var
   fra: TfraQuickViewer;
 begin
   frm := ttaskform.Create(Self);
-  frm.Caption := 'ËÙÀÀ';
+  frm.Caption := 'é€Ÿè§ˆ';
   fra := TfraQuickViewer.Create(frm);
   fra.Align := alclient;
   fra.Parent := frm;
@@ -480,7 +499,7 @@ var
   fra: TfraRptDataHTMLGrid;
 begin
   frm := ttaskform.Create(Self);
-  frm.Caption := '¹Û²âÊı¾İ±¨±í';
+  frm.Caption := 'è§‚æµ‹æ•°æ®æŠ¥è¡¨';
   fra := TfraRptDataHTMLGrid.Create(frm);
   fra.Align := alclient;
   fra.Parent := frm;
@@ -495,8 +514,8 @@ begin
   if ExcelMeters.Count > 0 then
     for i := 0 to ExcelMeters.Count - 1 do
         lstTestMeters.AddItem(ExcelMeters.Items[i].DesignName, ExcelMeters.Items[i]);
-  fraXLSParamEditor1.vleMeterParams.ItemProps['ÒÇÆ÷ÀàĞÍ'].PickList := PG_MeterTypes;
-  fraXLSParamEditor1.vlePrjParams.ItemProps['¹¤³Ì²¿Î»'].PickList := pg_locations;
+  fraXLSParamEditor1.vleMeterParams.ItemProps['ä»ªå™¨ç±»å‹'].PickList := PG_MeterTypes;
+  fraXLSParamEditor1.vlePrjParams.ItemProps['å·¥ç¨‹éƒ¨ä½'].PickList := pg_locations;
 end;
 
 procedure TfrmTestSummary.btnToolFindNewSheetsClick(Sender: TObject);
@@ -573,10 +592,10 @@ end;
 
 procedure TfrmTestSummary.FormCreate(Sender: TObject);
 begin
-  HJXAppServices.SetApplication(Application); // ÉèÖÃÈ«¾ÖApplication¶ÔÏó
+  HJXAppServices.SetApplication(Application); // è®¾ç½®å…¨å±€Applicationå¯¹è±¡
   HJXAppServices.AppProcessMessages := Application.ProcessMessages;
-    // ×¢£º±¾FormÄ¿Ç°»¹Î´Ôö¼ÓIHost½Ó¿Ú£¬Ò²Î´°´ÕÕIHost½Ó¿Ú½øĞĞ¸ÄÔì¡£ÕâÀïÔİÊ±ÉèÖÃÊÇÎªÁËÏòÆäËûµ¥ÔªÌá¹©
-    // Ò»¸öOwner¡¢Mainform¡£
+    // æ³¨ï¼šæœ¬Formç›®å‰è¿˜æœªå¢åŠ IHostæ¥å£ï¼Œä¹ŸæœªæŒ‰ç…§IHostæ¥å£è¿›è¡Œæ”¹é€ ã€‚è¿™é‡Œæš‚æ—¶è®¾ç½®æ˜¯ä¸ºäº†å‘å…¶ä»–å•å…ƒæä¾›
+    // ä¸€ä¸ªOwnerã€Mainformã€‚
   HJXAppServices.Host := Self;
 
   Self.pgcMain.ActivePage := tabBaseParams;
@@ -587,51 +606,53 @@ begin
   FfraMeterList.Align := alclient;
   ENV_ExePath := ExtractFilePath(Application.ExeName);
 
-    // ´´½¨Êı¾İ·ÃÎÊ½Ó¿ÚµÄÊµÀı
-    { DONE:ÏòFuncCompManager×¢²áClientDataFunc }
-    // IHJXClientFuncs := ThjxDataQuery.Create; //2018-06-07 ÒÑÔÚuHJX.Excel.DataQueryµ¥Ôª×Ô¼º×¢²áÁË
+    // åˆ›å»ºæ•°æ®è®¿é—®æ¥å£çš„å®ä¾‹
+    { DONE:å‘FuncCompManageræ³¨å†ŒClientDataFunc }
+    // IHJXClientFuncs := ThjxDataQuery.Create; //2018-06-07 å·²åœ¨uHJX.Excel.DataQueryå•å…ƒè‡ªå·±æ³¨å†Œäº†
 
-    // Ö¸¶¨¹¦ÄÜÊÂ¼şÏìÓ¦·½·¨£¬ËãÊÇÁÙÊ±·½·¨£¬½«À´ÓÃ¹¦ÄÜµ÷¶Èµ¥ÔªÊµÏÖ
+    // æŒ‡å®šåŠŸèƒ½äº‹ä»¶å“åº”æ–¹æ³•ï¼Œç®—æ˜¯ä¸´æ—¶æ–¹æ³•ï¼Œå°†æ¥ç”¨åŠŸèƒ½è°ƒåº¦å•å…ƒå®ç°
   FfraMeterList.OnShowMeterDatas := Self.ShowMeterDatas;
   FfraMeterList.OnShowMeterTrendLine := Self.ShowMeterTrendLine;
   FfraMeterList.OnDblClickMeter := Self.DblClickMeter;
+  fframeterlist.OnPopupTrendLine := PopupTrendLineWindow;
+  fframeterlist.OnPopupDatas := Self.PopupDatas;
 
-    // ÌØÕ÷ÖµFrame
+    // ç‰¹å¾å€¼Frame
   FEigenValue := TfraEigenvalueWeb.Create(Self);
   FEigenValue.Parent := tabEigenValue;
   FEigenValue.Align := alclient;
-    // ·Ö²¼Í¼
+    // åˆ†å¸ƒå›¾
   FDataLayout := TfraDataPresentation.Create(Self);
   with FDataLayout do
   begin
     Parent := tabDataLayout;
     Align := alclient;
   end;
-    // »ã×Ü±í
+    // æ±‡æ€»è¡¨
   FSummary := TfraXLSSummaryMeker.Create(Self);
   FSummary.Parent := tabSummary;
   FSummary.Align := alclient;
-    // Êı¾İ±¨±í
+    // æ•°æ®æŠ¥è¡¨
   FDataRpt := TfraRptDataHTMLGrid.Create(Self);
   FDataRpt.Parent := tabDataReport;
   FDataRpt.Align := alclient;
-    // Êı¾İËÙÀÀ
+    // æ•°æ®é€Ÿè§ˆ
   FQuickViewer := TfraQuickViewer.Create(Self);
   FQuickViewer.Parent := tabQuickView;
   FQuickViewer.Align := alclient;
 
-    // ÉèÖÃÈ±Ê¡µÄ¹ı³ÌÏß¿íºÍ¸ß
+    // è®¾ç½®ç¼ºçœçš„è¿‡ç¨‹çº¿å®½å’Œé«˜
   FDefaultTLWidth := 800;
   FDefaultTLHeight := 350;
 
-    // ³õÊ¼»¯×¢²á
+    // åˆå§‹åŒ–æ³¨å†Œ
   FuncCompManager.InitFuncComps;
     //
   IFD := IAppServices.FuncDispatcher as IFunctionDispatcher;
   Self.Width := Screen.Width - 350;
   Self.Height := Screen.Height - 200;
 
-  // 2021-11-10ÔËĞĞÊ±Òş²ØµôÔİÊ±²»ÓÃµÄ»ã×Ü±íÒ³ÃæºÍĞ¡¹¤¾ßÒ³Ãæ
+  // 2021-11-10è¿è¡Œæ—¶éšè—æ‰æš‚æ—¶ä¸ç”¨çš„æ±‡æ€»è¡¨é¡µé¢å’Œå°å·¥å…·é¡µé¢
   tabSummary.TabVisible := False;
   tabTools.TabVisible := False;
 
@@ -641,6 +662,10 @@ begin
   lblStake.Caption := '';
   lblElevation.Caption := '';
   lblPosition.Caption := '';
+  //2022-11-3 å¯åŠ¨å³è‡ªåŠ¨åŠ è½½é…ç½®æ–‡ä»¶ï¼Œå‚æ•°LoadNew=Falseè¡¨ç¤ºä¸åŠ è½½æ–°å‚æ•°ï¼Œä»iniæ–‡ä»¶ä¸­æ‰¾åˆ°é…ç½®æ–‡ä»¶çš„
+  //ä½ç½®å’Œåç§°ï¼Œç„¶ååŠ è½½
+  Timer1.Enabled := True; //æ²¡æ³•å­ï¼Œå¾—å…ˆæ˜¾ç¤ºç•Œé¢å†è‡ªåŠ¨åŠ è½½å‚æ•°ï¼Œ300msåè‡ªåŠ¨åŠ è½½ï¼Œåæ­£ä¹Ÿä¸æ…¢ã€‚
+  //uHjx.Excel.InitParams.OpenProject(False);
 end;
 
 procedure TfrmTestSummary.lstTestMetersDblClick(Sender: TObject);
@@ -653,7 +678,7 @@ end;
 
 { -----------------------------------------------------------------------------
   Procedure  : piSetDefaultTLSizeClick
-  Description: ÉèÖÃÈ±Ê¡¹ı³ÌÏß´°¿ÚµÄ¿í¶ÈºÍ¸ß¶È
+  Description: è®¾ç½®ç¼ºçœè¿‡ç¨‹çº¿çª—å£çš„å®½åº¦å’Œé«˜åº¦
 ----------------------------------------------------------------------------- }
 procedure TfrmTestSummary.piSetDefaultTLSizeClick(Sender: TObject);
 begin
@@ -666,7 +691,7 @@ end;
 
 { -----------------------------------------------------------------------------
   Procedure  : ShowMeterDatas
-  Description: ÏÔÊ¾ÒÇÆ÷Êı¾İ
+  Description: æ˜¾ç¤ºä»ªå™¨æ•°æ®
 ----------------------------------------------------------------------------- }
 procedure TfrmTestSummary.ShowMeterDatas(ADesignName: string);
 var
@@ -713,7 +738,7 @@ begin
     pnl.Parent := scrTLList;
     pnl.Caption.CloseButton := True;
     pnl.Caption.Visible := True;
-    pnl.Caption.Text := ADesignName + 'ÀúÊ±¹ı³ÌÏß';
+    pnl.Caption.Text := ADesignName + 'å†æ—¶è¿‡ç¨‹çº¿';
     pnl.CanSize := True;
     pnl.Align := alTop;
     pnl.Width := FDefaultTLWidth;
@@ -737,13 +762,28 @@ begin
   end;
 end;
 
+{-----------------------------------------------------------------------------
+  Procedure  : Timer1Timer
+  Description: ä¹‹æ‰€ä»¥è¦ç”¨ä¸€ä¸ªTimeræ¥è°ƒç”¨åŠ è½½å·¥ç¨‹æ–‡ä»¶ï¼Œæ˜¯å› ä¸ºå¸Œæœ›å…ˆæ˜¾ç¤ºç¨‹åºç•Œé¢
+  ç„¶åå†åŠ è½½ã€‚
+-----------------------------------------------------------------------------}
+procedure TfrmTestSummary.Timer1Timer(Sender: TObject);
+begin
+  Timer1.Enabled := False;
+  if not FParamLoaded then
+  begin
+    uHJX.Excel.InitParams.OpenProject(False);
+    FParamLoaded := True;
+  end;
+end;
+
 { -----------------------------------------------------------------------------
   Procedure  : DblClickMeter
-  Description: ¸ù¾İµ±Ç°¹¦ÄÜÒ³¾ö¶¨Ë«»÷ÒÇÆ÷ºó×öÊ²Ã´
+  Description: æ ¹æ®å½“å‰åŠŸèƒ½é¡µå†³å®šåŒå‡»ä»ªå™¨ååšä»€ä¹ˆ
 ----------------------------------------------------------------------------- }
 procedure TfrmTestSummary.DblClickMeter(ADesignName: string);
 begin
-    { µ±ÓÃ»§ÔÚÒÇÆ÷ÁĞ±íÖĞË«»÷ÒÇÆ÷Ê±£¬Èôµ±Ç°PageÊÇ¹Û²âÊı¾İ£¬ÔòÏÔÊ¾±»»÷ÒÇÆ÷Êı¾İ£¬ÈôÊÇ¹ı³ÌÏßÔòÏÔÊ¾¹ı³ÌÏß }
+    { å½“ç”¨æˆ·åœ¨ä»ªå™¨åˆ—è¡¨ä¸­åŒå‡»ä»ªå™¨æ—¶ï¼Œè‹¥å½“å‰Pageæ˜¯è§‚æµ‹æ•°æ®ï¼Œåˆ™æ˜¾ç¤ºè¢«å‡»ä»ªå™¨æ•°æ®ï¼Œè‹¥æ˜¯è¿‡ç¨‹çº¿åˆ™æ˜¾ç¤ºè¿‡ç¨‹çº¿ }
   if pgcMain.ActivePageIndex = 1 then
       ShowMeterDatas(ADesignName)
   else
@@ -751,14 +791,14 @@ begin
     ShowMeterTrendLine(ADesignName);
     pgcMain.ActivePageIndex := 2;
   end;
-    { todo: ¿ÉÔö¼ÓµÄÆäËû¹¦ÄÜÓĞ£ºÏÔÊ¾ÒÇÆ÷µµ°¸¿¨£»ÏÔÊ¾ÒÇÆ÷¸÷ÀàÊôĞÔ¼°ÔËĞĞĞÅÏ¢£»ÏÔÊ¾ÒÇÆ÷½üÆÚÊı¾İ±ä»¯Çé¿ö£»
-      ÈôË«»÷µÄÊÇÀàĞÍ»ò²¿Î»Ôò£ºÏÔÊ¾¸ÃÀà±ğÖĞËùÓĞÒÇÆ÷Êı¾İ±í or ¹Û²âÊı¾İËÙÀÀ or È«²¿¹ı³ÌÏß or ÌØÕ÷ÖµµÈµÈ¡£
-      ÀûÓÃË«»÷ÊÂ¼şÌá¹©¿ìËÙ·ÃÎÊ¹¦ÄÜ£¬Ìá¸ßÓÃ»§Ğ§ÂÊ£¬¸ÄÉÆÓÃ»§ÌåÑé }
+    { todo: å¯å¢åŠ çš„å…¶ä»–åŠŸèƒ½æœ‰ï¼šæ˜¾ç¤ºä»ªå™¨æ¡£æ¡ˆå¡ï¼›æ˜¾ç¤ºä»ªå™¨å„ç±»å±æ€§åŠè¿è¡Œä¿¡æ¯ï¼›æ˜¾ç¤ºä»ªå™¨è¿‘æœŸæ•°æ®å˜åŒ–æƒ…å†µï¼›
+      è‹¥åŒå‡»çš„æ˜¯ç±»å‹æˆ–éƒ¨ä½åˆ™ï¼šæ˜¾ç¤ºè¯¥ç±»åˆ«ä¸­æ‰€æœ‰ä»ªå™¨æ•°æ®è¡¨ or è§‚æµ‹æ•°æ®é€Ÿè§ˆ or å…¨éƒ¨è¿‡ç¨‹çº¿ or ç‰¹å¾å€¼ç­‰ç­‰ã€‚
+      åˆ©ç”¨åŒå‡»äº‹ä»¶æä¾›å¿«é€Ÿè®¿é—®åŠŸèƒ½ï¼Œæé«˜ç”¨æˆ·æ•ˆç‡ï¼Œæ”¹å–„ç”¨æˆ·ä½“éªŒ }
 end;
 
 { -----------------------------------------------------------------------------
   Procedure  : PopupTrendLineWindow
-  Description: ±¾·½·¨µ¯³öÒ»¸ö¹ı³ÌÏß´°¿Ú
+  Description: æœ¬æ–¹æ³•å¼¹å‡ºä¸€ä¸ªè¿‡ç¨‹çº¿çª—å£
 ----------------------------------------------------------------------------- }
 procedure TfrmTestSummary.PopupTrendLineWindow(ADesignName: string);
 var
@@ -782,6 +822,11 @@ begin
 // fra.DrawLine(ADesignName);
 // frm.Show;
 // frm.OnClose := Self.OnClose;
+end;
+
+procedure TfrmTestSummary.PopupDatas(ADesignName: string);
+begin
+  (IAppServices.FuncDispatcher as IFunctionDispatcher).ShowData(ADesignName, nil);
 end;
 
 end.

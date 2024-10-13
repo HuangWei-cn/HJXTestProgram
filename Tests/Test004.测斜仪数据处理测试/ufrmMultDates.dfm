@@ -11,12 +11,11 @@ object frmMultDates: TfrmMultDates
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
+  PixelsPerInch = 96
   DesignSize = (
     310
     275)
-  PixelsPerInch = 96
   TextHeight = 13
   object clstDates: TCheckListBox
     Left = 8
@@ -44,5 +43,14 @@ object frmMultDates: TfrmMultDates
     Caption = #21462#28040
     ModalResult = 2
     TabOrder = 2
+  end
+  object btnClear: TButton
+    Left = 199
+    Top = 104
+    Width = 90
+    Height = 25
+    Caption = #28165#31354
+    TabOrder = 3
+    OnClick = btnClearClick
   end
 end

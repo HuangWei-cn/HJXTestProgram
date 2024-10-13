@@ -120,6 +120,8 @@ begin
   for i := 1 to ABook.Sheets.Count do
   begin
     sht := ABook.Sheets[i];
+    if sht.Visible = 1 then Continue; //若Worksheet处于隐藏状态，则Visible = 1，否则为0
+
     sn := sht.Name;
         // 测试s是否可以转变为日期，若是，则和给定日期进行比较，成功则取数据
     if TryStrToDate(sn, dt) then
@@ -160,6 +162,9 @@ begin
   for i := 1 to book.Sheets.Count do
   begin
     sheet := book.Sheets[i];
+    //不列出隐藏的工作表
+    if Sheet.Visible = 1 then Continue; //nExcel中，工作表的Visible属性为0-显示，1-隐藏
+
     if sheet.Name = 'Info' then
     begin
       AInfo.DesignID := VarToStr(sheet.Cells[3, 2].Value);
@@ -176,8 +181,9 @@ begin
         // 判断是否是观测数据表，即判断工作表名称是否是日期
     if DateList <> nil then
     begin
-      if TryStrToDate(sheet.Name, dt) then
-          DateList.Add(DateToStr(dt));
+      if TryStrToDate(sheet.Name, dt) then //表名必须是日期格式
+          if dt>strtodate('2000-1-1') then //数据日期必须晚于2000年，早年的不支持
+            DateList.Add(DateToStr(dt));
     end;
   end;
 end;

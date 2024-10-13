@@ -51,7 +51,6 @@ uses
   ufraDataPresentation in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufraDataPresentation.pas' {fraDataPresentation: TFrame},
   ufraEigenvalueWeb in '..\..\Client\ClientCommon\FuncFrames\Eigenvalue\ufraEigenvalueWeb.pas' {fraEigenvalueWeb: TFrame},
   ufraExcelMeterParamEditor in '..\..\Client\ClientCommon\FuncFrames\ParamsEditor\ufraExcelMeterParamEditor.pas' {fraXLSParamEditor: TFrame},
-  ufrmMeterDataSelector in '..\..\Client\ClientCommon\FuncFrames\ParamsEditor\ufrmMeterDataSelector.pas' {frmMeterDataFileSelection},
   ufraMeterList in '..\..\Client\ClientCommon\FuncFrames\MeterList\ufraMeterList.pas' {fraMeterList: TFrame},
   ufraMeterListGrid in '..\..\Client\ClientCommon\FuncFrames\MeterList\ufraMeterListGrid.pas' {fraMeterListGrid: TFrame},
   ufraRptDataHTMLGrid in '..\..\Client\ClientCommon\FuncFrames\ReportDataHTMLGrid\ufraRptDataHTMLGrid.pas' {fraRptDataHTMLGrid: TFrame},
@@ -86,7 +85,14 @@ uses
   ufrmInputLayoutData in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufrmInputLayoutData.pas' {frmInputLayoutData},
   ufrmDataItemsList in '..\..\Client\ClientCommon\FuncFrames\DataLayout\ufrmDataItemsList.pas' {frmDataItemsList},
   ufrmSetSelectedSheets in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmSetSelectedSheets.pas' {frmSetSelectedSheets},
-  ufrmDataCount2 in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmDataCount2.pas' {frmDataCount2};
+  ufrmDataCount2 in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmDataCount2.pas' {frmDataCount2},
+  uDragSeriesHelper in '..\..\Client\ClientCommon\FuncFrames\DataGraph\uDragSeriesHelper.pas',
+  ufraBaseBarChart in '..\..\Client\ClientCommon\FuncFrames\DataGraph\ufraBaseBarChart.pas' {fraBaseBarChart: TFrame},
+  ufrmDataBar in '..\..\Client\ClientCommon\FuncFrames\QuickView\ufrmDataBar.pas' {frmDataBar},
+  ufrmDataSheet in '..\..\Client\ClientCommon\FuncFrames\Tools\ufrmDataSheet.pas' {frmDataSheet},
+  ufrmSetting in '..\..\Client\ClientCommon\FuncFrames\Setup\ufrmSetting.pas' {frmSetting},
+  ufrmMeterDataSelector in '..\..\Client\ClientCommon\FuncFrames\ParamsEditor\ufrmMeterDataSelector.pas' {frmMeterDataFileSelection},
+  ufraDataRemedy in '..\..\Client\ClientCommon\FuncFrames\DataRemedy\ufraDataRemedy.pas' {fraDataRemedy: TFrame};
 
 {$R *.res}
 
@@ -96,7 +102,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := '黄金峡观测数据处理辅助工具（功能测试程序）';
   Application.CreateForm(TfrmTestSummary, frmTestSummary);
-  Application.CreateForm(TfrmDataCount2, frmDataCount2);
   // Application.CreateForm(TfrmMeterSelector, frmMeterSelector);
   Application.Run;
 
